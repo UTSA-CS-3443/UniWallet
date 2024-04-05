@@ -2,27 +2,31 @@
 
     <!-- activity_login.xml -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="#f2ebe2">
 
-    <Button
-        android:layout_gravity="left"
-        android:id="@+id/button"
-        android:layout_width="80dp"
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="5dp"
-        android:text="Back" />
+        android:text="UniWallet"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:typeface="serif"
+        android:background="#2f3c54"
+        android:textColor="#ffffff" />
 
     <ImageView
         android:id="@+id/uniwallet_logo"
-        android:layout_marginTop="70dp"
-        android:layout_width="200dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
         android:layout_height="200dp"
         app:srcCompat="@drawable/uniwallet_logo" />
 
@@ -30,25 +34,34 @@
         android:id="@+id/editTextUsername"
         android:layout_marginTop="90dp"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:hint="Username"
         android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:hint="Password"
         android:inputType="textPassword"
         android:layout_marginBottom="16dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSubmit"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        style="@style/ButtonStyle"
         android:text="Submit" />
         <!--add button shape and color to theme -->
         <!--add text color and font to theme -->
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/button"
+        android:layout_marginTop="5dp"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        style="@style/ButtonStyle"
+        android:text="Back" />
 
     <!--add UniWallet header to theme -->
 

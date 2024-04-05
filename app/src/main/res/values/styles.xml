@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@drawable/custom_button</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+</resources>
