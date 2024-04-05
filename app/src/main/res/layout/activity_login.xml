@@ -10,7 +10,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="#f2ebe2">
+    android:background="@color/colorMainBackground">
 
     <TextView
         android:id="@+id/header_title"
@@ -20,8 +20,8 @@
         android:textAlignment="center"
         android:textSize="40sp"
         android:typeface="serif"
-        android:background="#2f3c54"
-        android:textColor="#ffffff" />
+        android:background="@color/colorTitleHeader"
+        android:textColor="@color/white" />
 
     <ImageView
         android:id="@+id/uniwallet_logo"
