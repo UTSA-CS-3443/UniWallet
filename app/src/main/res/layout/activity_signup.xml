@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <!-- activity_login.xml -->
+<!-- activity_signup.xml -->
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -32,21 +32,21 @@
         android:textSize="60sp"
         android:typeface="serif"
         android:textColor="@color/colorTitleHeader"
-        android:text="Login" />
+        android:text="Sign Up" />
 
     <EditText
         android:id="@+id/editTextUsername"
         android:layout_marginTop="140dp"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:hint="Username"
+        android:hint="New Username"
         android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:hint="Password"
+        android:hint="New Password"
         android:inputType="textPassword"
         android:layout_marginBottom="16dp"/>
 
@@ -56,8 +56,8 @@
         android:layout_height="wrap_content"
         style="@style/ButtonStyle"
         android:text="Submit" />
-        <!--add button shape and color to theme -->
-        <!--add text color and font to theme -->
+    <!--add button shape and color to theme -->
+    <!--add text color and font to theme -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button"
