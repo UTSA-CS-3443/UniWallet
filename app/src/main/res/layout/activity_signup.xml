@@ -60,7 +60,7 @@
     <!--add text color and font to theme -->
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/btnBack"
         android:layout_marginTop="5dp"
         android:layout_width="100dp"
         android:layout_height="wrap_content"

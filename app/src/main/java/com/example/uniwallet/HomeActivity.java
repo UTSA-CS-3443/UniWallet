@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //launchLoginActivity();
+                launchLoginActivity();
             }
         });
     }
@@ -37,8 +37,8 @@ public class HomeActivity extends AppCompatActivity {
 //        startActivity(intent);
 //    }
 //
-//    private void launchLoginActivity( ) {
-//        Intent intent = new Intent(this, LoginActivity.class);
-//        startActivity(intent);
-//    }
+   private void launchLoginActivity() {
+       Intent intent = new Intent(this, LoginActivity.class);
+       startActivity(intent);
+  }
 }
