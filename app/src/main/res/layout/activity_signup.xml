@@ -51,7 +51,7 @@
         android:layout_marginBottom="16dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSubmit"
+        android:id="@+id/submit_btn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         style="@style/ButtonStyle"
@@ -60,7 +60,7 @@
     <!--add text color and font to theme -->
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/back_btn"
         android:layout_marginTop="5dp"
         android:layout_width="100dp"
         android:layout_height="wrap_content"

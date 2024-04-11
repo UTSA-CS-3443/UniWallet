@@ -20,7 +20,7 @@ public class HomeActivity extends AppCompatActivity {
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //launchSignupActivity();
+                launchSignUpActivity();
             }
         });
 
@@ -32,11 +32,11 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-//    private void launchSignupActivity( ) {
-//        Intent intent = new Intent(this, SignupActivity.class);
-//        startActivity(intent);
-//    }
-//
+    private void launchSignUpActivity( ) {
+        Intent intent = new Intent(this, SignUpActivity.class);
+        startActivity(intent);
+    }
+
 //    private void launchLoginActivity( ) {
 //        Intent intent = new Intent(this, LoginActivity.class);
 //        startActivity(intent);
