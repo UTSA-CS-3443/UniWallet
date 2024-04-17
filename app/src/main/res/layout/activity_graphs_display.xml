@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A67DB8">
+
+    <TextView
+        android:id="@+id/tvUniWallet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UniWallet"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"/>
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvUniWallet"
+        android:layout_marginTop="20dp"
+        tools:ignore="MissingClass" />
+
+    <LinearLayout
+        android:id="@+id/legendBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:layout_below="@id/pieChart"
+        android:layout_marginTop="20dp">
+
+        <!-- Repeat similar elements for each category in the pie chart -->
+
+    </LinearLayout>
+</RelativeLayout>
