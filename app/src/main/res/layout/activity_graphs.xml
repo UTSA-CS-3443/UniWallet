@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A67DB8">
+
+    <Button
+        android:id="@+id/homeButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        style="?android:borderlessButtonStyle"/>
+
+    <Button
+        android:id="@+id/homeButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        style="?android:borderlessButtonStyle"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/graphsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Graphs"
+        android:textSize="36sp"
+        android:textColor="#FFFFFF"
+        android:layout_centerInParent="true"/>
+
+    <TextView
+        android:id="@+id/incomeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Income"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@id/graphsTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/timeFrameBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:layout_below="@id/incomeTitle"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/weeklyButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Weekly"
+            android:layout_weight="1"
+            style="?attr/buttonBarButtonStyle"/>
+
+        <Button
+            android:id="@+id/monthlyButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Monthly"
+            android:layout_weight="1"
+            style="?attr/buttonBarButtonStyle"/>
+
+        <Button
+            android:id="@+id/yearlyButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Yearly"
+            android:layout_weight="1"
+            style="?attr/buttonBarButtonStyle"/>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A67DB8">
+
+    <TextView
+        android:id="@+id/uniWalletTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UniWallet"
+        android:textSize="24sp"
+        android:textColor="#FFFFFF"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        style="?android:borderlessButtonStyle"/>
+
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        style="?android:borderlessButtonStyle"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/settingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Settings"
+        android:textSize="36sp"
+        android:textColor="#FFFFFF"
+        android:layout_below="@id/uniWalletTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+        android:id="@+id/settingsBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#FFFFFF"
+        android:layout_below="@id/settingsTitle"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/deleteAccountButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Account"
+            style="?android:borderlessButtonStyle"/>
+
+        <!-- Repeat similar elements for other settings options -->
+
+    </LinearLayout>
+</RelativeLayout>
