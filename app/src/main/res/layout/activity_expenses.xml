@@ -2,42 +2,93 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A67DB8">
+    android:background="#ffffff">
 
     <TextView
-        android:id="@+id/tvUniWallet"
-        android:layout_width="wrap_content"
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorTitleHeader"
         android:text="UniWallet"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"/>
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:typeface="serif" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/balanceButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Balance"
-        style="?android:borderlessButtonStyle"
-        android:layout_below="@id/tvUniWallet"
+        android:textColor="@color/black"
+        style="@style/ButtonStyle2"
+        android:layout_below="@id/header_title"
         android:layout_marginTop="20dp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/budgetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         android:text="Budget"
-        style="?android:borderlessButtonStyle"
+        style="@style/ButtonStyle2"
         android:layout_below="@id/balanceButton"
         android:layout_marginTop="20dp"/>
 
-    <!-- Repeat similar elements for other buttons -->
-
-    <Button
-        android:id="@+id/generateBalanceButton"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/change_budgetButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Change Budget"
+        style="@style/ButtonStyle2"
+        android:layout_below="@id/budgetButton"
+        android:layout_marginTop="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_extra_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Add Extra"
+        style="@style/ButtonStyle2"
+        android:layout_below="@id/change_budgetButton"
+        android:layout_marginTop="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_paycheck_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="Add Paycheck"
+        style="@style/ButtonStyle2"
+        android:layout_below="@id/add_extra_button"
+        android:layout_marginTop="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/utility_cost_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:text="add utility"
+        style="@style/ButtonStyle2"
+        android:layout_below="@id/add_paycheck_button"
+        android:layout_marginTop="20dp"/>
+
+   <ScrollView
+       android:id="@+id/quick_add_scroll"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       />
+
+    <!-- Repeat similar elements for other buttons -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/generateBalanceButton"
+        style="@style/ButtonStyle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="139dp"
         android:text="Generate Balance"
-        android:style="?attr/buttonBarButtonStyle"
-        android:layout_centerInParent="true"/>
+        android:textColor="@color/black" />
 </RelativeLayout>
