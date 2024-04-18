@@ -280,7 +280,7 @@ public class AccountManager{
         return highestUserId;
     }
 
-    public void deleteAccount(String username) {
+    static public void deleteAccount(String username) {
         Path accountsFilePath = Paths.get(ACCOUNTS_DIRECTORY, accountsCSV);
         List<String> updatedLines = new ArrayList<>();
 
@@ -296,7 +296,7 @@ public class AccountManager{
 
                     File accountDirectory = new File(ACCOUNTS_DIRECTORY, username);
                     if (accountDirectory.exists()) {
-                        deleteDirectory(accountDirectory);
+                        //deleteDirectory(accountDirectory);
                         System.out.println("Account directory for " + username + " has been deleted.");
                     } else {
                         System.out.println("Account directory for " + username + " does not exist.");
