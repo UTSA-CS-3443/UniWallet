@@ -20,25 +20,25 @@ public class HomeActivity extends AppCompatActivity {
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //launchSignupActivity();
+                launchSignupActivity();
             }
         });
 
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //launchLoginActivity();
+                launchLoginActivity();
             }
         });
     }
 
-//    private void launchSignupActivity( ) {
-//        Intent intent = new Intent(this, SignupActivity.class);
-//        startActivity(intent);
-//    }
-//
-//    private void launchLoginActivity( ) {
-//        Intent intent = new Intent(this, LoginActivity.class);
-//        startActivity(intent);
-//    }
+   private void launchSignupActivity( ) {
+      Intent intent = new Intent(this, SignUpActivity.class);
+      startActivity(intent);
+  }
+
+    private void launchLoginActivity( ) {
+       Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
 }

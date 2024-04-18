@@ -16,9 +16,9 @@ import java.util.Scanner;
 
 public class AccountManager{
     ArrayList<Account> usernameList = new ArrayList<Account>();
-    private static final String ACCOUNTS_DIRECTORY = "E:\\Application Programming Project\\DirectoryCreationTests\\Accounts";
-    private static final String accountsCSV = "AllAccounts.csv";
-    File allAccountsFile = new File(ACCOUNTS_DIRECTORY, "AllAccounts.csv");
+    private static final String ACCOUNTS_DIRECTORY = "Accounts";
+    private static final String accountsCSV = "users.csv";
+    File allAccountsFile = new File(ACCOUNTS_DIRECTORY, "users.csv");
     File directory;
 
     // Account account;
@@ -89,7 +89,6 @@ public class AccountManager{
 
     public Account login(String username, String password) {
 
-
         Path accountsFilePath = Paths.get(ACCOUNTS_DIRECTORY, accountsCSV);
 
         try {
@@ -125,8 +124,40 @@ public class AccountManager{
         System.out.println("Login failed: Incorrect username or password.");
         return null;
     }
+    public void createDirectory(String ACCOUNTS_DIRECTORY, String username, Account account) throws IOException{
+        // Create the user's directory object
+        File directory = new File(ACCOUNTS_DIRECTORY, username);
 
+        // Check if the directory already exists
+        if (!directory.exists()) {
+            // If it doesn't exist, create it
+            if (directory.mkdirs()) {
+                // If creation is successful, proceed to create CSV files within it
+                createCSVFiles(account, directory);
+                System.out.println("Directory created for " + username);
+            } else {
+                // If creation fails, print an error message
+                System.err.println("Failed to create directory for " + username);
+            }
+        } else {
+            // If the directory already exists, print a message indicating so
+            System.err.println(username + " directory already exists.");
+        }
 
+        // Now, proceed to create the 'users.csv' file regardless of whether the directory exists or not
+        try {
+            allAccountsFile.createNewFile();
+
+            int highestUserId = getHighestUserId(directory);
+            userCount = highestUserId + 1; // Increment the highest user ID
+            FileWriter fw = new FileWriter(allAccountsFile, true); // Append mode
+            fw.write(String.format("%d,%s,%s\n", userCount, username, password));
+            fw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+/*
     public void createDirectory(String ACCOUNTS_DIRECTORY, String username, Account account) throws IOException{
         //String workspacePath = System.getProperty("D:\\Application Programming Project\\DirectoryCreationTests\\Accounts");
         File directory = new File(ACCOUNTS_DIRECTORY, username);
@@ -157,7 +188,7 @@ public class AccountManager{
             e.printStackTrace();
         }
     }
-
+*/
     public void createCSVFiles(Account account, File directory) {
 
         try {
