@@ -343,7 +343,7 @@ public Account login(String username, String password) {
     }
 
 
-    public void deleteAccount(String username) {
+    static public void deleteAccount(String username) {
         Path accountsFilePath = Paths.get(ACCOUNTS_DIRECTORY, accountsCSV);
         List<String> updatedLines = new ArrayList<>();
 
@@ -359,7 +359,7 @@ public Account login(String username, String password) {
 
                     File accountDirectory = new File(ACCOUNTS_DIRECTORY, username);
                     if (accountDirectory.exists()) {
-                        deleteDirectory(accountDirectory);
+                        //deleteDirectory(accountDirectory);
                         System.out.println("Account directory for " + username + " has been deleted.");
                     } else {
                         System.out.println("Account directory for " + username + " does not exist.");
