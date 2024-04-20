@@ -21,8 +21,8 @@ public class LoginActivity extends AppCompatActivity {
             Button Submit = findViewById(R.id.btnSubmit);
             Button back = findViewById(R.id.btnBack);
 
-            AccountManager accountManager = new AccountManager(username.toString(), password.toString());
+            //AccountManager accountManager = new AccountManager(getApplicationContext(), username.toString(), password.toString());
 
-            accountManager.login(username.toString(), password.toString());
+           // accountManager.login(username.toString(), password.toString());
         }
 }

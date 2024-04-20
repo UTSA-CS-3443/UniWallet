@@ -1,15 +1,16 @@
 package com.example.uniwallet;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
+
 
 import com.example.uniwallet.model.Account;
 import com.example.uniwallet.model.AccountManager;
@@ -34,16 +35,18 @@ public class SignUpActivity extends AppCompatActivity {
                 String username = usernameEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-                AccountManager accountManager = new AccountManager(username, password);
+
+                AccountManager accountManager = new AccountManager(SignUpActivity.this);
+
                 try {
                     Account signedUpAccount = accountManager.signUp(username, password);
 
                     if (signedUpAccount != null){
                         launchActivity(signedUpAccount);
+                        Toast.makeText(SignUpActivity.this, "valid sign up parameters", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(SignUpActivity.this, "Invalid sign up parameters", Toast.LENGTH_SHORT).show();
                     }
-
 
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -56,6 +59,4 @@ public class SignUpActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
    }
-
-
 }

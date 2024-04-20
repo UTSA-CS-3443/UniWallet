@@ -1,38 +1,49 @@
 package com.example.uniwallet.model;
 
+import android.app.Activity;
+import android.content.Context;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.example.uniwallet.SignUpActivity;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class AccountManager{
-    ArrayList<Account> usernameList = new ArrayList<Account>();
+    ArrayList<Account> usernameList;
     private static final String ACCOUNTS_DIRECTORY = "Accounts";
     private static final String accountsCSV = "users.csv";
-    File allAccountsFile = new File(ACCOUNTS_DIRECTORY, "users.csv");
-    File directory;
+    private static final String TAG = "Accounts";
 
-    // Account account;
-
-    private int userCount;
+    private int userID;
     private String username;
     private String password;
+    private final String filename;
+    private Activity activity;
 
-    public AccountManager(String username, String password) {
+    public AccountManager(Activity activity){
+        this.activity = activity;
+        usernameList = new ArrayList<Account>();
+        filename = "users.csv";
         this.username = username;
         this.password = password;
-        this.userCount = 0;
+        this.userID = 0;
     }
-
 
     public boolean checkSignUpParameters(String username, String password) {
 
@@ -44,8 +55,7 @@ public class AccountManager{
             return false;
         } else if (!file.equals(username)){
             return true;
-        }//read csv to see if duplicate username
-        //if non existing pass else fail
+        }
         return false;
 
     }
@@ -59,20 +69,32 @@ public class AccountManager{
         return false;
     }
 
+
     public Account signUp(String username, String password) throws IOException {
         System.out.println(checkSignUpParameters(username, password));
 
-        if (checkSignUpParameters(username, password) == false) {
+        if (!checkSignUpParameters(username, password)) {
             System.out.println("sign up parameters bad");
             return null;
         } else if (checkSignUpParameters(username, password)) {
-            System.out.println("sign up parameters good");
+            Log.i("Sign up paras good", username);
 
 
-            Account account = new Account(userCount,username, password);
-            createDirectory(ACCOUNTS_DIRECTORY, username, account);
+            Account account = new Account(userID,username, password);
+
+
+            createDirectory(username);
+            initializeFiles(username);
+            addUser(account);
+
+            saveFile();
+
+           // createDirectory(username);
+            //createDirectory(ACCOUNTS_DIRECTORY, username, account);
+
             account.setDefaultValues();
-            createCSVFiles(account, directory);
+            //createCSVFiles(account, createDirectory(username));
+
             //writeToCSV(account, balanceFile);
             //account.createAccountCSVFiles();
             //account.setCSVDefaults();
@@ -87,160 +109,227 @@ public class AccountManager{
         return null;
     }
 
-    public Account login(String username, String password) {
 
-        Path accountsFilePath = Paths.get(ACCOUNTS_DIRECTORY, accountsCSV);
+    private void createDirectory(String username) {
 
+        File directory = activity.getFileStreamPath(filename).getParentFile();
+
+        File playerDirectory = new File(directory, username);
+
+        if (!playerDirectory.exists()) {
+
+            if (playerDirectory.mkdirs()) {
+                Log.i(TAG, "Directory created successfully: " + playerDirectory.getAbsolutePath());
+            } else {
+                Log.e(TAG, "Failed to create directory: " + playerDirectory.getAbsolutePath());
+            }
+        } else {
+            Log.i(TAG, "Directory already exists: " + playerDirectory.getAbsolutePath());
+        }
+    }
+    private void initializeFiles(String username) {
         try {
-            List<String> lines = Files.readAllLines(accountsFilePath);
-            for (String line : lines) {
-                String[] parts = line.split(",");
-                if (parts.length >= 3) {
-                    int userID = Integer.parseInt(parts[0]);
-                    if (parts[1].equals(username) && parts[2].equals(password)) {
-                        System.out.println("Login successful!");
-                        Account account = new Account(userID, username, password);
-                        return account;
-                        //with this return you can go to the next activity
-                        /*
-                         * pass THIS ACCOUNT as intent for next activity
-                         * these next methods will be invoked in the next activity with the intent
-                         * Accountmanager am = new AccountManager(account) pass in the intent account
-                         * am.expense
-                         * am.quickAdd
-                         * am.quickRemove
-                         * am.Income
-                         */
-                        //is this where all login specfic stuff has to be achieved?
+            Log.i(TAG, "Attempting to read from file ...");
+                InputStream in = activity.openFileInput(filename);
+            Log.i(TAG, "SUCCESS");
+        } catch (FileNotFoundException e1) {
+            Log.e(TAG, "Unable to read from file. File does not exist. " + filename);
+            try {
+                Log.i(TAG, "Attempting to create a file ...");
+                OutputStream out = activity.openFileOutput(filename, Context.MODE_PRIVATE);
+                Log.i(TAG, "SUCCESS");
+            } catch (FileNotFoundException e2) {
+                Log.e(TAG, "Unable to create file. " + filename);
+            }
+        }
+        try {
+
+            File directory = activity.getFileStreamPath(ACCOUNTS_DIRECTORY).getParentFile();
+            File userDirectory = new File(directory, username);
+
+            if (!userDirectory.exists()) {
+                if (!userDirectory.mkdirs()) {
+                    Log.e(TAG, "Failed to create user directory: " + userDirectory.getAbsolutePath());
+                    return;
+                }
+            }
+
+            String[] csvFiles = {"accountInfo.csv", "accountBalance.csv", "accountIncome.csv",
+                    "accountExpense.csv", "accountQuickAdd.csv", "accountQuickRemove.csv"};
 
 
+            for (String fileName : csvFiles) {
+                File csvFile = new File(userDirectory, fileName);
+                if (!csvFile.exists()) {
+                    if (csvFile.createNewFile()) {
+                        Log.i(TAG, "CSV file created successfully: " + csvFile.getAbsolutePath());
+                    } else {
+                        Log.e(TAG, "Failed to create CSV file: " + csvFile.getAbsolutePath());
                     }
+                } else {
+                    Log.i(TAG, "CSV file already exists: " + csvFile.getAbsolutePath());
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e(TAG, "IOException occurred: " + e.getMessage());
         }
-
-        System.out.println("Login failed: Incorrect username or password.");
-        return null;
     }
-    public void createDirectory(String ACCOUNTS_DIRECTORY, String username, Account account) throws IOException{
-        // Create the user's directory object
-        File directory = new File(ACCOUNTS_DIRECTORY, username);
-
-        // Check if the directory already exists
-        if (!directory.exists()) {
-            // If it doesn't exist, create it
-            if (directory.mkdirs()) {
-                // If creation is successful, proceed to create CSV files within it
-                createCSVFiles(account, directory);
-                System.out.println("Directory created for " + username);
-            } else {
-                // If creation fails, print an error message
-                System.err.println("Failed to create directory for " + username);
-            }
-        } else {
-            // If the directory already exists, print a message indicating so
-            System.err.println(username + " directory already exists.");
+    public void addUser(Account account){
+        if(usernameList != null){
+            Log.i(TAG, "Adding " + account + " to the players");
+            usernameList.add(account);
+            createDirectory(account.getUsername());
+            createCSVFiles(account, new File(activity.getFileStreamPath(filename).getParentFile(), account.getUsername()));
         }
+    }
 
-        // Now, proceed to create the 'users.csv' file regardless of whether the directory exists or not
+    public void saveFile() {
         try {
-            allAccountsFile.createNewFile();
+            Log.i(TAG, "Attempting to save to file ... ");
 
-            int highestUserId = getHighestUserId(directory);
-            userCount = highestUserId + 1; // Increment the highest user ID
-            FileWriter fw = new FileWriter(allAccountsFile, true); // Append mode
-            fw.write(String.format("%d,%s,%s\n", userCount, username, password));
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-/*
-    public void createDirectory(String ACCOUNTS_DIRECTORY, String username, Account account) throws IOException{
-        //String workspacePath = System.getProperty("D:\\Application Programming Project\\DirectoryCreationTests\\Accounts");
-        File directory = new File(ACCOUNTS_DIRECTORY, username);
+            OutputStream out = activity.openFileOutput(filename, Context.MODE_APPEND);
+            Log.i(TAG, "SUCCESS");
+            if (usernameList != null) {
 
+                int lastUserCount = getUserCountFromCSV();
+                for (Account account : usernameList) {
 
-        try {
-            allAccountsFile.createNewFile();
+                    lastUserCount++;
+                    account.setUserID(lastUserCount);
 
-            int highestUserId = getHighestUserId(directory);
-            userCount = highestUserId + 1; // Increment the highest user ID
-            FileWriter fw = new FileWriter(allAccountsFile, true); // Append mode
-            //PrintWriter pw = new PrintWriter(fw);
-
-            fw.write(String.format("%d,%s,%s\n", userCount, username, password));
-            fw.close();
-
-            if (!directory.exists()) {
-
-                directory.mkdirs();
-                createCSVFiles(account, directory);
-
-                System.out.println("Directory created for " + username);
-            } else if (directory.exists()){
-                System.err.println(username + " directory already exists.");
+                    String userData = String.format("%d,%s,%s\n", account.getUserID(), account.getUsername(), account.getPassword());
+                    out.write(userData.getBytes(StandardCharsets.UTF_8));
+                }
             }
+            out.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.i(TAG, "Failed to write to file. " + filename);
         }
     }
-*/
+    private int getUserCountFromCSV() {
+        int lastUserCount = 0;
+        try {
+
+            InputStream in = activity.openFileInput(filename);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 0) {
+                    int userCount = Integer.parseInt(parts[0]);
+
+                    if (userCount > lastUserCount) {
+                        lastUserCount = userCount;
+                    }
+                }
+            }
+            in.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading users.csv: " + e.getMessage());
+        }
+        return lastUserCount;
+    }
+
+
     public void createCSVFiles(Account account, File directory) {
 
-        try {
-            //int highestUserId = getHighestUserId(directory);
-            //userCount = highestUserId + 1;
-            File infoFile = new File(directory, "accountInfo.csv");
-            File balanceFile = new File(directory, "accountBalance.csv");
-            File incomeFile = new File(directory, "accountIncome.csv");
-            File expenseFile = new File(directory, "accountExpense.csv");
-            File quickAddFile = new File(directory, "accountQuickAdd.csv");
-            File quickRemoveFile = new File(directory, "accountQuickRemove.csv");
+        directory = activity.getFileStreamPath(filename).getParentFile();
 
-            infoFile.createNewFile();
-            balanceFile.createNewFile();
-            incomeFile.createNewFile();
-            expenseFile.createNewFile();
-            quickAddFile.createNewFile();
-            quickRemoveFile.createNewFile();
+        File playerDirectory = new File(directory, account.getUsername());
 
-            //ADD USERID, and categories 1st line for each csv
-            FileWriter fwInfo = new FileWriter(infoFile, true); // Append mode
-            fwInfo.write(String.format("%d,%s,%s\n", userCount, account.getUsername(), account.getPassword()));
-            fwInfo.close();
+               if (!playerDirectory.exists()) {
 
-            FileWriter fwBalance = new FileWriter(balanceFile, true);
-            fwBalance.write(String.format("%d,%s,%s\n", userCount, account.getBudget(), account.getBalance()));
-            fwBalance.close();
-
-            FileWriter fwIncome = new FileWriter(incomeFile, true);
-            fwIncome.write(String.format("%d,%s,%s\n", userCount, account.getPay(), account.getTimeRate()));
-            fwIncome.close();
-
-            FileWriter fwExpense = new FileWriter(expenseFile, true);
-            fwExpense.write(String.format("%d,%s,%s\n", userCount, account.getCategory(), account.getRate(), account.getCost()));
-            fwExpense.close();
-
-            FileWriter fwQuickAdd = new FileWriter(quickAddFile, true);
-            fwQuickAdd.write(String.format("%d,%s,%s\n", userCount, account.getTransactionNumber(), account.getAmount()));
-            fwQuickAdd.close();
-
-            FileWriter fwQuickRemove = new FileWriter(quickRemoveFile, true);
-            fwQuickRemove.write(String.format("%d,%s,%s\n", userCount, account.getTransactionNumber2(), account.getCategory2(), account.getItem(), account.getAmount2()));
-            fwQuickRemove.close();
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            if (playerDirectory.mkdirs()) {
+                Log.i(TAG, "Directory created successfully: " + playerDirectory.getAbsolutePath());
+                createCSVFiles(account, playerDirectory);
+            } else {
+                Log.e(TAG, "Failed to create directory: " + playerDirectory.getAbsolutePath());
+                return;
+            }
+        } else {
+            Log.i(TAG, "Directory already exists: " + playerDirectory.getAbsolutePath());
         }
 
+        try {
 
+            File infoFile = new File(playerDirectory, "accountInfo.csv");
+            File balanceFile = new File(playerDirectory, "accountBalance.csv");
+            File incomeFile = new File(playerDirectory, "accountIncome.csv");
+            File expenseFile = new File(playerDirectory, "accountExpense.csv");
+            File quickAddFile = new File(playerDirectory, "accountQuickAdd.csv");
+            File quickRemoveFile = new File(playerDirectory, "accountQuickRemove.csv");
 
+            ensureFileCreated(infoFile);
+            ensureFileCreated(balanceFile);
+            ensureFileCreated(incomeFile);
+            ensureFileCreated(expenseFile);
+            ensureFileCreated(quickAddFile);
+            ensureFileCreated(quickRemoveFile);
+
+            appendToFile(infoFile, String.format("%d,%s,%s\n", account.getUserID(), account.getUsername(), account.getPassword()));
+            appendToFile(balanceFile, String.format("%d,%s,%s\n", account.getUserID(), account.getBudget(), account.getBalance()));
+            appendToFile(incomeFile, String.format("%d,%s,%s\n", account.getUserID(), account.getPay(), account.getTimeRate()));
+            appendToFile(expenseFile, String.format("%d,%s,%s,%s\n", account.getUserID(), account.getCategory(), account.getRate(), account.getCost()));
+            appendToFile(quickAddFile, String.format("%d,%s,%s\n", account.getUserID(), account.getTransactionNumber(), account.getAmount()));
+            appendToFile(quickRemoveFile, String.format("%d,%s,%s,%s,%s\n", account.getUserID(), account.getTransactionNumber2(), account.getCategory2(), account.getItem(), account.getAmount2()));
+
+            Log.i(TAG, "CSV files created successfully in directory: " + playerDirectory.getAbsolutePath());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e(TAG, "Failed to create CSV files in directory: " + playerDirectory.getAbsolutePath());
+        }
     }
+    private void ensureFileCreated(File file) throws IOException {
+        if (!file.exists()) {
+            if (!file.createNewFile()) {
+                throw new IOException("Failed to create file: " + file.getAbsolutePath());
+            }
+        }
+    }
+    private void appendToFile(File file, String data) throws IOException {
+        FileWriter fw = new FileWriter(file, true); // Append mode
+        fw.write(data);
+        fw.close();
+    }
+
+public Account login(String username, String password) {
+
+    Path accountsFilePath = Paths.get(ACCOUNTS_DIRECTORY, accountsCSV);
+
+    try {
+        List<String> lines = Files.readAllLines(accountsFilePath);
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length >= 3) {
+                int userID = Integer.parseInt(parts[0]);
+                if (parts[1].equals(username) && parts[2].equals(password)) {
+                    System.out.println("Login successful!");
+                    Account account = new Account(userID, username, password);
+                    return account;
+                    //with this return you can go to the next activity
+                    /*
+                     * pass THIS ACCOUNT as intent for next activity
+                     * these next methods will be invoked in the next activity with the intent
+                     * Accountmanager am = new AccountManager(account) pass in the intent account
+                     * am.expense
+                     * am.quickAdd
+                     * am.quickRemove
+                     * am.Income
+                     */
+                    //is this where all login specfic stuff has to be achieved?
+
+
+                }
+            }
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+
+    System.out.println("Login failed: Incorrect username or password.");
+    return null;
+}
+
 
     public void writeToCSV(Account account, File balanceFile) {
 
@@ -253,32 +342,6 @@ public class AccountManager{
         }
     }
 
-    public int getHighestUserId(File directory) throws NumberFormatException, IOException {
-        int highestUserId = 0;
-        try (BufferedReader br = new BufferedReader(new FileReader(allAccountsFile))) {
-            String line;
-            //boolean headerSkipped = false;
-            while ((line = br.readLine()) != null) {
-                //if (!headerSkipped) {
-                //	headerSkipped = true;
-                //continue;
-                //}
-                String[] tokens = line.split(",");
-                if (tokens.length > 0 && !tokens[0].isEmpty()) {
-                    try {
-                        int userId = Integer.parseInt(tokens[0]);
-                        highestUserId = Math.max(highestUserId, userId);
-                    } catch (NumberFormatException e) {
-                        // Handle if the userID cannot be parsed as an integer
-                        e.printStackTrace();
-                    }
-                }
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return highestUserId;
-    }
 
     public void deleteAccount(String username) {
         Path accountsFilePath = Paths.get(ACCOUNTS_DIRECTORY, accountsCSV);
@@ -347,6 +410,10 @@ public class AccountManager{
         this.password = password;
     }
 
+    @NonNull
+    public String toString(){
+        return getUsername();
+    }
 
 }
 
