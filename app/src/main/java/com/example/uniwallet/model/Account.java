@@ -1,8 +1,9 @@
 package com.example.uniwallet.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Account {
+public class Account implements Serializable {
 
 
     private int userID = 0;

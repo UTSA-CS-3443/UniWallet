@@ -25,6 +25,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_signup);
 
         Button submitButton = findViewById(R.id.submit_btn);
+        Button backButton = findViewById(R.id.back_btn);
         EditText usernameEditText = findViewById(R.id.editTextUsername);
         EditText passwordEditText = findViewById(R.id.editTextPassword);
 
@@ -51,6 +52,16 @@ public class SignUpActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
