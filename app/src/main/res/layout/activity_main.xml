@@ -21,6 +21,16 @@
         android:src="@drawable/uniwallet_logo" />
 
     <Button
+        android:id="@+id/settingsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="-632dp"
+        android:text="Settings" />
+
+    <Button
         android:id="@+id/graphsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,10 +40,10 @@
         android:layout_marginTop="20dp"/>
 
     <Button
-        android:id="@+id/incomeButton"
+        android:id="@+id/expenseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Income"
+        android:text="Expenses/Income"
         android:layout_below="@id/logo"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"/>

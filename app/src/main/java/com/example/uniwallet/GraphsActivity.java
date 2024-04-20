@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 public class GraphsActivity extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_graphs);
     }
 }
