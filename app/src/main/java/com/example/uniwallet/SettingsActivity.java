@@ -2,6 +2,7 @@ package com.example.uniwallet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -35,8 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO add/change logic for account deletion
-                //AccountManager.deleteAccount();
-                launchHomeActivity();
+                deleteAccount();
             }
         });
         change_password.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +58,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
-
+    private void deleteAccount(){
+            AccountManager accountManager = new AccountManager(SettingsActivity.this);
+            accountManager.deleteAccount(account);
+    }
     private void launchChangePasswordActivity() {
         Intent intent = new Intent(this, ChangePasswordActivity.class);
         intent.putExtra("account", account);
