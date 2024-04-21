@@ -1,65 +1,53 @@
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A67DB8">
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:theme="@style/Theme.UniWallet">
 
-    <TextView
-        android:id="@+id/uniWalletTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UniWallet"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"/>
+    <include layout="@layout/header"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/homeButton"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
-        style="@style/ButtonStyle"
-        android:layout_alignParentEnd="true"/>
+        android:layout_gravity="end"
+        android:text="Home" />
 
     <TextView
-        android:id="@+id/settingsTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/settingsText"
+        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:gravity="center_horizontal"
+        android:textSize="60sp"
+        android:typeface="serif"
+        android:textColor="@color/colorTitleHeader"
+        android:text="Settings" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/deleteAccountButton"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="Settings"
-        android:textSize="36sp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@id/uniWalletTitle"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="100dp"
+        android:text="Delete Account"
+        style="@style/ButtonStyle"/>
 
-    <LinearLayout
-        android:id="@+id/settingsBox"
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/changePasswordButton"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="#FFFFFF"
-        android:layout_below="@id/settingsTitle"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="10dp"
+        android:text="Change Password"
+        style="@style/ButtonStyle"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/deleteAccountButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Delete Account"
-            style="@style/ButtonStyle"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/changePasswordButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Change Password"
-            style="@style/ButtonStyle"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/logoutAccountButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Logout"
-            style="@style/ButtonStyle"/>
-    </LinearLayout>
-</RelativeLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/logoutAccountButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Logout"
+        style="@style/ButtonStyle"/>
+</LinearLayout>

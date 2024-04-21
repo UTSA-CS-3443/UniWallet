@@ -1,90 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A67DB8">
+    android:theme="@style/Theme.UniWallet">
 
-    <TextView
-        android:id="@+id/tvUniWallet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UniWallet"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"/>
+    <include layout="@layout/header"/>
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvUniWallet"
-        android:layout_marginTop="-166dp"
-        android:src="@drawable/uniwallet_logo" />
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/settingsButton"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="-8dp"
-        android:layout_marginTop="-464dp"
+        android:layout_gravity="start"
+        android:layout_marginTop="52dp"
+        style="@style/ButtonStyle"
         android:text="Settings" />
 
-    <Button
+    <ImageView
+        android:id="@+id/uniwallet_logo"
+        android:layout_alignParentTop="true"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/uniwallet_logo" />
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/graphsButton"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="Graphs"
-        android:layout_below="@id/logo"
+        android:layout_below="@id/uniwallet_logo"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="10dp"
+        style="@style/ButtonStyle"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/expenseButton"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Expenses/Income"
-        android:layout_below="@id/logo"
+        android:text="Expenses"
+        android:layout_below="@id/uniwallet_logo"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="10dp"
+        style="@style/ButtonStyle"/>
 
-    <Button
-        android:id="@+id/submitBudgetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="142dp"
-        android:layout_marginEnd="6dp"
-        android:text="Submit Budget" />
-
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/submitBalanceButton"
-        android:layout_width="wrap_content"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
+        android:layout_below="@id/expenseButton"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="87dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        style="@style/ButtonStyle"
         android:text="Submit Balance" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/submitBudgetButton"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/submitBalanceButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        style="@style/ButtonStyle"
+        android:text="Submit Budget" />
 
     <EditText
         android:id="@+id/initialBalanceField"
-        android:layout_width="256dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/graphsButton"
-        android:layout_marginTop="20dp"
-        android:hint="Enter Initial Balance"
+        android:layout_marginTop="55dp"
+        android:layout_marginStart="10dp"
+        android:hint="Enter initial balance"
         android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/initialBudgetField"
-        android:layout_width="257dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/initialBalanceField"
         android:layout_marginTop="10dp"
-        android:hint="Enter Initial Budget"
+        android:layout_marginStart="10dp"
+        android:hint="Enter initial budget"
         android:inputType="numberDecimal" />
 
     <Spinner
@@ -92,9 +94,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@id/submitBudgetButton"
         android:background="@android:drawable/btn_dropdown"
         android:spinnerMode="dropdown" />
 </RelativeLayout>

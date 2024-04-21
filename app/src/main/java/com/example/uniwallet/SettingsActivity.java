@@ -36,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TODO add/change logic for account deletion
                 //AccountManager.deleteAccount();
+                launchHomeActivity();
             }
         });
         change_password.setOnClickListener(new View.OnClickListener() {
