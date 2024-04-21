@@ -282,6 +282,55 @@ public class AccountManager implements Serializable {
         return new File(activity.getFilesDir(), username);
     }
 
+
+    public void deleteAccount(Account account) {
+        File userDirectory = getUserDirectory(account.getUsername());
+        File usersFile = new File(userDirectory.getParent(), "users.csv");
+
+        try {
+            List<String> lines = Files.readAllLines(usersFile.toPath());
+            boolean accountFound = false;
+            for (int i = 0; i < lines.size(); i++) {
+                String line = lines.get(i);
+                String[] parts = line.split(",");
+                if (parts.length >= 3 && parts[1].equals(account.getUsername()) && parts[2].equals(account.getPassword())) {
+                    lines.remove(i);
+                    Files.write(usersFile.toPath(), lines);
+                    accountFound = true;
+                    System.out.println("Account deleted successfully!");
+
+                    if (userDirectory.exists()) {
+                        deleteDirectory(userDirectory);
+                        System.out.println("Account directory for " + account.getUsername() + " has been deleted.");
+                    } else {
+                        System.out.println("Account directory for " + account.getUsername() + " does not exist.");
+                    }
+                    break;
+                }
+            }
+            if (!accountFound) {
+                System.out.println("Failed to delete the account from users.csv: Account not found.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Failed to delete the account from users.csv");
+        }
+    }
+
+    private void deleteDirectory(File directory) {
+        File[] files = directory.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    deleteDirectory(file);
+                } else {
+                    file.delete();
+                }
+            }
+        }
+        directory.delete(); // Delete the directory itself
+    }
+
     public Account login(String username, String password) {
         try {
             File accountsFile = new File(activity.getFilesDir(), accountsCSV);
@@ -509,68 +558,7 @@ public class AccountManager implements Serializable {
     }
 
 
-    public void writeToCSV(Account account, File balanceFile) {
 
-        try {
-            FileWriter fwBalance = new FileWriter(balanceFile);
-
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-
-    static public void deleteAccount(String username) {
-        Path accountsFilePath = Paths.get(ACCOUNTS_DIRECTORY, accountsCSV);
-        List<String> updatedLines = new ArrayList<>();
-
-        try {
-            List<String> lines = Files.readAllLines(accountsFilePath);
-            for (int i = 0; i < lines.size(); i++) {
-                String line = lines.get(i);
-                String[] parts = line.split(",");
-                if (parts.length >= 2 && parts[1].equals(username)) { // Check if there are at least two parts
-                    lines.remove(i); // Remove the line containing the username to delete
-                    Files.write(accountsFilePath, lines); // Write the updated lines back to the file
-                    System.out.println("Account deleted successfully!");
-
-                    File accountDirectory = new File(ACCOUNTS_DIRECTORY, username);
-                    if (accountDirectory.exists()) {
-                        //deleteDirectory(accountDirectory);
-                        System.out.println("Account directory for " + username + " has been deleted.");
-                    } else {
-                        System.out.println("Account directory for " + username + " does not exist.");
-                    }
-
-                    return;
-                }
-            }
-
-            // Write the updated lines back to the file, effectively removing the account
-            Files.write(accountsFilePath, updatedLines);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Failed to delete the account from AllAccounts.csv");
-            return;
-        }
-
-
-    }
-
-    private void deleteDirectory(File directory) {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                if (file.isDirectory()) {
-                    deleteDirectory(file);
-                } else {
-                    file.delete();
-                }
-            }
-        }
-        directory.delete(); // Delete the directory itself
-    }
 
     public String getUsername() {
         return username;
