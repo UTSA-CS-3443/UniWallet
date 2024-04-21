@@ -123,7 +123,8 @@ public class AccountManager implements Serializable {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 3 && parts[0].equals(String.valueOf(account.getUserID()))) {
+                // && parts[0].equals(String.valueOf(account.getUserID()))
+                if (parts.length >= 3) {
                     budget = Double.parseDouble(parts[1]);
                     break;
                 }
@@ -149,7 +150,8 @@ public class AccountManager implements Serializable {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 3 && parts[0].equals(String.valueOf(account.getUserID()))) {
+                //&& parts[0].equals(String.valueOf(account.getUserID())
+                if (parts.length >= 3 ) {
                     balance = Double.parseDouble(parts[2]);
                     break;
                 }
@@ -174,8 +176,10 @@ public class AccountManager implements Serializable {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 3 && parts[0].equals(String.valueOf(account.getUserID()))) {
+                //&& parts[0].equals(String.valueOf(account.getUserID()))
+                if (parts.length >= 3) {
                     parts[2] = String.valueOf(balance); // Update balance value
+                    account.setBalance(balance);
                 }
                 updatedLines.add(String.join(",", parts));
             }
@@ -203,8 +207,10 @@ public class AccountManager implements Serializable {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length >= 3 && parts[0].equals(String.valueOf(account.getUserID()))) {
+                //&& parts[0].equals(String.valueOf(account.getUserID())
+                if (parts.length >= 3 ) {
                     parts[1] = String.valueOf(budget); // Update budget value
+                    account.setBalance(budget);
                 }
                 updatedLines.add(String.join(",", parts));
             }

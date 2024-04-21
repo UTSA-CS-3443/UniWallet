@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/initialBalanceField"
         android:layout_marginTop="10dp"
-        android:hint="Enter Initial Budget"
+        android:hint="Enter Initial Budget%"
         android:inputType="numberDecimal" />
 
     <Spinner

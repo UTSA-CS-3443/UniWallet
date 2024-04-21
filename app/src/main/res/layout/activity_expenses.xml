@@ -15,6 +15,19 @@
         android:textSize="40sp"
         android:typeface="serif" />
 
+    <TextView
+        android:id="@+id/expenses_header_text"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/header_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="48dp"
+        android:gravity="center_horizontal"
+        android:text="Expenses"
+        android:textColor="@color/colorTitleHeader"
+        android:textSize="60sp"
+        android:typeface="serif" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/balanceButton"
         android:layout_width="wrap_content"
@@ -22,8 +35,23 @@
         android:text="Balance"
         android:textColor="@color/black"
         style="@style/ButtonStyle2"
-        android:layout_below="@id/header_title"
+        android:layout_below="@id/expenses_header_text"
         android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/balanceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="balance text"
+        android:layout_below="@id/balanceButton"/>
+
+    <TextView
+        android:id="@+id/budgetTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="budget text"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/budgetButton"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/budgetButton"
@@ -31,8 +59,9 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="Budget"
+        android:layout_alignParentEnd="true"
         style="@style/ButtonStyle2"
-        android:layout_below="@id/balanceButton"
+        android:layout_below="@id/expenses_header_text"
         android:layout_marginTop="20dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
@@ -41,9 +70,20 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="Change Budget"
+        android:layout_alignParentEnd="true"
         style="@style/ButtonStyle2"
         android:layout_below="@id/budgetButton"
         android:layout_marginTop="20dp"/>
+
+
+    <EditText
+        android:id="@+id/initialBudgetField"
+        android:layout_width="257dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/balanceTextView"
+        android:layout_marginTop="2dp"
+        android:hint="Enter Initial Budget%"
+        android:inputType="numberDecimal" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_extra_button"
@@ -51,6 +91,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="Add Extra"
+        android:layout_centerHorizontal="true"
         style="@style/ButtonStyle2"
         android:layout_below="@id/change_budgetButton"
         android:layout_marginTop="20dp"/>
@@ -61,6 +102,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="Add Paycheck"
+        android:layout_alignParentEnd="true"
         style="@style/ButtonStyle2"
         android:layout_below="@id/add_extra_button"
         android:layout_marginTop="20dp"/>
@@ -71,6 +113,7 @@
         android:layout_height="wrap_content"
         android:textColor="@color/black"
         android:text="add utility"
+        android:layout_alignParentEnd="true"
         style="@style/ButtonStyle2"
         android:layout_below="@id/add_paycheck_button"
         android:layout_marginTop="20dp"/>
@@ -82,13 +125,18 @@
        />
 
     <!-- Repeat similar elements for other buttons -->
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/generateBalanceButton"
         style="@style/ButtonStyle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/utility_cost_button"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="139dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="113dp"
         android:text="Generate Balance"
         android:textColor="@color/black" />
 
@@ -96,7 +144,7 @@
         android:id="@+id/expenseTypeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/utility_cost_button"
+        android:layout_below="@id/add_extra_button"
         android:layout_marginTop="20dp" />
 
 </RelativeLayout>
