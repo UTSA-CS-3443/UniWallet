@@ -18,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tvUniWallet"
+        android:layout_marginTop="-166dp"
         android:src="@drawable/uniwallet_logo" />
 
     <Button
@@ -26,8 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/logo"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="-632dp"
+        android:layout_marginStart="-8dp"
+        android:layout_marginTop="-464dp"
         android:text="Settings" />
 
     <Button
@@ -48,21 +49,52 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"/>
 
+    <Button
+        android:id="@+id/submitBudgetButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="142dp"
+        android:layout_marginEnd="6dp"
+        android:text="Submit Budget" />
+
+    <Button
+        android:id="@+id/submitBalanceButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="87dp"
+        android:layout_marginEnd="6dp"
+        android:text="Submit Balance" />
+
     <EditText
         android:id="@+id/initialBalanceField"
-        android:layout_width="match_parent"
+        android:layout_width="256dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Initial Balance"
-        android:inputType="numberDecimal"
         android:layout_below="@id/graphsButton"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:hint="Enter Initial Balance"
+        android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/initialBudgetField"
-        android:layout_width="match_parent"
+        android:layout_width="257dp"
         android:layout_height="wrap_content"
-        android:hint="Enter Initial Budget"
-        android:inputType="numberDecimal"
         android:layout_below="@id/initialBalanceField"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:hint="Enter Initial Budget"
+        android:inputType="numberDecimal" />
+
+    <Spinner
+        android:id="@+id/navigationSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="16dp"
+        android:background="@android:drawable/btn_dropdown"
+        android:spinnerMode="dropdown" />
 </RelativeLayout>

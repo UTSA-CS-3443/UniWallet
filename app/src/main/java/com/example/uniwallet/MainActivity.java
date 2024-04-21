@@ -6,12 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.uniwallet.model.Account;
+import com.example.uniwallet.model.AccountManager;
 
 public class MainActivity extends AppCompatActivity {
 
     Account account;
+    double budget = 0.0;
+    double balance = 0.0;
+    EditText budgetText;
+    EditText balanceText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,16 +29,39 @@ public class MainActivity extends AppCompatActivity {
              account = (Account) intent.getSerializableExtra("account");
 
         }
+         budgetText = findViewById(R.id.initialBudgetField);
+         balanceText = findViewById(R.id.initialBalanceField);
+
         Button settingsButton = findViewById(R.id.settingsButton);
         Button expenseButton = findViewById(R.id.expenseButton);
         Button graphsButton = findViewById(R.id.graphsButton);
+        Button submitBalanceButton = findViewById(R.id.submitBalanceButton);
+        Button submitBudgetButton = findViewById(R.id.submitBudgetButton);
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
+        AccountManager accountManager = new AccountManager(MainActivity.this);
+
+         budget = accountManager.getBudgetFromFile(account);
+         balance = accountManager.getBalanceFromFile(account);
+        submitBalanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchSettingsActivity(account);
+
+                updateAccountBalance();
             }
         });
+
+        submitBudgetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateAccountBudget();
+            }
+        });
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        launchSettingsActivity(account);
+                    }
+                });
 
         expenseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +76,29 @@ public class MainActivity extends AppCompatActivity {
                 launchGraphsActivity(account);
             }
         });
+    }
+    private void updateAccountBalance() {
+        String balanceString = balanceText.getText().toString();
+        if (!balanceString.isEmpty()) {
+            balance = Double.parseDouble(balanceString);
+            if (account != null) {
+                //account.setBalance(balance);
+                AccountManager accountManager = new AccountManager(MainActivity.this);
+                accountManager.updateBalanceInFile(account, balance); // Update balance in the file
+            }
+        }
+    }
+
+    private void updateAccountBudget() {
+        String budgetString = budgetText.getText().toString();
+        if (!budgetString.isEmpty()) {
+            budget = Double.parseDouble(budgetString);
+            if (account != null) {
+                account.setBudget(budget);
+                AccountManager accountManager = new AccountManager(MainActivity.this);
+                accountManager.updateBudgetInFile(account, budget); // Update budget in the file
+            }
+        }
     }
     private void launchExpenseActivity(Account account) {
         Intent intent = new Intent(this, ExpenseActivity.class);

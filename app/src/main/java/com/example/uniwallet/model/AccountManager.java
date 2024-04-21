@@ -2,6 +2,7 @@ package com.example.uniwallet.model;
 
 import android.app.Activity;
 import android.content.Context;
+import android.icu.util.Output;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import com.example.uniwallet.SignUpActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -35,6 +37,8 @@ public class AccountManager implements Serializable {
     private String username;
     private String password;
     private final String filename;
+    private final String balanceFile = "accountBalance.csv";
+    private static final String BALANCE_FILE_NAME = "accountBalance.csv";
     private Activity activity;
 
     public AccountManager(Activity activity){
@@ -108,6 +112,119 @@ public class AccountManager implements Serializable {
             return account;
         }
         return null;
+    }
+
+    public double getBudgetFromFile(Account account) {
+        double budget = 0.0;
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File balanceFile = new File(userDirectory, "accountBalance.csv");
+
+            BufferedReader reader = new BufferedReader(new FileReader(balanceFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3 && parts[0].equals(String.valueOf(account.getUserID()))) {
+                    budget = Double.parseDouble(parts[1]);
+                    break;
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Error: Balance file not found for user: " + account.getUsername());
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading balance file for user: " + account.getUsername());
+            e.printStackTrace();
+        }
+        return budget;
+    }
+
+    public double getBalanceFromFile(Account account) {
+        double balance = 0.0;
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File balanceFile = new File(userDirectory, "accountBalance.csv");
+
+            BufferedReader reader = new BufferedReader(new FileReader(balanceFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3 && parts[0].equals(String.valueOf(account.getUserID()))) {
+                    balance = Double.parseDouble(parts[2]);
+                    break;
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Error: Balance file not found for user: " + account.getUsername());
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading balance file for user: " + account.getUsername());
+            e.printStackTrace();
+        }
+        return balance;
+    }
+    public void updateBalanceInFile(Account account, double balance) {
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File balanceFile = new File(userDirectory, "accountBalance.csv");
+
+            List<String> updatedLines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(balanceFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3 && parts[0].equals(String.valueOf(account.getUserID()))) {
+                    parts[2] = String.valueOf(balance); // Update balance value
+                }
+                updatedLines.add(String.join(",", parts));
+            }
+            reader.close();
+
+            FileWriter writer = new FileWriter(balanceFile);
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine + "\n");
+            }
+            writer.close();
+
+            Log.i(TAG, "Balance updated successfully for user: " + account.getUsername());
+        } catch (IOException e) {
+            Log.e(TAG, "Error updating balance in file for user: " + account.getUsername(), e);
+        }
+    }
+
+    public void updateBudgetInFile(Account account, double budget) {
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File balanceFile = new File(userDirectory, "accountBalance.csv");
+
+            List<String> updatedLines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(balanceFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3 && parts[0].equals(String.valueOf(account.getUserID()))) {
+                    parts[1] = String.valueOf(budget); // Update budget value
+                }
+                updatedLines.add(String.join(",", parts));
+            }
+            reader.close();
+
+            FileWriter writer = new FileWriter(balanceFile);
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine + "\n");
+            }
+            writer.close();
+
+            Log.i(TAG, "Budget updated successfully for user: " + account.getUsername());
+        } catch (IOException e) {
+            Log.e(TAG, "Error updating budget in file for user: " + account.getUsername(), e);
+        }
+    }
+
+    private File getUserDirectory(String username) {
+        return new File(activity.getFilesDir(), username);
     }
 
     public Account login(String username, String password) {
@@ -254,7 +371,26 @@ public class AccountManager implements Serializable {
         }
         return lastUserCount;
     }
+    private double getBalanceFromCSV() {
+        double balance = 0;
+        try {
 
+            InputStream in = activity.openFileInput(balanceFile);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length > 0) {
+                    balance = Double.parseDouble(parts[1]);
+
+                }
+            }
+            in.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading users.csv: " + e.getMessage());
+        }
+        return balance;
+    }
 
     public void createCSVFiles(Account account, File directory) {
 

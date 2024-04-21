@@ -52,6 +52,7 @@ public class Account implements Serializable {
     public double getBudget() {
         return budget;
     }
+    public void setBudget(double budget){ this.budget = budget; }
     public double getBalance() {
         return balance;
     }

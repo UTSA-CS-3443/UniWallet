@@ -91,4 +91,12 @@
         android:layout_marginBottom="139dp"
         android:text="Generate Balance"
         android:textColor="@color/black" />
+
+    <Spinner
+        android:id="@+id/expenseTypeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/utility_cost_button"
+        android:layout_marginTop="20dp" />
+
 </RelativeLayout>
