@@ -210,7 +210,7 @@ public class AccountManager implements Serializable {
                 //&& parts[0].equals(String.valueOf(account.getUserID())
                 if (parts.length >= 3 ) {
                     parts[1] = String.valueOf(budget); // Update budget value
-                    account.setBalance(budget);
+                    account.setBudget(budget);
                 }
                 updatedLines.add(String.join(",", parts));
             }
@@ -225,6 +225,33 @@ public class AccountManager implements Serializable {
             Log.i(TAG, "Budget updated successfully for user: " + account.getUsername());
         } catch (IOException e) {
             Log.e(TAG, "Error updating budget in file for user: " + account.getUsername(), e);
+        }
+    }
+
+    public void addMoney(Account account, double amount) {
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountAddFile = new File(userDirectory, "accountQuickAdd.csv");
+
+            // Check if the file exists
+            if (!accountAddFile.exists()) {
+                // If the file doesn't exist, create it with the header and the first transaction
+                FileWriter headerWriter = new FileWriter(accountAddFile);
+                headerWriter.write("UserID,TransactionNumber,,Amount\n");
+                headerWriter.write(account.getUserID() + ",1,"  + "," + amount + "\n");
+                headerWriter.close();
+            } else {
+                // If the file exists, append the new transaction
+                FileWriter writer = new FileWriter(accountAddFile, true);
+                // Get the current number of transactions by counting the lines in the file
+                int transactionNumber = Files.readAllLines(accountAddFile.toPath()).size() - 1; // Subtract 1 for the header
+                writer.write(account.getUserID() + "," + (transactionNumber + 1)  + "," + amount + "\n");
+                writer.close();
+            }
+
+            Log.i(TAG, "Amount added successfully for user: " + account.getUsername());
+        } catch (IOException e) {
+            Log.e(TAG, "Error adding amount to file for user: " + account.getUsername(), e);
         }
     }
 
@@ -536,6 +563,14 @@ public class AccountManager implements Serializable {
             ensureFileCreated(expenseFile);
             ensureFileCreated(quickAddFile);
             ensureFileCreated(quickRemoveFile);
+/*
+            appendToFile(infoFile, String.format("%s,%s,%s\n", "UserID", "Username", "Password"));
+            appendToFile(balanceFile, String.format("%s,%s,%s\n", "UserID", "Budget", "Balance"));
+            appendToFile(incomeFile, String.format("%s,%s,%s\n", "UserID", "Pay", "Time Rate"));
+            appendToFile(expenseFile, String.format("%s,%s,%s,%s\n", "UserID","Category", "Rate", "Cost"));
+            appendToFile(quickAddFile, String.format("%s,%s,%s\n", "UserID", "Transaction Number", "Amount"));
+            appendToFile(quickRemoveFile, String.format("%s,%s,%s,%s,%s\n", "UserID", "Transaction Number 2", "Category 2", "Item", "Amount 2"));
+*/
 
             appendToFile(infoFile, String.format("%d,%s,%s\n", account.getUserID(), account.getUsername(), account.getPassword()));
             appendToFile(balanceFile, String.format("%d,%s,%s\n", account.getUserID(), account.getBudget(), account.getBalance()));

@@ -15,7 +15,10 @@ import com.example.uniwallet.model.AccountManager;
 public class ExpenseActivity extends AppCompatActivity {
     Account account;
     EditText budgetText;
+    EditText addText;
     double budget = 0.0;
+    double amount = 0.0;
+    private boolean isAddingAmount = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,8 +43,21 @@ public class ExpenseActivity extends AppCompatActivity {
             budgetTextView.setText(budgetString);
 
             Button submitBudgetButton = findViewById(R.id.change_budgetButton);
-            budgetText = findViewById(R.id.initialBudgetField);
+            budgetText = findViewById(R.id.ChangeBudgetField);
 
+
+
+            Button submitAddButton = findViewById(R.id.add_amountButton);
+            addText = findViewById(R.id.AddAmountField);
+
+            submitAddButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    updateAddAmount();
+
+                }
+            });
             submitBudgetButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -63,4 +79,18 @@ public class ExpenseActivity extends AppCompatActivity {
                 }
             }
         }
+    private void updateAddAmount() {
+        if (!isAddingAmount) { // Check if amount is already being added
+            isAddingAmount = true; // Set flag to indicate that amount is being added
+            String addString = addText.getText().toString();
+            if (!addString.isEmpty()) {
+                double amount = Double.parseDouble(addString);
+                if (account != null) {
+                    AccountManager accountManager = new AccountManager(ExpenseActivity.this);
+                    accountManager.addMoney(account, amount); // Update Money in the file
+                }
+            }
+            isAddingAmount = false; // Reset flag after adding amount
+        }
+    }
         }
