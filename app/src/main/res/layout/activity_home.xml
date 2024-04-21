@@ -10,18 +10,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="#f2ebe2">
+    android:theme="@style/Theme.UniWallet">
 
-    <TextView
-        android:id="@+id/header_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UniWallet"
-        android:textAlignment="center"
-        android:textSize="40sp"
-        android:typeface="serif"
-        android:background="#2f3c54"
-        android:textColor="#ffffff" />
+    <include layout="@layout/header"/>
 
     <ImageView
         android:id="@+id/uniwallet_logo"
