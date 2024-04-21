@@ -9,15 +9,25 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.uniwallet.model.Account;
+import com.example.uniwallet.model.AccountManager;
+
 public class ChangePasswordActivity extends AppCompatActivity {
+
+    Account account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_changepassword);
 
+        Intent intent = getIntent();
+
+        if (intent != null && intent.hasExtra("account")) {
+            account = (Account) intent.getSerializableExtra("account");
+
+        }
         //TODO add ids from xml file
-        EditText new_password = findViewById(R.id.editText1);
-        EditText reenter_new_password = findViewById(R.id.editText2);
+
         Button submit_button = findViewById(R.id.submitButton);
         Button back_button = findViewById(R.id.backbutton);
 
@@ -31,18 +41,31 @@ public class ChangePasswordActivity extends AppCompatActivity {
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newPass = new_password.getText().toString();
-                String rNewPass = reenter_new_password.getText().toString();
-                if(newPass.equals(rNewPass) && !newPass.equals("")){
-                    //TODO add logic to check if new password is different from old password
-                    launchSettingsActivity();
-                } else {
-                    Toast.makeText(ChangePasswordActivity.this, "Passwords must match!", Toast.LENGTH_SHORT).show();
-                }
+
+                changePassword();
             }
         });
     }
 
+    private void changePassword() {
+        EditText new_password = findViewById(R.id.editText1);
+        EditText reenter_new_password = findViewById(R.id.editText2);
+        String newPass = new_password.getText().toString();
+        String rNewPass = reenter_new_password.getText().toString();
+
+        if (newPass.equals(rNewPass) && !newPass.isEmpty()) {
+            if (!newPass.equals(account.getPassword())) { // Check if new password is different from old one
+                AccountManager accountManager = new AccountManager(ChangePasswordActivity.this);
+                accountManager.updatePasswordInFiles(account, newPass);
+                Toast.makeText(ChangePasswordActivity.this, "Pass Success?" + newPass + account.getPassword(), Toast.LENGTH_SHORT).show();
+                launchSettingsActivity();
+            } else {
+                Toast.makeText(ChangePasswordActivity.this, "New password must be different from the old one!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(ChangePasswordActivity.this, "Passwords must match!", Toast.LENGTH_SHORT).show();
+        }
+    }
     private void launchSettingsActivity( ) {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);

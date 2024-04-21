@@ -39,18 +39,22 @@ public class SignUpActivity extends AppCompatActivity {
 
                 AccountManager accountManager = new AccountManager(SignUpActivity.this);
 
-                try {
-                    Account signedUpAccount = accountManager.signUp(username, password);
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(SignUpActivity.this, "Username or password cannot be empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        Account signedUpAccount = accountManager.signUp(username, password);
 
-                    if (signedUpAccount != null){
-                        launchActivity(signedUpAccount);
-                        Toast.makeText(SignUpActivity.this, "valid sign up parameters", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(SignUpActivity.this, "Invalid sign up parameters", Toast.LENGTH_SHORT).show();
+                        if (signedUpAccount != null) {
+                            launchActivity(signedUpAccount);
+                            Toast.makeText(SignUpActivity.this, "valid sign up parameters", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(SignUpActivity.this, "Invalid sign up parameters", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
-
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
                 }
             }
         });

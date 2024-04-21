@@ -76,7 +76,6 @@ public class AccountManager implements Serializable {
 
 
     public Account signUp(String username, String password) throws IOException {
-        System.out.println(checkSignUpParameters(username, password));
 
         if (!checkSignUpParameters(username, password)) {
             System.out.println("sign up parameters bad");
@@ -223,6 +222,62 @@ public class AccountManager implements Serializable {
         }
     }
 
+    public void updatePasswordInFiles(Account account, String newPassword) {
+        try {
+            // Update password in account info file
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountInfoFile = new File(userDirectory, "accountInfo.csv");
+
+            // Update password in account info file
+            List<String> accountInfoLines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(accountInfoFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                // && parts[0].equals(String.valueOf(account.getUserID()))
+                if (parts.length >= 3) {
+                    parts[2] = newPassword; // Update the password value
+                }
+                accountInfoLines.add(String.join(",", parts));
+            }
+            reader.close();
+
+            FileWriter accountInfoWriter = new FileWriter(accountInfoFile);
+            for (String updatedLine : accountInfoLines) {
+                accountInfoWriter.write(updatedLine + "\n");
+            }
+            accountInfoWriter.close();
+
+
+            Log.i(TAG, "Password updated successfully in account info file for user: " + account.getUsername());
+
+            // Update password in users file
+            File usersFile = new File(activity.getFilesDir(), "users.csv");
+
+            List<String> usersLines = new ArrayList<>();
+            reader = new BufferedReader(new FileReader(usersFile));
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 2 && parts[1].equals(account.getUsername())) {
+                    parts[2] = newPassword; // Update the password value
+                }
+                usersLines.add(String.join(",", parts));
+            }
+            reader.close();
+
+            FileWriter usersWriter = new FileWriter(usersFile);
+            for (String updatedLine : usersLines) {
+                usersWriter.write(updatedLine + "\n");
+            }
+            usersWriter.close();
+
+            Log.i(TAG, "Password updated successfully in account info file for user: " + account.getUsername() +
+                    ", New password: " + newPassword); // Log the new password
+
+        } catch (IOException e) {
+            Log.e(TAG, "Error updating password in account info file for user: " + account.getUsername(), e);
+        }
+    }
     private File getUserDirectory(String username) {
         return new File(activity.getFilesDir(), username);
     }

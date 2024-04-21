@@ -5,14 +5,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.uniwallet.model.Account;
 import com.example.uniwallet.model.AccountManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
+
+    Account account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        Intent intent = getIntent();
+
+        if (intent != null && intent.hasExtra("account")) {
+            account = (Account) intent.getSerializableExtra("account");
+
+        }
 
         //TODO add ids from xml file
         Button delete_account = findViewById(R.id.deleteAccountButton);
@@ -47,8 +58,9 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void launchChangePasswordActivity( ) {
+    private void launchChangePasswordActivity() {
         Intent intent = new Intent(this, ChangePasswordActivity.class);
+        intent.putExtra("account", account);
         startActivity(intent);
     }
     private void launchHomeActivity( ) {
@@ -58,6 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
     private void launchMainActivity( ) {
         Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("account", account);
         startActivity(intent);
     }
 }
