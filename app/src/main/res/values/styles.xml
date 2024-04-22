@@ -7,8 +7,15 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textAllCaps">true</item>
     </style>
-    <style name="ButtonStyle2" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">@drawable/custom_button_2</item>
+    <style name="MinorButtonStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:background">@drawable/custom_button2</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:typeface">serif</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+    <style name="SwitchButton" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:backgroundTint">@color/colorMinorButtonBody</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:typeface">serif</item>
         <item name="android:textSize">16sp</item>

@@ -4,24 +4,13 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/colorMainBackground">
+    android:theme="@style/Base.Theme.UniWallet">
 
-    <TextView
-        android:id="@+id/header_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="UniWallet"
-        android:textAlignment="center"
-        android:textSize="40sp"
-        android:typeface="serif"
-        android:background="@color/colorTitleHeader"
-        android:textColor="@color/white" />
+    <include layout="@layout/header"/>
 
     <TextView
         android:id="@+id/signupText"
@@ -31,7 +20,7 @@
         android:gravity="center_horizontal"
         android:textSize="60sp"
         android:typeface="serif"
-        android:textColor="@color/colorTitleHeader"
+        style="@style/TextViewStyle"
         android:text="Sign Up" />
 
     <EditText
@@ -56,8 +45,6 @@
         android:layout_height="wrap_content"
         style="@style/ButtonStyle"
         android:text="Submit" />
-    <!--add button shape and color to theme -->
-    <!--add text color and font to theme -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/back_btn"
@@ -66,7 +53,4 @@
         android:layout_height="wrap_content"
         style="@style/ButtonStyle"
         android:text="Back" />
-
-    <!--add UniWallet header to theme -->
-
 </LinearLayout>
