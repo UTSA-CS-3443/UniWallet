@@ -104,7 +104,71 @@ public class AccountManager implements Serializable {
         return null;
     }
 
-    public double getBudgetFromFile(Account account) {
+    public double generateBalance(Account account) {
+        double balance = account.getBalance();
+
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+
+            // Process accountExpense.csv
+            File expenseFile = new File(userDirectory, "accountExpense.csv");
+            BufferedReader reader = new BufferedReader(new FileReader(expenseFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    double amount = Double.parseDouble(parts[3]);
+                    balance -= amount;
+                }
+            }
+            reader.close();
+
+            // Process accountIncome.csv
+            File incomeFile = new File(userDirectory, "accountIncome.csv");
+            reader = new BufferedReader(new FileReader(incomeFile));
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 2) {
+                    double amount = Double.parseDouble(parts[1]);
+                    balance += amount;
+                }
+            }
+            reader.close();
+
+            // Process accountQuickAdd.csv
+            File quickAddFile = new File(userDirectory, "accountQuickAdd.csv");
+            reader = new BufferedReader(new FileReader(quickAddFile));
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 3) {
+                    double amount = Double.parseDouble(parts[2]);
+                    balance += amount;
+                }
+            }
+            reader.close();
+
+            // Process accountQuickRemove.csv
+            File quickRemoveFile = new File(userDirectory, "accountQuickRemove.csv");
+            reader = new BufferedReader(new FileReader(quickRemoveFile));
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 5) {
+                    double amount = Double.parseDouble(parts[4]);
+                    balance -= amount;
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Error: Balance file not found for user: " + account.getUsername(), e);
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading balance file for user: " + account.getUsername(), e);
+        }
+        // Apply budget constraint
+
+        return balance;
+    }
+
+      public double getBudgetFromFile(Account account) {
         double budget = 0.0;
         try {
             File userDirectory = getUserDirectory(account.getUsername());

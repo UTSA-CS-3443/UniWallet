@@ -18,24 +18,26 @@
         android:gravity="center_horizontal"
         android:text="Expenses"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/balanceButton"
+    <TextView
+        android:id="@+id/balanceText"
+        style="@style/MinorTextStyle"
         android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="10dp"
-        android:text="Balance"
-        style="@style/ButtonStyle"
+        android:layout_height="30dp"
+        android:textAlignment="center"
         android:layout_below="@id/expenses_header_text"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="80dp"
+        android:text="Balance" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/budgetButton"
+    <TextView
+        android:id="@+id/budgetText"
         android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
         android:layout_marginEnd="10dp"
+        android:textAlignment="center"
         android:text="Budget"
         android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle"
+        style="@style/MinorTextStyle"
         android:layout_below="@id/expenses_header_text"
         android:layout_marginTop="80dp"/>
 
@@ -48,8 +50,8 @@
         android:text="Change Budget"
         android:layout_alignParentEnd="true"
         style="@style/MinorButtonStyle"
-        android:layout_below="@id/budgetButton"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/budgetTextView" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_amountButton"
@@ -71,7 +73,7 @@
         android:layout_alignParentEnd="true"
         style="@style/MinorButtonStyle"
         android:layout_below="@id/add_amountButton"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="25dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/remove_funds_button"
@@ -114,17 +116,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:textSize="20sp"
         android:text="balance text"
-        android:layout_below="@id/balanceButton"/>
+        android:layout_below="@id/balanceText"/>
 
     <TextView
         android:id="@+id/budgetTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
+        android:textSize="20sp"
         android:text="budget text"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/budgetButton"/>
+        android:layout_below="@id/budgetText"/>
 
 
 
@@ -195,7 +199,29 @@
         android:hint="Enter Cost$"
         android:inputType="numberDecimal" />
 
+    <TextView
+        android:id="@+id/generate_balance_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        style="@style/MinorTextStyle"
+        android:layout_below="@id/add_utility_button"
+        android:text="Generated Balance:"
+        android:inputType="numberDecimal" />
 
+
+    <TextView
+        android:id="@+id/generate_balance_field"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/generate_balance_header"
+        android:layout_marginStart="10dp"
+        android:textSize="20sp"
+        android:layout_marginTop="0dp"
+        android:hint="generated balance text"
+        android:inputType="numberDecimal" />
 
     <ScrollView
         android:id="@+id/quick_add_scroll"

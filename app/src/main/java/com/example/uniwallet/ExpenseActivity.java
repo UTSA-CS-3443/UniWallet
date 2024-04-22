@@ -22,6 +22,7 @@ public class ExpenseActivity extends AppCompatActivity {
     EditText amountText;
     EditText itemText;
     EditText costText;
+    TextView totalBalanceText;
     double budget = 0.0;
     double amount = 0.0;
     double pay;
@@ -117,11 +118,18 @@ public class ExpenseActivity extends AppCompatActivity {
         //Generate Balance Button
 
         Button generateBalanceButton = findViewById(R.id.generateBalanceButton);
-
+        totalBalanceText = findViewById(R.id.generate_balance_field);
         generateBalanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AccountManager accountManager = new AccountManager(ExpenseActivity.this);
+                double generatedBalance = accountManager.generateBalance(account);
+                double budget = accountManager.getBudgetFromFile(account);
+                double budgetDecimal = budget / 100;
+                double newBalance = generatedBalance * (1-budgetDecimal);
+                String generatedBalanceString = String.valueOf(newBalance);
+                totalBalanceText.setText(generatedBalanceString);
+                balanceTextView.setText(generatedBalanceString);
             }
         });
         utilityButton.setOnClickListener(new View.OnClickListener() {
