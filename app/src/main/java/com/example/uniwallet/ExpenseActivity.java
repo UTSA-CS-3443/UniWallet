@@ -113,6 +113,17 @@ public class ExpenseActivity extends AppCompatActivity {
         utilitySpinner.setAdapter(adapter3);
         timeRateSpinner2 = findViewById(R.id.timeRateTypeSpinner);
         timeRateSpinner2.setAdapter(adapter4);
+
+        //Generate Balance Button
+
+        Button generateBalanceButton = findViewById(R.id.generateBalanceButton);
+
+        generateBalanceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         utilityButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -231,5 +242,8 @@ public class ExpenseActivity extends AppCompatActivity {
 
             isAddingUtility = false; // Reset flag after adding utility
         }
+    }
+    private void generateBalance(){
+
     }
 }

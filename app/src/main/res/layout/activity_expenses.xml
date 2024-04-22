@@ -2,46 +2,118 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
+    android:theme="@style/Base.Theme.UniWallet">
+
+
+    <include layout="@layout/header"/>
 
     <TextView
-        android:id="@+id/header_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorImportantButtonBody"
-        android:text="UniWallet"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        android:typeface="serif" />
-
-    <TextView
+        style="@style/TextViewStyle"
         android:id="@+id/expenses_header_text"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:layout_below="@id/header_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="100dp"
         android:gravity="center_horizontal"
-        android:text="Expenses"
-        android:textColor="@color/colorImportantButtonBody"
-        android:textSize="60sp"
-        android:typeface="serif" />
+        android:text="Expenses"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/balanceButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="10dp"
         android:text="Balance"
-        android:textColor="@color/black"
         style="@style/ButtonStyle"
         android:layout_below="@id/expenses_header_text"
+        android:layout_marginTop="80dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/budgetButton"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="10dp"
+        android:text="Budget"
+        android:layout_alignParentEnd="true"
+        style="@style/ButtonStyle"
+        android:layout_below="@id/expenses_header_text"
+        android:layout_marginTop="80dp"/>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/change_budgetButton"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:text="Change Budget"
+        android:layout_alignParentEnd="true"
+        style="@style/MinorButtonStyle"
+        android:layout_below="@id/budgetButton"
+        android:layout_marginTop="30dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_amountButton"
+        style="@style/MinorButtonStyle"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_below="@id/change_budgetButton"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:text="Add Extra" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_paycheck_button"
+        android:layout_width="140dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:text="Add Paycheck"
+        android:layout_alignParentEnd="true"
+        style="@style/MinorButtonStyle"
+        android:layout_below="@id/add_amountButton"
         android:layout_marginTop="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/remove_funds_button"
+        style="@style/MinorButtonStyle"
+        android:layout_width="170dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/remove_funds_field"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:text="Remove Funds" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_utility_button"
+        android:layout_width="140dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_centerHorizontal="true"
+        style="@style/MinorButtonStyle"
+        android:layout_below="@id/timeRateTypeSpinner"
+        android:layout_marginTop="10dp"
+        android:text="add utility" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/generateBalanceButton"
+        style="@style/ButtonStyle"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/add_utility_button"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="12dp"
+        android:text="Generate Balance" />
 
     <TextView
         android:id="@+id/balanceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="balance text"
         android:layout_below="@id/balanceButton"/>
 
@@ -49,48 +121,29 @@
         android:id="@+id/budgetTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
         android:text="budget text"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/budgetButton"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/budgetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="Budget"
-        android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle"
-        android:layout_below="@id/expenses_header_text"
-        android:layout_marginTop="20dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/change_budgetButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="Change Budget"
-        android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle"
-        android:layout_below="@id/budgetButton"
-        android:layout_marginTop="20dp"/>
 
 
     <EditText
         android:id="@+id/ChangeBudgetField"
-        android:layout_width="257dp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_below="@id/balanceTextView"
-        android:layout_marginTop="2dp"
         android:hint="Enter New Budget%"
         android:inputType="numberDecimal" />
 
     <EditText
         android:id="@+id/AddAmountField"
-        android:layout_width="257dp"
+        android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_below="@id/ChangeBudgetField"
-        android:layout_marginTop="2dp"
         android:hint="Add New Amount$"
         android:inputType="numberDecimal" />
 
@@ -99,12 +152,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/AddAmountField"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_alignStart="@id/paycheckTypeSpinner"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:hint="Add Paycheck Amount$"
+
+        android:hint="Paycheck Amt$"
         android:inputType="numberDecimal" />
 
     <EditText
@@ -112,11 +165,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/paycheckAmountField"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_alignStart="@id/categoryTypeSpinner"
+        android:layout_marginStart="119dp"
         android:hint="Remove Funds$"
         android:inputType="numberDecimal" />
 
@@ -125,9 +175,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/paycheckAmountField"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="36dp"
-        android:layout_marginEnd="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
         android:hint="Enter item name"
         android:inputType="text" />
@@ -136,59 +186,16 @@
         android:id="@+id/cost_field"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/timeRateTypeSpinner"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@id/remove_funds_button"
+        android:layout_alignParentEnd="true"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
+
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="20dp"
-        android:hint="Cost$"
+        android:hint="Enter Cost$"
         android:inputType="numberDecimal" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_amountButton"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/change_budgetButton"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="0dp"
-        android:text="Add Extra"
-        android:textColor="@color/black" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_paycheck_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="Add Paycheck"
-        android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle"
-        android:layout_below="@id/add_amountButton"
-        android:layout_marginTop="20dp"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/remove_funds_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:text="Remove Funds"
-        android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle"
-        android:layout_below="@id/add_paycheck_button"
-        android:layout_marginTop="20dp"/>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/add_utility_button"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_paycheck_button"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="148dp"
-        android:layout_marginEnd="11dp"
-        android:text="add utility"
-        android:textColor="@color/black" />
 
     <ScrollView
         android:id="@+id/quick_add_scroll"
@@ -198,25 +205,13 @@
 
     <!-- Repeat similar elements for other buttons -->
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/generateBalanceButton"
-        style="@style/ButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_utility_button"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="12dp"
-        android:text="Generate Balance"
-        android:textColor="@color/black" />
 
     <Spinner
         android:id="@+id/paycheckTypeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/AddAmountField"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp" />
 
     <Spinner
@@ -224,20 +219,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/paycheckTypeSpinner"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp" />
 
     <Spinner
         android:id="@+id/utilityTypeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/categoryTypeSpinner"
-        android:layout_marginTop="97dp" />
+        android:layout_below="@id/remove_funds_button"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
 
     <Spinner
         android:id="@+id/timeRateTypeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/remove_funds_field"
-        android:layout_marginTop="20dp" />
+        android:layout_below="@id/remove_funds_button"
+        android:layout_marginTop="10dp" />
 </RelativeLayout>
