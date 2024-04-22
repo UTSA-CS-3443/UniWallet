@@ -29,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
              account = (Account) intent.getSerializableExtra("account");
 
         }
-         budgetText = findViewById(R.id.initialBudgetField);
-         balanceText = findViewById(R.id.initialBalanceField);
+        budgetText = findViewById(R.id.initialBudgetField);
+        balanceText = findViewById(R.id.initialBalanceField);
 
         Button settingsButton = findViewById(R.id.settingsButton);
         Button expenseButton = findViewById(R.id.expenseButton);
-        Button graphsButton = findViewById(R.id.graphsButton);
+        //Button graphsButton = findViewById(R.id.graphsButton);/
         Button submitBalanceButton = findViewById(R.id.submitBalanceButton);
         Button submitBudgetButton = findViewById(R.id.submitBudgetButton);
 
@@ -70,12 +70,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         graphsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchGraphsActivity(account);
             }
         });
+        */
+
     }
     private void updateAccountBalance() {
         String balanceString = balanceText.getText().toString();

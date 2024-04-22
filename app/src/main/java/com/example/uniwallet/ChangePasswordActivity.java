@@ -57,7 +57,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             if (!newPass.equals(account.getPassword())) { // Check if new password is different from old one
                 AccountManager accountManager = new AccountManager(ChangePasswordActivity.this);
                 accountManager.updatePasswordInFiles(account, newPass);
-                Toast.makeText(ChangePasswordActivity.this, "Pass Success?" + newPass + account.getPassword(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChangePasswordActivity.this, "Password changed successfully to: " +  account.getPassword(), Toast.LENGTH_SHORT).show();
                 launchSettingsActivity();
             } else {
                 Toast.makeText(ChangePasswordActivity.this, "New password must be different from the old one!", Toast.LENGTH_SHORT).show();

@@ -119,6 +119,17 @@ public class ExpenseActivity extends AppCompatActivity {
 
         Button generateBalanceButton = findViewById(R.id.generateBalanceButton);
         totalBalanceText = findViewById(R.id.generate_balance_field);
+
+        //General purpose buttons
+
+        Button homeButton = findViewById(R.id.homeButton);
+
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchMainActivity(account);
+            }
+        });
         generateBalanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,12 +175,17 @@ public class ExpenseActivity extends AppCompatActivity {
             public void onClick(View v) {
                 updateAccountBudget();
                 double budget = accountManager.getBudgetFromFile(account);
-                String budgetString = String.valueOf(budget);
+                String budgetString = budget + "%";
                 budgetTextView.setText(budgetString);
             }
         });
     }
 
+    private void launchMainActivity(Account account) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("account", account);
+        startActivity(intent);
+    }
     private void updateAccountBudget() {
         String budgetString = budgetText.getText().toString();
         if (!budgetString.isEmpty()) {
@@ -251,7 +267,5 @@ public class ExpenseActivity extends AppCompatActivity {
             isAddingUtility = false; // Reset flag after adding utility
         }
     }
-    private void generateBalance(){
 
-    }
 }

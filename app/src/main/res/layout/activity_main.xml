@@ -28,16 +28,6 @@
         android:layout_centerHorizontal="true"
         android:src="@drawable/uniwallet_logo" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/graphsButton"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:text="Graphs"
-        android:layout_below="@id/uniwallet_logo"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="10dp"
-        style="@style/ButtonStyle"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/expenseButton"
@@ -45,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="Expenses"
         android:layout_below="@id/uniwallet_logo"
-        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:layout_marginEnd="10dp"
         style="@style/ButtonStyle"/>
@@ -76,7 +66,7 @@
         android:id="@+id/initialBalanceField"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/graphsButton"
+        android:layout_below="@id/expenseButton"
         android:layout_marginTop="55dp"
         android:layout_marginStart="10dp"
         android:hint="Enter initial balance"
@@ -87,9 +77,9 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/initialBalanceField"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
-        android:hint="Enter initial budget"
+        android:layout_marginTop="10dp"
+        android:hint="Enter initial budget%"
         android:inputType="numberDecimal" />
 
 

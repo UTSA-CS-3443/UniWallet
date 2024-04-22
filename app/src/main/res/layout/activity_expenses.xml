@@ -18,6 +18,19 @@
         android:gravity="center_horizontal"
         android:text="Expenses"/>
 
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/homeButton"
+        style="@style/MinorButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="-1dp"
+        android:text="Home" />
+
     <TextView
         android:id="@+id/balanceText"
         style="@style/MinorTextStyle"

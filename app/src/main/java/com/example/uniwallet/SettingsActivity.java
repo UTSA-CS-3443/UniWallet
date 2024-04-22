@@ -50,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //TODO add/change logic for account deletion
                 deleteAccount();
+                launchHomeActivity();
             }
         });
         change_password.setOnClickListener(new View.OnClickListener() {
@@ -81,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
     private void launchHomeActivity( ) {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(SettingsActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
