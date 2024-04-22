@@ -94,6 +94,57 @@
         android:hint="Add New Amount$"
         android:inputType="numberDecimal" />
 
+    <EditText
+        android:id="@+id/paycheckAmountField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/AddAmountField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Add Paycheck Amount$"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/remove_funds_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paycheckAmountField"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Remove Funds$"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/item_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paycheckAmountField"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Enter item name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/cost_field"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/timeRateTypeSpinner"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Cost$"
+        android:inputType="numberDecimal" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_amountButton"
         style="@style/ButtonStyle2"
@@ -117,17 +168,29 @@
         android:layout_marginTop="20dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/utility_cost_button"
+        android:id="@+id/remove_funds_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/black"
-        android:text="add utility"
+        android:text="Remove Funds"
         android:layout_alignParentEnd="true"
         style="@style/ButtonStyle2"
         android:layout_below="@id/add_paycheck_button"
         android:layout_marginTop="20dp"/>
 
-   <ScrollView
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_utility_button"
+        style="@style/ButtonStyle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_paycheck_button"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="11dp"
+        android:text="add utility"
+        android:textColor="@color/black" />
+
+    <ScrollView
        android:id="@+id/quick_add_scroll"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
@@ -140,20 +203,41 @@
         style="@style/ButtonStyle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/utility_cost_button"
+        android:layout_below="@id/add_utility_button"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="113dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="12dp"
         android:text="Generate Balance"
         android:textColor="@color/black" />
 
     <Spinner
-        android:id="@+id/expenseTypeSpinner"
+        android:id="@+id/paycheckTypeSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/AddAmountField"
         android:layout_marginTop="20dp" />
 
+    <Spinner
+        android:id="@+id/categoryTypeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/paycheckTypeSpinner"
+        android:layout_marginTop="20dp" />
+
+    <Spinner
+        android:id="@+id/utilityTypeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/categoryTypeSpinner"
+        android:layout_marginTop="97dp" />
+
+    <Spinner
+        android:id="@+id/timeRateTypeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/remove_funds_field"
+        android:layout_marginTop="20dp" />
 </RelativeLayout>

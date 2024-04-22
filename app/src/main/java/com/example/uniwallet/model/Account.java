@@ -13,7 +13,7 @@ public class Account implements Serializable {
     private String rate; //expense
     private double cost; //expense
     private double pay; //income
-    private String[] timeRate; //income
+    private String timeRate; //income
     private double budget; //info
     private double balance; //info
     private int transactionNumber; //quickAdd
@@ -162,11 +162,11 @@ public class Account implements Serializable {
         this.pay = pay;
     }
 
-    public String[] getTimeRate() {
+    public String getTimeRate() {
         return timeRate;
     }
 
-    public void setTimeRate(String[] timeRate) {
+    public void setTimeRate(String timeRate) {
         this.timeRate = timeRate;
     }
 

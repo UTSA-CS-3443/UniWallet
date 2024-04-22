@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         private void launchActivity(Account account) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("account", account);
-        launchActivity(account);
+        startActivity(intent);
     }
 
 }

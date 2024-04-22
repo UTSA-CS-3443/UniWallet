@@ -86,22 +86,13 @@ public class AccountManager implements Serializable {
 
             Account account = new Account(userID,username, password);
 
-
             createDirectory(username);
             initializeFiles(username);
             addUser(account);
 
             saveFile();
 
-           // createDirectory(username);
-            //createDirectory(ACCOUNTS_DIRECTORY, username, account);
-
             account.setDefaultValues();
-            //createCSVFiles(account, createDirectory(username));
-
-            //writeToCSV(account, balanceFile);
-            //account.createAccountCSVFiles();
-            //account.setCSVDefaults();
 
             usernameList.add(account);
             System.out.println(account.getBudget());
@@ -228,23 +219,149 @@ public class AccountManager implements Serializable {
         }
     }
 
+    public void addUtility(Account account, String category, String rate, double cost, boolean isCustom) {
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountExpenseFile = new File(userDirectory, "accountExpense.csv");
+
+            List<String> updatedLines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(accountExpenseFile));
+            String line;
+            boolean utilityFound = false;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    if (!isCustom && parts[1].equals(category)) {
+                        utilityFound = true; // Utility of the same type already exists
+                        // Update existing line with new values
+                        parts[2] = rate;
+                        parts[3] = String.valueOf(cost);
+                        account.setRate(rate);
+                        account.setCost(cost);
+                    }
+                    updatedLines.add(String.join(",", parts)); // Preserve existing or other lines
+                }
+            }
+            reader.close();
+
+            if (!utilityFound) {
+
+                String transactionLine = account.getUserID()  + "," + category + "," + rate + "," + cost + "\n";
+                updatedLines.add(transactionLine);
+            }
+
+            FileWriter writer = new FileWriter(accountExpenseFile);
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine + "\n");
+            }
+            writer.close();
+
+            Log.i(TAG, "Expense added successfully for user: " + account.getUsername());
+        } catch (IOException e) {
+            Log.e(TAG, "Error adding expense in file for user: " + account.getUsername(), e);
+        }
+    }
+
+    public void removeFunds(Account account, String category, String item, double amount){
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountRemoveFile = new File(userDirectory, "accountQuickRemove.csv");
+
+            List<String> updatedLines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(accountRemoveFile));
+            if (!accountRemoveFile.exists()) {
+
+                FileWriter headerWriter = new FileWriter(accountRemoveFile);
+                headerWriter.write("UserID,TransactionNumber,Category,Item,Amount\n");
+                headerWriter.write(account.getUserID() + ",1," + "," + category + "," + item + "," + amount + "\n");
+                headerWriter.close();
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(",");
+                    if (parts.length >= 5) {
+                        parts[2] = category;
+                        parts[3] = item;
+                        parts[4] = String.valueOf(amount);
+                        account.setCategory(category);
+                        account.setItem(item);
+                        account.setAmount(amount);
+                    }
+                    updatedLines.add(String.join(",", parts));
+                }
+                reader.close();
+            }
+
+            FileWriter writer = new FileWriter(accountRemoveFile, true);
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine + "\n");
+            }
+
+
+            int transactionNumber = Files.readAllLines(accountRemoveFile.toPath()).size() - 1;
+            String transactionLine = account.getUserID() + "," + (transactionNumber + 1) + "," + category + "," + item + "," + amount + "\n";
+            writer.write(transactionLine);
+
+            writer.close();
+
+            Log.i(TAG, "Budget updated successfully for user: " + account.getUsername());
+        } catch (IOException e) {
+            Log.e(TAG, "Error updating budget in file for user: " + account.getUsername(), e);
+        }
+    }
+
+    public void addPaycheck(Account account, double pay, String timeRate){
+        try{
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountPaycheckFile = new File(userDirectory, "accountIncome.csv");
+
+            List<String> updatedLines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(accountPaycheckFile));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                //&& parts[0].equals(String.valueOf(account.getUserID())
+                if (parts.length >= 3 ) {
+                    parts[1] = String.valueOf(pay); // Update budget value
+                    parts[2] = timeRate;
+                    account.setPay(pay);
+                    account.setTimeRate(timeRate);
+
+                }
+                updatedLines.add(String.join(",", parts));
+            }
+            reader.close();
+
+            FileWriter writer = new FileWriter(accountPaycheckFile);
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine + "\n");
+            }
+
+            writer.close();
+
+            Log.i(TAG, "Budget updated successfully for user: " + account.getUsername());
+        } catch (IOException e) {
+            Log.e(TAG, "Error updating budget in file for user: " + account.getUsername(), e);
+        }
+    }
+
     public void addMoney(Account account, double amount) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
             File accountAddFile = new File(userDirectory, "accountQuickAdd.csv");
 
-            // Check if the file exists
             if (!accountAddFile.exists()) {
-                // If the file doesn't exist, create it with the header and the first transaction
+
                 FileWriter headerWriter = new FileWriter(accountAddFile);
-                headerWriter.write("UserID,TransactionNumber,,Amount\n");
+                headerWriter.write("UserID,TransactionNumber,Amount\n");
                 headerWriter.write(account.getUserID() + ",1,"  + "," + amount + "\n");
                 headerWriter.close();
             } else {
-                // If the file exists, append the new transaction
+
                 FileWriter writer = new FileWriter(accountAddFile, true);
-                // Get the current number of transactions by counting the lines in the file
-                int transactionNumber = Files.readAllLines(accountAddFile.toPath()).size() - 1; // Subtract 1 for the header
+
+                int transactionNumber = Files.readAllLines(accountAddFile.toPath()).size() - 1;
                 writer.write(account.getUserID() + "," + (transactionNumber + 1)  + "," + amount + "\n");
                 writer.close();
             }
@@ -257,11 +374,10 @@ public class AccountManager implements Serializable {
 
     public void updatePasswordInFiles(Account account, String newPassword) {
         try {
-            // Update password in account info file
+
             File userDirectory = getUserDirectory(account.getUsername());
             File accountInfoFile = new File(userDirectory, "accountInfo.csv");
 
-            // Update password in account info file
             List<String> accountInfoLines = new ArrayList<>();
             BufferedReader reader = new BufferedReader(new FileReader(accountInfoFile));
             String line;
@@ -281,10 +397,8 @@ public class AccountManager implements Serializable {
             }
             accountInfoWriter.close();
 
-
             Log.i(TAG, "Password updated successfully in account info file for user: " + account.getUsername());
 
-            // Update password in users file
             File usersFile = new File(activity.getFilesDir(), "users.csv");
 
             List<String> usersLines = new ArrayList<>();
@@ -508,28 +622,7 @@ public class AccountManager implements Serializable {
         }
         return lastUserCount;
     }
-    private double getBalanceFromCSV() {
-        double balance = 0;
-        try {
-
-            InputStream in = activity.openFileInput(balanceFile);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length > 0) {
-                    balance = Double.parseDouble(parts[1]);
-
-                }
-            }
-            in.close();
-        } catch (IOException e) {
-            Log.e(TAG, "Error reading users.csv: " + e.getMessage());
-        }
-        return balance;
-    }
-
-    public void createCSVFiles(Account account, File directory) {
+     public void createCSVFiles(Account account, File directory) {
 
         directory = activity.getFileStreamPath(filename).getParentFile();
 
@@ -598,13 +691,9 @@ public class AccountManager implements Serializable {
         fw.close();
     }
 
-
-
-
     public String getUsername() {
         return username;
     }
-
 
     public void setUsername(String username) {
         this.username = username;
@@ -616,7 +705,6 @@ public class AccountManager implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
     @NonNull
     public String toString(){
         return getUsername();
