@@ -8,7 +8,7 @@
         android:id="@+id/header_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorTitleHeader"
+        android:background="@color/colorImportantButtonBody"
         android:text="UniWallet"
         android:textAlignment="center"
         android:textColor="@color/white"
@@ -24,7 +24,7 @@
         android:layout_marginTop="48dp"
         android:gravity="center_horizontal"
         android:text="Expenses"
-        android:textColor="@color/colorTitleHeader"
+        android:textColor="@color/colorImportantButtonBody"
         android:textSize="60sp"
         android:typeface="serif" />
 
@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:text="Balance"
         android:textColor="@color/black"
-        style="@style/ButtonStyle2"
+        style="@style/ButtonStyle"
         android:layout_below="@id/expenses_header_text"
         android:layout_marginTop="20dp"/>
 
@@ -60,7 +60,7 @@
         android:textColor="@color/black"
         android:text="Budget"
         android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle2"
+        style="@style/ButtonStyle"
         android:layout_below="@id/expenses_header_text"
         android:layout_marginTop="20dp"/>
 
@@ -71,7 +71,7 @@
         android:textColor="@color/black"
         android:text="Change Budget"
         android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle2"
+        style="@style/ButtonStyle"
         android:layout_below="@id/budgetButton"
         android:layout_marginTop="20dp"/>
 
@@ -147,7 +147,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_amountButton"
-        style="@style/ButtonStyle2"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/change_budgetButton"
@@ -163,7 +163,7 @@
         android:textColor="@color/black"
         android:text="Add Paycheck"
         android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle2"
+        style="@style/ButtonStyle"
         android:layout_below="@id/add_amountButton"
         android:layout_marginTop="20dp"/>
 
@@ -174,13 +174,13 @@
         android:textColor="@color/black"
         android:text="Remove Funds"
         android:layout_alignParentEnd="true"
-        style="@style/ButtonStyle2"
+        style="@style/ButtonStyle"
         android:layout_below="@id/add_paycheck_button"
         android:layout_marginTop="20dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_utility_button"
-        style="@style/ButtonStyle2"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_paycheck_button"
@@ -191,16 +191,16 @@
         android:textColor="@color/black" />
 
     <ScrollView
-       android:id="@+id/quick_add_scroll"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       />
+        android:id="@+id/quick_add_scroll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 
     <!-- Repeat similar elements for other buttons -->
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/generateBalanceButton"
-        style="@style/ButtonStyle2"
+        style="@style/ButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/add_utility_button"
