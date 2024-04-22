@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <!-- activity_login.xml -->
+<!-- activity_login.xml -->
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:theme="@style/Theme.UniWallet">
+    android:theme="@style/Base.Theme.UniWallet">
 
     <include layout="@layout/header"/>
 
@@ -20,9 +18,7 @@
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:gravity="center_horizontal"
-        android:textSize="60sp"
-        android:typeface="serif"
-        android:textColor="@color/colorTitleHeader"
+        style="@style/TextViewStyle"
         android:text="Login" />
 
     <EditText
@@ -55,7 +51,4 @@
         android:layout_height="wrap_content"
         style="@style/ButtonStyle"
         android:text="Back" />
-
-    <!--add UniWallet header to theme -->
-
 </LinearLayout>

@@ -2,13 +2,15 @@ package com.example.uniwallet;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.uniwallet.model.Account;
 import com.example.uniwallet.model.AccountManager;
+import com.google.android.material.button.MaterialButtonToggleGroup;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -31,7 +33,18 @@ public class SettingsActivity extends AppCompatActivity {
         Button change_password = findViewById(R.id.changePasswordButton);
         Button logout = findViewById(R.id.logoutAccountButton);
         Button home_button = findViewById(R.id.homeButton);
+        MaterialButtonToggleGroup buttonToggleGroup = findViewById(R.id.btg_theme_switch);
 
+        buttonToggleGroup.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if (checkedId == R.id.btnLight) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                } else if (checkedId == R.id.btnDark) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+            }
+        });
         delete_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

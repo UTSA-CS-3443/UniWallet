@@ -2,8 +2,13 @@
 <resources>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="colorMainBackground">#f2ebe2</color>
-    <color name="colorTitleHeader">#2f3c54</color>
+    <color name="grey">#a5a5a5</color>
+    <color name="lightMainBackground">#f2ebe2</color>
+    <color name="darkMainBackground">#201e1f</color>
+    <color name="lightTitleHeader">#2f3c54</color>
+    <color name="darkTitleHeader">#293241</color>
     <color name="colorImportantButtonBody">#b3002d</color>
     <color name="colorImportantButtonBorder">#800020</color>
+    <color name="colorMinorButtonBody">#3c5233</color>
+    <color name="colorMinorButtonBorder">#264027</color>
 </resources>

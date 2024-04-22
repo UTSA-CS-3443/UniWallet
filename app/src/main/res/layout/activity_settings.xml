@@ -1,30 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- activity_settings.xml -->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:theme="@style/Theme.UniWallet">
+    android:theme="@style/Base.Theme.UniWallet">
 
     <include layout="@layout/header"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/homeButton"
-        style="@style/ButtonStyle"
+        style="@style/MinorButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:text="Home" />
 
     <TextView
+        style="@style/TextViewStyle"
         android:id="@+id/settingsText"
         android:layout_marginTop="30dp"
         android:layout_width="300dp"
         android:layout_height="100dp"
         android:gravity="center_horizontal"
-        android:textSize="60sp"
-        android:typeface="serif"
-        android:textColor="@color/colorTitleHeader"
         android:text="Settings" />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -50,4 +53,28 @@
         android:layout_marginTop="10dp"
         android:text="Logout"
         style="@style/ButtonStyle"/>
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/btg_theme_switch"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        android:layout_marginTop="10dp">
+
+        <Button
+            android:id="@+id/btnLight"
+            style="@style/SwitchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Light"/>
+
+        <Button
+            android:id="@+id/btnDark"
+            style="@style/SwitchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dark"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 </LinearLayout>
