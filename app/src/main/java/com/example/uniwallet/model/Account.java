@@ -22,7 +22,7 @@ public class Account implements Serializable {
     private String category2; //quickRemove
     private String item; //quickRemove
     private double amount2; //quickRemove
-
+    private double savings;
     public Account(int userID, String username, String password) {
 
 
@@ -33,10 +33,11 @@ public class Account implements Serializable {
         this.setCategory(null);
         this.setRate(null);
         this.setCost(0.0);
-        this.setPay(0.0);
+        this.pay = 0.0;
         this.setTimeRate(null);
         this.budget = 0.0;
         this.balance = 0.0;
+        this.savings = 0.0;
         this.setTransactionNumber(0);
         this.setAmount(0.0);
         this.setTransactionNumber2(0);
@@ -65,68 +66,13 @@ public class Account implements Serializable {
     public int getUserID() {
         return userID;
     }
+    public double getSavings() {return savings;}
+    public void setSavings(double savings){this.savings = savings;}
     public String getUsername() {
         return username;
     }
     public String getPassword() {
         return password;
-    }
-
-    public void initialBalance() {
-        // on click enter DOUBLE.
-    }
-    public void initialBudget() {
-        // on click enter double change percentage here
-    }
-    public void Expense() {
-        // on submit (category, rate, cost)
-        // convert expense to daily rate
-    }
-    public void Income() {
-        // on submit (pay, timerate)
-        // convert income to daily rate
-    }
-    public void quickAdd() {
-        // on submit (transactionNumber, amount)
-        // amount user input.
-    }
-    public void quickRemove() {
-        // on submit (transactionNumber2, category2, item, amount2)
-
-        // for each item transactionNumber++
-        // category array selection (pre determined array)
-        // item = (Edit Text), user input or csv upload
-        // amount = (Edit Text), user input or csv upload
-
-    }
-    public void getDailyRate() {
-        //converts all account expense information into daily rate
-        //get budget
-        //get balance
-        //get quick add
-        //get quick remove
-        //get expense
-        //get income
-
-        getBalance();
-        Expense();
-
-
-    }
-    public void getWeeklyGraph() {
-        //converts all account expense information into weekly rate
-    }
-    public void getMonthlyGraph() {
-        //converts all account expense information into monthly rate
-    }
-    public void getYearlyGraph() {
-        //converts all account expense information into yearly rate
-    }
-    public void deleteAccount() {
-
-    }
-    public void logout() {
-
     }
 
 

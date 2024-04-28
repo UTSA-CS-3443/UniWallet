@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 
 import com.example.uniwallet.SignUpActivity;
 
+import org.intellij.lang.annotations.JdkConstants;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,8 +26,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AccountManager implements Serializable {
     ArrayList<Account> usernameList;
@@ -34,20 +41,20 @@ public class AccountManager implements Serializable {
     private static final String TAG = "Accounts";
 
     private int userID;
-    private String username;
-    private String password;
+    //private String username;
+    //private String password;
     private final String filename;
-    private final String balanceFile = "accountBalance.csv";
-    private static final String BALANCE_FILE_NAME = "accountBalance.csv";
+    //private final String balanceFile = "accountBalance.csv";
+    //private static final String BALANCE_FILE_NAME = "accountBalance.csv";
     private Activity activity;
 
     public AccountManager(Activity activity){
         this.activity = activity;
         usernameList = new ArrayList<Account>();
         filename = "users.csv";
-        this.username = username;
-        this.password = password;
-        this.userID = 0;
+        //this.username = username;
+        //this.password = password;
+        //this.userID = 0;
     }
 
     public boolean checkSignUpParameters(String username, String password) {
@@ -104,33 +111,48 @@ public class AccountManager implements Serializable {
         return null;
     }
 
-    public double generateBalance(Account account) {
-        double balance = account.getBalance();
+
+    public double generateBudget(Account account) {
+       // double balance = account.getBalance();
+        double amount = 0;
+        double income = 0;
 
         try {
             File userDirectory = getUserDirectory(account.getUsername());
 
-            // Process accountExpense.csv
-            File expenseFile = new File(userDirectory, "accountExpense.csv");
-            BufferedReader reader = new BufferedReader(new FileReader(expenseFile));
+            // INCOME
             String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 4) {
-                    double amount = Double.parseDouble(parts[3]);
-                    balance -= amount;
-                }
-            }
-            reader.close();
-
-            // Process accountIncome.csv
-            File incomeFile = new File(userDirectory, "accountIncome.csv");
-            reader = new BufferedReader(new FileReader(incomeFile));
+                     File incomeFile = new File(userDirectory, "accountIncome.csv");
+            BufferedReader reader = new BufferedReader(new FileReader(incomeFile));
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 2) {
-                    double amount = Double.parseDouble(parts[1]);
-                    balance += amount;
+                    amount = Double.parseDouble(parts[1]);
+                    income += amount;
+                }
+            }
+//SAVINGS
+            reader.close();
+            File balanceFile = new File(userDirectory, "accountBalance.csv");
+            reader = new BufferedReader(new FileReader(balanceFile));
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    amount = Double.parseDouble(parts[3]);
+                    double savingsDecimal = amount / 100;
+                    double newIncome = income * savingsDecimal;
+                    income -= newIncome;
+                }
+            }
+            reader.close();
+            // EXPENSES
+            File expenseFile = new File(userDirectory, "accountExpense.csv");
+             reader = new BufferedReader(new FileReader(expenseFile));
+             while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    amount = Double.parseDouble(parts[3]);
+                    income -= amount;
                 }
             }
             reader.close();
@@ -141,8 +163,8 @@ public class AccountManager implements Serializable {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 3) {
-                    double amount = Double.parseDouble(parts[2]);
-                    balance += amount;
+                     amount = Double.parseDouble(parts[2]);
+                    income += amount;
                 }
             }
             reader.close();
@@ -153,8 +175,8 @@ public class AccountManager implements Serializable {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 5) {
-                    double amount = Double.parseDouble(parts[4]);
-                    balance -= amount;
+                     amount = Double.parseDouble(parts[4]);
+                    income -= amount;
                 }
             }
             reader.close();
@@ -165,11 +187,11 @@ public class AccountManager implements Serializable {
         }
         // Apply budget constraint
 
-        return balance;
+        return income;
     }
 
-      public double getBudgetFromFile(Account account) {
-        double budget = 0.0;
+      public double getSavingsFromFile(Account account) {
+        double savings = 0.0;
         try {
             File userDirectory = getUserDirectory(account.getUsername());
             File balanceFile = new File(userDirectory, "accountBalance.csv");
@@ -179,8 +201,9 @@ public class AccountManager implements Serializable {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 // && parts[0].equals(String.valueOf(account.getUserID()))
-                if (parts.length >= 3) {
-                    budget = Double.parseDouble(parts[1]);
+                if (parts.length >= 4) {
+                    savings = Double.parseDouble(parts[3]);
+                    account.setSavings(savings);
                     break;
                 }
             }
@@ -192,7 +215,7 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error reading balance file for user: " + account.getUsername());
             e.printStackTrace();
         }
-        return budget;
+        return savings;
     }
 
     public double getBalanceFromFile(Account account) {
@@ -208,6 +231,7 @@ public class AccountManager implements Serializable {
                 //&& parts[0].equals(String.valueOf(account.getUserID())
                 if (parts.length >= 3 ) {
                     balance = Double.parseDouble(parts[2]);
+                    account.setBalance(balance);
                     break;
                 }
             }
@@ -221,6 +245,36 @@ public class AccountManager implements Serializable {
         }
         return balance;
     }
+    public void updateSavingsInFile(Account account, double savings){
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File balanceFile = new File(userDirectory, "accountBalance.csv");
+
+            List<String> updatedLines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(balanceFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                //&& parts[0].equals(String.valueOf(account.getUserID()))
+                if (parts.length >= 4) {
+                    parts[3] = String.valueOf(savings); // Update balance value
+                    account.setSavings(savings);
+                }
+                updatedLines.add(String.join(",", parts));
+            }
+            reader.close();
+
+            FileWriter writer = new FileWriter(balanceFile);
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine + "\n");
+            }
+            writer.close();
+
+            Log.i(TAG, "Savings updated successfully for user: " + account.getUsername());
+        } catch (IOException e) {
+            Log.e(TAG, "Error updating savings in file for user: " + account.getUsername(), e);
+        }
+    }
     public void updateBalanceInFile(Account account, double balance) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -232,7 +286,7 @@ public class AccountManager implements Serializable {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 //&& parts[0].equals(String.valueOf(account.getUserID()))
-                if (parts.length >= 3) {
+                if (parts.length >= 4) {
                     parts[2] = String.valueOf(balance); // Update balance value
                     account.setBalance(balance);
                 }
@@ -252,6 +306,80 @@ public class AccountManager implements Serializable {
         }
     }
 
+    public double updateSavings(Account account, double savings){
+
+        double income = account.getPay();
+        double savingsPercentage = income / 100;
+        savings = income * savingsPercentage;
+        return savings;
+    }
+    public String getLastPaymentDate(Account account, String category) {
+        // This is just a placeholder implementation
+        // You would need to replace it with your actual logic
+        // For example, you might retrieve the last payment date from a database or a file
+
+        // For demonstration purposes, let's assume we're returning the current date
+        Date lastPaymentDate = new Date();
+
+        // Format the lastPaymentDate into a String representation
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(lastPaymentDate);
+    }
+
+    public void calculateUtilityAmount(String utilityName, String paymentFrequency, double amount, String lastPaymentDate) {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String currentDate = sdf.format(calendar.getTime());
+
+        try {
+            Date lastDate = sdf.parse(lastPaymentDate);
+            Date currentDateObj = sdf.parse(currentDate);
+
+            long differenceInMilliseconds = currentDateObj.getTime() - lastDate.getTime();
+            long differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
+
+            double adjustedAmount = amount;
+
+            switch (paymentFrequency) {
+                case "Daily":
+                    adjustedAmount = amount * differenceInDays;
+                    break;
+                case "Weekly":
+                    adjustedAmount = amount * (differenceInDays / 7); // Assuming each week has 7 days
+                    break;
+                case "Monthly":
+                    Calendar lastCal = Calendar.getInstance();
+                    lastCal.setTime(lastDate);
+                    Calendar currentCal = Calendar.getInstance();
+                    currentCal.setTime(currentDateObj);
+
+                    int lastMonth = lastCal.get(Calendar.MONTH);
+                    int currentMonth = currentCal.get(Calendar.MONTH);
+
+                    int monthsDifference = (currentCal.get(Calendar.YEAR) - lastCal.get(Calendar.YEAR)) * 12 + (currentMonth - lastMonth);
+                    adjustedAmount = amount * monthsDifference;
+                    break;
+                case "Yearly":
+                    Calendar lastYear = Calendar.getInstance();
+                    lastYear.setTime(lastDate);
+                    Calendar currentYear = Calendar.getInstance();
+                    currentYear.setTime(currentDateObj);
+
+                    int lastYearValue = lastYear.get(Calendar.YEAR);
+                    int currentYearValue = currentYear.get(Calendar.YEAR);
+
+                    int yearsDifference = currentYearValue - lastYearValue;
+                    adjustedAmount = amount * yearsDifference;
+                    break;
+                default:
+                    break;
+            }
+
+            System.out.println("Adjusted amount for " + utilityName + ": " + adjustedAmount);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
     public void updateBudgetInFile(Account account, double budget) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -263,7 +391,7 @@ public class AccountManager implements Serializable {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 //&& parts[0].equals(String.valueOf(account.getUserID())
-                if (parts.length >= 3 ) {
+                if (parts.length >= 4 ) {
                     parts[1] = String.valueOf(budget); // Update budget value
                     account.setBudget(budget);
                 }
@@ -279,10 +407,56 @@ public class AccountManager implements Serializable {
 
             Log.i(TAG, "Budget updated successfully for user: " + account.getUsername());
         } catch (IOException e) {
-            Log.e(TAG, "Error updating budget in file for user: " + account.getUsername(), e);
+            Log.e(TAG, "Error updating savings in file for user: " + account.getUsername(), e);
         }
     }
 
+    public void addUtility(Account account, String category, String rate, double cost, boolean isCustom) {
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountExpenseFile = new File(userDirectory, "accountExpense.csv");
+
+            // Calculate adjusted cost based on payment frequency
+            calculateUtilityAmount(category, rate, cost, getLastPaymentDate(account, category));
+
+            List<String> updatedLines = new ArrayList<>();
+            BufferedReader reader = new BufferedReader(new FileReader(accountExpenseFile));
+            String line;
+            boolean utilityFound = false;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4) {
+                    if (!isCustom && parts[1].equals(category)) {
+                        utilityFound = true; // Utility of the same type already exists
+                        // Update existing line with new values
+                        parts[2] = rate;
+                        parts[3] = String.valueOf(cost);
+                        account.setRate(rate);
+                        account.setCost(cost);
+                    }
+                    updatedLines.add(String.join(",", parts)); // Preserve existing or other lines
+                }
+            }
+            reader.close();
+
+            if (!utilityFound) {
+                // Add new utility with adjusted cost
+                String transactionLine = account.getUserID()  + "," + category + "," + rate + "," + cost + "\n";
+                updatedLines.add(transactionLine);
+            }
+
+            FileWriter writer = new FileWriter(accountExpenseFile);
+            for (String updatedLine : updatedLines) {
+                writer.write(updatedLine + "\n");
+            }
+            writer.close();
+
+            Log.i(TAG, "Expense added successfully for user: " + account.getUsername());
+        } catch (IOException e) {
+            Log.e(TAG, "Error adding expense in file for user: " + account.getUsername(), e);
+        }
+    }
+    /*
     public void addUtility(Account account, String category, String rate, double cost, boolean isCustom) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -325,7 +499,7 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error adding expense in file for user: " + account.getUsername(), e);
         }
     }
-
+*/
     public void removeFunds(Account account, String category, String item, double amount){
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -374,7 +548,34 @@ public class AccountManager implements Serializable {
         }
     }
 
-    public void addPaycheck(Account account, double pay, String timeRate){
+    public double getPaycheckFromFile(Account account){
+        double paycheck = 0.0;
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File incomeFile = new File(userDirectory, "accountIncome.csv");
+
+            BufferedReader reader = new BufferedReader(new FileReader(incomeFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                //&& parts[0].equals(String.valueOf(account.getUserID())
+                if (parts.length >= 3 ) {
+                    paycheck = Double.parseDouble(parts[1]);
+                    account.setPay(paycheck);
+                    break;
+                }
+            }
+            reader.close();
+        } catch (FileNotFoundException e) {
+            Log.e(TAG, "Error: income file not found for user: " + account.getUsername());
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading income file for user: " + account.getUsername());
+            e.printStackTrace();
+        }
+        return paycheck;
+    }
+    public void addPaycheck(Account account, double paycheck, String timeRate){
         try{
             File userDirectory = getUserDirectory(account.getUsername());
             File accountPaycheckFile = new File(userDirectory, "accountIncome.csv");
@@ -387,9 +588,9 @@ public class AccountManager implements Serializable {
                 String[] parts = line.split(",");
                 //&& parts[0].equals(String.valueOf(account.getUserID())
                 if (parts.length >= 3 ) {
-                    parts[1] = String.valueOf(pay); // Update budget value
+                    parts[1] = String.valueOf(paycheck); // Update budget value
                     parts[2] = timeRate;
-                    account.setPay(pay);
+                    account.setPay(paycheck);
                     account.setTimeRate(timeRate);
 
                 }
@@ -429,7 +630,7 @@ public class AccountManager implements Serializable {
                 writer.write(account.getUserID() + "," + (transactionNumber + 1)  + "," + amount + "\n");
                 writer.close();
             }
-
+            account.setAmount2(amount);
             Log.i(TAG, "Amount added successfully for user: " + account.getUsername());
         } catch (IOException e) {
             Log.e(TAG, "Error adding amount to file for user: " + account.getUsername(), e);
@@ -720,6 +921,8 @@ public class AccountManager implements Serializable {
             ensureFileCreated(expenseFile);
             ensureFileCreated(quickAddFile);
             ensureFileCreated(quickRemoveFile);
+
+
 /*
             appendToFile(infoFile, String.format("%s,%s,%s\n", "UserID", "Username", "Password"));
             appendToFile(balanceFile, String.format("%s,%s,%s\n", "UserID", "Budget", "Balance"));
@@ -730,7 +933,7 @@ public class AccountManager implements Serializable {
 */
 
             appendToFile(infoFile, String.format("%d,%s,%s\n", account.getUserID(), account.getUsername(), account.getPassword()));
-            appendToFile(balanceFile, String.format("%d,%s,%s\n", account.getUserID(), account.getBudget(), account.getBalance()));
+            appendToFile(balanceFile, String.format("%d,%s,%s,%s\n", account.getUserID(), account.getBudget(), account.getBalance(), account.getSavings()));
             appendToFile(incomeFile, String.format("%d,%s,%s\n", account.getUserID(), account.getPay(), account.getTimeRate()));
             appendToFile(expenseFile, String.format("%d,%s,%s,%s\n", account.getUserID(), account.getCategory(), account.getRate(), account.getCost()));
             appendToFile(quickAddFile, String.format("%d,%s,%s\n", account.getUserID(), account.getTransactionNumber(), account.getAmount()));
@@ -755,6 +958,7 @@ public class AccountManager implements Serializable {
         fw.close();
     }
 
+    /*
     public String getUsername() {
         return username;
     }
@@ -773,6 +977,6 @@ public class AccountManager implements Serializable {
     public String toString(){
         return getUsername();
     }
-
+*/
 }
 

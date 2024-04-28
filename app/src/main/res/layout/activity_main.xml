@@ -52,7 +52,7 @@
         android:text="Submit Balance" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/submitBudgetButton"
+        android:id="@+id/submitSavingsButton"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/submitBalanceButton"
@@ -60,7 +60,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         style="@style/ButtonStyle"
-        android:text="Submit Budget" />
+        android:text="Submit Savings%" />
 
     <EditText
         android:id="@+id/initialBalanceField"
@@ -73,13 +73,13 @@
         android:inputType="numberDecimal" />
 
     <EditText
-        android:id="@+id/initialBudgetField"
+        android:id="@+id/initialSavingsField"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/initialBalanceField"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:hint="Enter initial budget%"
+        android:hint="Enter initial savings%"
         android:inputType="numberDecimal" />
 
 

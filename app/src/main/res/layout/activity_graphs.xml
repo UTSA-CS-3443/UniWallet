@@ -23,10 +23,10 @@
         android:id="@+id/graphsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="Graphs"
-        android:textSize="36sp"
         android:textColor="#FFFFFF"
-        android:layout_centerInParent="true"/>
+        android:textSize="36sp" />
 
     <TextView
         android:id="@+id/incomeTitle"
@@ -47,6 +47,7 @@
         android:background="#FFFFFF"
         android:layout_below="@id/incomeTitle"
         android:layout_marginTop="20dp">
+
 
         <Button
             android:id="@+id/weeklyButton"

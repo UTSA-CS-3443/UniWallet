@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.uniwallet.model.Account;
 import com.example.uniwallet.model.AccountManager;
@@ -14,9 +15,11 @@ import com.example.uniwallet.model.AccountManager;
 public class MainActivity extends AppCompatActivity {
 
     Account account;
-    double budget = 0.0;
+    double savings = 0.0;
+
+   // double budget = 0.0;
     double balance = 0.0;
-    EditText budgetText;
+    EditText savingsText;
     EditText balanceText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,31 +32,35 @@ public class MainActivity extends AppCompatActivity {
              account = (Account) intent.getSerializableExtra("account");
 
         }
-        budgetText = findViewById(R.id.initialBudgetField);
+        savingsText = findViewById(R.id.initialSavingsField);
         balanceText = findViewById(R.id.initialBalanceField);
 
         Button settingsButton = findViewById(R.id.settingsButton);
         Button expenseButton = findViewById(R.id.expenseButton);
         //Button graphsButton = findViewById(R.id.graphsButton);/
         Button submitBalanceButton = findViewById(R.id.submitBalanceButton);
-        Button submitBudgetButton = findViewById(R.id.submitBudgetButton);
+        Button submitSavingsButton = findViewById(R.id.submitSavingsButton);
 
         AccountManager accountManager = new AccountManager(MainActivity.this);
 
-         budget = accountManager.getBudgetFromFile(account);
+        savings = accountManager.getSavingsFromFile(account);
+         //budget = accountManager.getBudgetFromFile(account);
          balance = accountManager.getBalanceFromFile(account);
         submitBalanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                double balanceAmount = Double.parseDouble(balanceText.getText().toString());
+                Toast.makeText(MainActivity.this, account.getUsername() + " balance updated: $" + balanceAmount, Toast.LENGTH_SHORT).show();
                 updateAccountBalance();
             }
         });
 
-        submitBudgetButton.setOnClickListener(new View.OnClickListener() {
+        submitSavingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateAccountBudget();
+                double savingsAmount = Double.parseDouble(savingsText.getText().toString());
+                Toast.makeText(MainActivity.this, account.getUsername() + " savings updated: " + savingsAmount + "%", Toast.LENGTH_SHORT).show();
+                updateAccountSavings();
             }
         });
         settingsButton.setOnClickListener(new View.OnClickListener() {
@@ -92,14 +99,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateAccountBudget() {
-        String budgetString = budgetText.getText().toString();
-        if (!budgetString.isEmpty()) {
-            budget = Double.parseDouble(budgetString);
+    private void updateAccountSavings() {
+        String savingsString = savingsText.getText().toString();
+        if (!savingsString.isEmpty()) {
+            savings = Double.parseDouble(savingsString);
             if (account != null) {
-                account.setBudget(budget);
+                account.setSavings(savings);
                 AccountManager accountManager = new AccountManager(MainActivity.this);
-                accountManager.updateBudgetInFile(account, budget); // Update budget in the file
+                accountManager.updateSavingsInFile(account, savings); // Update budget in the file
             }
         }
     }
@@ -108,11 +115,14 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("account", account);
         startActivity(intent);
     }
+    /*
     private void launchGraphsActivity(Account account) {
         Intent intent = new Intent(this, GraphsActivity.class);
         intent.putExtra("account", account);
         startActivity(intent);
     }
+
+     */
     private void launchSettingsActivity(Account account) {
         Intent intent = new Intent(this, SettingsActivity.class);
         intent.putExtra("account", account);

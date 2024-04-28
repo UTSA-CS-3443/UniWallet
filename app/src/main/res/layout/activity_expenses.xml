@@ -32,7 +32,7 @@
         android:text="Home" />
 
     <TextView
-        android:id="@+id/balanceText"
+        android:id="@+id/incomeTextHeader"
         style="@style/MinorTextStyle"
         android:layout_width="100dp"
         android:layout_height="30dp"
@@ -40,53 +40,76 @@
         android:layout_below="@id/expenses_header_text"
         android:layout_marginStart="10dp"
         android:layout_marginTop="80dp"
-        android:text="Balance" />
+        android:text="Income" />
 
     <TextView
-        android:id="@+id/budgetText"
+        android:id="@+id/balanceTextHeader"
+        style="@style/MinorTextStyle"
         android:layout_width="100dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="10dp"
-        android:textAlignment="center"
-        android:text="Budget"
-        android:layout_alignParentEnd="true"
-        style="@style/MinorTextStyle"
         android:layout_below="@id/expenses_header_text"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="26dp"
+        android:text="Balance"
+        android:textAlignment="center" />
 
+
+    <TextView
+        android:id="@+id/savingsHeader"
+        style="@style/MinorTextStyle"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/expenses_header_text"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="32dp"
+        android:text="Savings%"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/savingsValueHeader"
+        style="@style/MinorTextStyle"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/savingsPercentTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-2dp"
+        android:layout_marginEnd="35dp"
+        android:text="Savings$value"
+        android:textAlignment="center" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/change_budgetButton"
+        android:id="@+id/change_SavingsButton"
+        style="@style/MinorButtonStyle"
         android:layout_width="170dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="10dp"
-        android:text="Change Budget"
+        android:layout_below="@id/savingsValueTextView"
         android:layout_alignParentEnd="true"
-        style="@style/MinorButtonStyle"
-        android:layout_marginTop="8dp"
-        android:layout_below="@id/budgetTextView" />
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="8dp"
+        android:text="Change Savings%" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_amountButton"
         style="@style/MinorButtonStyle"
         android:layout_width="170dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="10dp"
-        android:layout_below="@id/change_budgetButton"
+        android:layout_below="@id/change_SavingsButton"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="7dp"
         android:text="Add Extra" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_paycheck_button"
+        style="@style/MinorButtonStyle"
         android:layout_width="140dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="10dp"
-        android:text="Add Paycheck"
-        android:layout_alignParentEnd="true"
-        style="@style/MinorButtonStyle"
         android:layout_below="@id/add_amountButton"
-        android:layout_marginTop="25dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="5dp"
+        android:text="Add Paycheck" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/remove_funds_button"
@@ -112,7 +135,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/generateBalanceButton"
+        android:id="@+id/generateBudgetButton"
         style="@style/ButtonStyle"
         android:layout_width="150dp"
         android:layout_height="100dp"
@@ -122,37 +145,58 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="12dp"
-        android:text="Generate Balance" />
+        android:text="Generate Weekly Budget" />
 
     <TextView
         android:id="@+id/balanceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/incomeTextHeader"
         android:layout_marginStart="10dp"
-        android:textSize="20sp"
+        android:layout_marginTop="-56dp"
         android:text="balance text"
-        android:layout_below="@id/balanceText"/>
+        android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/budgetTextView"
+        android:id="@+id/incomeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:textSize="20sp"
-        android:text="budget text"
+        android:layout_below="@id/incomeTextHeader"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="-1dp"
+        android:text="income text"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/savingsPercentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/savingsHeader"
         android:layout_alignParentEnd="true"
-        android:layout_below="@id/budgetText"/>
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="8dp"
+        android:text="savings% text"
+        android:textSize="20sp" />
 
-
-
+    <TextView
+        android:id="@+id/savingsValueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/savingsValueHeader"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="24dp"
+        android:text="savings value text"
+        android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/ChangeBudgetField"
+        android:id="@+id/ChangeSavingsField"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
+        android:layout_below="@id/incomeTextView"
         android:layout_marginStart="10dp"
-        android:layout_below="@id/balanceTextView"
-        android:hint="Enter New Budget%"
+        android:hint="Enter New Savings%"
         android:inputType="numberDecimal" />
 
     <EditText
@@ -160,7 +204,7 @@
         android:layout_width="210dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_below="@id/ChangeBudgetField"
+        android:layout_below="@id/ChangeSavingsField"
         android:hint="Add New Amount$"
         android:inputType="numberDecimal" />
 
@@ -213,7 +257,7 @@
         android:inputType="numberDecimal" />
 
     <TextView
-        android:id="@+id/generate_balance_header"
+        android:id="@+id/generate_budget_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -221,19 +265,19 @@
         android:layout_marginTop="20dp"
         style="@style/MinorTextStyle"
         android:layout_below="@id/add_utility_button"
-        android:text="Generated Balance:"
+        android:text="Generated Weekly Budget:"
         android:inputType="numberDecimal" />
 
 
     <TextView
-        android:id="@+id/generate_balance_field"
+        android:id="@+id/generate_budget_field"
         android:layout_width="210dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/generate_balance_header"
+        android:layout_below="@id/generate_budget_header"
         android:layout_marginStart="10dp"
         android:textSize="20sp"
         android:layout_marginTop="0dp"
-        android:hint="generated balance text"
+        android:hint="generated weekly budget text"
         android:inputType="numberDecimal" />
 
     <ScrollView
