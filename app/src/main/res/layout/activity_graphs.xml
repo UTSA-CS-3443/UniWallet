@@ -2,42 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A67DB8">
+    android:theme="@style/Base.Theme.UniWallet">
+    <include layout="@layout/header"/>
 
-    <Button
-        android:id="@+id/homeButton1"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/backButton"
+        style="@style/MinorButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Home"
-        style="?android:borderlessButtonStyle"/>
+        android:layout_gravity="end"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="-1dp"
+        android:text="Back" />
 
-    <Button
-        android:id="@+id/homeButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Home"
-        style="?android:borderlessButtonStyle"
-        android:layout_alignParentEnd="true"/>
 
     <TextView
         android:id="@+id/graphsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Graphs"
-        android:textColor="#FFFFFF"
-        android:textSize="36sp" />
-
-    <TextView
-        android:id="@+id/incomeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Income"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:layout_below="@id/graphsTitle"
+        style="@style/TextViewStyle"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/header_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="100dp"
+        android:gravity="center_horizontal"
+        android:text="Graphs" />
+
+
 
     <LinearLayout
         android:id="@+id/timeFrameBox"
@@ -45,32 +35,38 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="#FFFFFF"
-        android:layout_below="@id/incomeTitle"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="200dp"
+        android:layout_below="@id/graphsTitle"
+       >
 
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MinorButtonStyle"
             android:id="@+id/weeklyButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Weekly"
-            android:layout_weight="1"
-            style="?attr/buttonBarButtonStyle"/>
+            android:layout_marginStart="10dp"
+            android:padding="20dp"
+            android:text="Weekly"/>
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/monthlyButton"
-            android:layout_width="0dp"
+            style="@style/MinorButtonStyle"
+            android:layout_width="148dp"
             android:layout_height="wrap_content"
-            android:text="Monthly"
-            android:layout_weight="1"
-            style="?attr/buttonBarButtonStyle"/>
+            android:layout_marginStart="10dp"
+            android:padding="20dp"
+            android:text="Monthly" />
 
-        <Button
-            android:id="@+id/yearlyButton"
-            android:layout_width="0dp"
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Yearly"
-            android:layout_weight="1"
-            style="?attr/buttonBarButtonStyle"/>
+            style="@style/MinorButtonStyle"
+            android:id="@+id/yearlyButton"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:padding="20dp"
+            android:text="Yearly"/>
+
     </LinearLayout>
 </RelativeLayout>

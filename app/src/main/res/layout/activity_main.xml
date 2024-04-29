@@ -19,6 +19,17 @@
         style="@style/MinorButtonStyle"
         android:text="Settings" />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/graphsButton"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Graphs"
+        android:layout_below="@id/uniwallet_logo"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="100dp"
+        style="@style/ButtonStyle"/>
+
     <ImageView
         android:id="@+id/uniwallet_logo"
         android:layout_alignParentTop="true"
@@ -31,14 +42,14 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/expenseButton"
+        style="@style/ButtonStyle"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="Expenses"
         android:layout_below="@id/uniwallet_logo"
-        android:layout_centerHorizontal="true"
+        android:layout_marginStart="220dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="10dp"
-        style="@style/ButtonStyle"/>
+        android:layout_marginEnd="-100dp"
+        android:text="Expenses" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/submitBalanceButton"

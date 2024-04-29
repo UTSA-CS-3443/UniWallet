@@ -313,6 +313,7 @@ public class AccountManager implements Serializable {
         savings = income * savingsPercentage;
         return savings;
     }
+    /*
     public String getLastPaymentDate(Account account, String category) {
         // This is just a placeholder implementation
         // You would need to replace it with your actual logic
@@ -325,12 +326,12 @@ public class AccountManager implements Serializable {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         return sdf.format(lastPaymentDate);
     }
-
-    public void calculateUtilityAmount(String utilityName, String paymentFrequency, double amount, String lastPaymentDate) {
+/*
+    public double calculateUtilityAmount(String utilityName, String paymentFrequency, double amount, String lastPaymentDate) {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         String currentDate = sdf.format(calendar.getTime());
-
+        double adjustedAmount = amount;
         try {
             Date lastDate = sdf.parse(lastPaymentDate);
             Date currentDateObj = sdf.parse(currentDate);
@@ -338,7 +339,7 @@ public class AccountManager implements Serializable {
             long differenceInMilliseconds = currentDateObj.getTime() - lastDate.getTime();
             long differenceInDays = differenceInMilliseconds / (1000 * 60 * 60 * 24);
 
-            double adjustedAmount = amount;
+
 
             switch (paymentFrequency) {
                 case "Daily":
@@ -374,12 +375,12 @@ public class AccountManager implements Serializable {
                 default:
                     break;
             }
-
-            System.out.println("Adjusted amount for " + utilityName + ": " + adjustedAmount);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return adjustedAmount;
     }
+    */
     public void updateBudgetInFile(Account account, double budget) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -409,15 +410,123 @@ public class AccountManager implements Serializable {
         } catch (IOException e) {
             Log.e(TAG, "Error updating savings in file for user: " + account.getUsername(), e);
         }
+
+    }
+    public double getRemoveFundsCategory(Account account, String category) {
+        double totalAmount = 0.0;
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountQuickRemoveFile = new File(userDirectory, "accountQuickRemove.csv");
+
+            BufferedReader reader = new BufferedReader(new FileReader(accountQuickRemoveFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4 && parts[2].equals(category)) {
+                    totalAmount += Double.parseDouble(parts[4]);
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading quick remove file for user: " + account.getUsername(), e);
+        }
+        return totalAmount;
+    }
+    public double getUtilityRateAdjusted(Account account, String category, String rate, boolean isCustom) {
+        double adjustedRate = 0.0;
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountExpenseFile = new File(userDirectory, "accountExpense.csv");
+
+            BufferedReader reader = new BufferedReader(new FileReader(accountExpenseFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4 && parts[1] != null && parts[1].equals(category)) {
+                    String utilityRate = parts[2];
+                    if (isCustom && "Custom".equals(parts[1])) {
+
+                        switch (rate) {
+                            case "Weekly":
+                                adjustedRate += Double.parseDouble(parts[3]) / 7;
+                                break;
+                            case "Monthly":
+                                adjustedRate += Double.parseDouble(parts[3]) / 30;
+                                break;
+                            case "Yearly":
+                                adjustedRate += Double.parseDouble(parts[3]) / 365;
+                                break;
+                            default:
+                                adjustedRate += Double.parseDouble(parts[3]);
+                                break;
+                        }
+                    } else if (!isCustom && !"Custom".equals(parts[1])) {
+                        adjustedRate += Double.parseDouble(parts[3]);
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading expense file for user: " + account.getUsername(), e);
+        }
+        return adjustedRate;
+    }
+    public String getUtilityRate(Account account, String category) {
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountExpenseFile = new File(userDirectory, "accountExpense.csv");
+
+            BufferedReader reader = new BufferedReader(new FileReader(accountExpenseFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4 && parts[1].equals(category)) {
+                    return parts[2];
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading expense file for user: " + account.getUsername(), e);
+        }
+        return null;
+    }
+    public double getUtility(Account account, String category, boolean isCustom) {
+        double totalAmount = 0.0;
+        try {
+            File userDirectory = getUserDirectory(account.getUsername());
+            File accountExpenseFile = new File(userDirectory, "accountExpense.csv");
+
+            BufferedReader reader = new BufferedReader(new FileReader(accountExpenseFile));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length >= 4 && parts[1].equals(category)) {
+                    if (isCustom) { // Check if it's a custom category
+                        totalAmount += Double.parseDouble(parts[3]);
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            Log.e(TAG, "Error reading expense file for user: " + account.getUsername(), e);
+        }
+        return totalAmount;
+
     }
 
+/*
+    public String getUtilityRate(Account account, String category, String rate){
+
+        return rate;
+    }
+  */
     public void addUtility(Account account, String category, String rate, double cost, boolean isCustom) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
             File accountExpenseFile = new File(userDirectory, "accountExpense.csv");
 
             // Calculate adjusted cost based on payment frequency
-            calculateUtilityAmount(category, rate, cost, getLastPaymentDate(account, category));
+           // calculateUtilityAmount(category, rate, cost, getLastPaymentDate(account, category));
 
             List<String> updatedLines = new ArrayList<>();
             BufferedReader reader = new BufferedReader(new FileReader(accountExpenseFile));
@@ -456,50 +565,7 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error adding expense in file for user: " + account.getUsername(), e);
         }
     }
-    /*
-    public void addUtility(Account account, String category, String rate, double cost, boolean isCustom) {
-        try {
-            File userDirectory = getUserDirectory(account.getUsername());
-            File accountExpenseFile = new File(userDirectory, "accountExpense.csv");
 
-            List<String> updatedLines = new ArrayList<>();
-            BufferedReader reader = new BufferedReader(new FileReader(accountExpenseFile));
-            String line;
-            boolean utilityFound = false;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 4) {
-                    if (!isCustom && parts[1].equals(category)) {
-                        utilityFound = true; // Utility of the same type already exists
-                        // Update existing line with new values
-                        parts[2] = rate;
-                        parts[3] = String.valueOf(cost);
-                        account.setRate(rate);
-                        account.setCost(cost);
-                    }
-                    updatedLines.add(String.join(",", parts)); // Preserve existing or other lines
-                }
-            }
-            reader.close();
-
-            if (!utilityFound) {
-
-                String transactionLine = account.getUserID()  + "," + category + "," + rate + "," + cost + "\n";
-                updatedLines.add(transactionLine);
-            }
-
-            FileWriter writer = new FileWriter(accountExpenseFile);
-            for (String updatedLine : updatedLines) {
-                writer.write(updatedLine + "\n");
-            }
-            writer.close();
-
-            Log.i(TAG, "Expense added successfully for user: " + account.getUsername());
-        } catch (IOException e) {
-            Log.e(TAG, "Error adding expense in file for user: " + account.getUsername(), e);
-        }
-    }
-*/
     public void removeFunds(Account account, String category, String item, double amount){
         try {
             File userDirectory = getUserDirectory(account.getUsername());

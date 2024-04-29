@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button settingsButton = findViewById(R.id.settingsButton);
         Button expenseButton = findViewById(R.id.expenseButton);
-        //Button graphsButton = findViewById(R.id.graphsButton);/
+        Button graphsButton = findViewById(R.id.graphsButton);
         Button submitBalanceButton = findViewById(R.id.submitBalanceButton);
         Button submitSavingsButton = findViewById(R.id.submitSavingsButton);
 
@@ -77,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*
+
         graphsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 launchGraphsActivity(account);
             }
         });
-        */
+
 
     }
     private void updateAccountBalance() {
@@ -115,14 +115,14 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("account", account);
         startActivity(intent);
     }
-    /*
+
     private void launchGraphsActivity(Account account) {
         Intent intent = new Intent(this, GraphsActivity.class);
         intent.putExtra("account", account);
         startActivity(intent);
     }
 
-     */
+
     private void launchSettingsActivity(Account account) {
         Intent intent = new Intent(this, SettingsActivity.class);
         intent.putExtra("account", account);
