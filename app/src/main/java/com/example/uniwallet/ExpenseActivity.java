@@ -121,7 +121,7 @@ public class ExpenseActivity extends AppCompatActivity {
         //Remove Buttons/Texts
 
         Button removeButton = findViewById(R.id.remove_funds_button);
-        String[] categories = {"Food", "Groceries", "Personal", "Luxury"};
+        String[] categories = {"Groceries", "Personal"};
         amountText = findViewById(R.id.remove_funds_field);
         itemText = findViewById(R.id.item_field);
         ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
@@ -135,7 +135,7 @@ public class ExpenseActivity extends AppCompatActivity {
         //Expense Buttons/Texts
 
         Button utilityButton = findViewById(R.id.add_utility_button);
-        String[] utilities = {"Water", "Electrical", "Car", "House", "Custom"};
+        String[] utilities = {"Utilities", "Car", "House", "Custom"};
         String[] timeRates2 = {"Weekly", "Biweekly", "Monthly", "Yearly"};
         costText = findViewById(R.id.cost_field);
 

@@ -1,252 +1,962 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><RelativeLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#D8BFD8">
-
-    <TextView
-        android:id="@+id/tvUniWallet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="UniWallet"
-        android:textSize="24sp"
-        android:textColor="#FFFFFF"
-        android:layout_centerHorizontal="true"/>
-
-    <LinearLayout
-        android:id="@+id/graphBox"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:orientation="vertical"
-        android:background="#FFFFFF"
-        android:layout_below="@id/tvUniWallet"
-        android:layout_marginTop="20dp">
-
-    <org.eazegraph.lib.charts.PieChart
-        android:id="@+id/pieChart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvUniWallet"
-        android:layout_marginTop="20dp"
-        style="@style/MinorTextStyle"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/legendBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/graphBox"
-        android:layout_marginTop="19dp"
-        android:background="#FFFFFF"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/customPercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="custom bill Percentage" />
-
-        <TextView
-            android:id="@+id/customBillView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="custom bill value view" />
-
-        <TextView
-            android:id="@+id/customPercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/foodPercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="food Percentage" />
-
-        <TextView
-            android:id="@+id/foodBillView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="food value view" />
-
-        <TextView
-            android:id="@+id/foodPercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/groceriesPercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="groceries Percentage" />
-
-        <TextView
-            android:id="@+id/groceriesBillView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="groceries value view" />
-
-        <TextView
-            android:id="@+id/groceriesPercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/personalPercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Personal Percentage" />
-
-        <TextView
-            android:id="@+id/personalView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="personal value view" />
-
-        <TextView
-            android:id="@+id/personalPercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/luxuryPercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="luxury Percentage" />
-
-        <TextView
-            android:id="@+id/luxuryBillView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="luxury value view" />
-
-        <TextView
-            android:id="@+id/luxuryPercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-        <TextView
-            android:id="@+id/budgetHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Budget" />
-
-        <TextView
-            android:id="@+id/budgetView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="budget value view" />
-
-        <TextView
-            android:id="@+id/budgetValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/balanceHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Balance" />
-
-        <TextView
-            android:id="@+id/balanceValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/housePercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rent Percentage" />
-
-        <TextView
-            android:id="@+id/houseBillView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="rent value view" />
-
-        <TextView
-            android:id="@+id/housePercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/carPercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Car Payment Percentage" />
-
-        <TextView
-            android:id="@+id/carPaymentView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="car payment value view" />
-
-        <TextView
-            android:id="@+id/carPercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/waterPercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="water bill Percentage" />
-
-        <TextView
-            android:id="@+id/waterBillView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="water bill value view" />
-
-        <TextView
-            android:id="@+id/waterPercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/electricalPercentageHeaderView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="electrical bill Percentage" />
-
-        <TextView
-            android:id="@+id/electricalBillView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="electrical bill value view" />
-
-        <TextView
-            android:id="@+id/electricalPercentageValueView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="" />
+    android:background="@color/color_white">
 
 
-        <!-- Repeat similar elements for each category in the pie chart -->
 
-    </LinearLayout>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/homeButton"
-        style="@style/MinorButtonStyle"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
+        android:layout_height="64dp"
+        style="@style/MinorButtonStyle"
+        android:text="Home"
+        android:layout_marginTop="-8dp"
+        android:textColor="#FFFF"
+        app:cornerRadius="0dp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/backButton"
+        style="@style/MinorButtonStyle"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="-8dp"
+        android:layout_height="64dp"
         android:layout_gravity="end"
-        android:layout_marginTop="52dp"
         android:layout_marginEnd="-1dp"
-        android:text="Home" />
+        android:text="Back" />
+
+    <TextView
+        android:id="@+id/header_title"
+        android:layout_width="240dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="64dp"
+        android:background="@color/colorTitleHeader"
+        android:text="UniWallet"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:typeface="serif" />
+
+    <!-- Card view for displaying the -->
+    <!-- Pie chart and details of pie chart -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewGraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="60dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp">
+
+
+        <!--Linear layout to display pie chart -->
+        <!-- and details of pie chart-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="279dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!--Pie chart to display the data-->
+
+            <org.eazegraph.lib.charts.PieChart xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/piechart"
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:padding="6dp"
+
+                />
+
+            <!--Creating another linear layout -->
+            <!-- to display pie chart details -->
+            <LinearLayout
+                android:layout_width="10dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical">
+
+                    <!--View to display the yellow color icon-->
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/R" />
+
+                    <!--Text view to display R, // "Water", "Electrical", "House", "Custom" -->
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:typeface="serif"
+                        android:text="Utilities" />
+
+                    <TextView
+                        android:id="@+id/utilitiesPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="8dp"
+                        android:typeface="serif"
+                        android:text="0" />
+
+                </LinearLayout>
+
+                <!--Linear layout to display Python-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    tools:ignore="TextSizeCheck">
+
+                    <!--View to display the green color icon-->
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/Python" />
+
+                    <!--Text view to display python text -->
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:typeface="serif"
+                        android:text="House" />
+
+                    <TextView
+                        android:id="@+id/housePercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="7dp"
+                        android:typeface="serif"
+                        android:text="0" />
+
+                </LinearLayout>
+
+                <!--Linear layout to display C++-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp">
+
+                    <!--View to display the red color icon-->
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/CPP" />
+
+                    <!--Text view to display C++ text -->
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:typeface="serif"
+                        android:text="Custom" />
+
+                    <TextView
+                        android:id="@+id/customPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8.5dp"
+                        android:typeface="serif"
+                        android:text="0" />
+
+                </LinearLayout>
+
+                <!--Linear layout to display Java-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp">
+
+                    <!--View to display the blue color icon-->
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/Java" />
+
+                    <!--Text view to display Java text -->
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:typeface="serif"
+                        android:text="Personal" />
+
+                    <TextView
+                        android:id="@+id/personalPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="8.3dp"
+                        android:text="0"
+                        android:typeface="serif" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical">
+
+                    <!--View to display the yellow color icon-->
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/Food" />
+
+                    <!--Text view to display R, // "Water", "Electrical", "House", "Custom" -->
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:typeface="serif"
+                        android:text="Groceries" />
+
+                    <TextView
+                        android:id="@+id/groceriesPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="8dp"
+                        android:text="0"
+                        android:typeface="serif" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical">
+
+                    <!--View to display the yellow color icon-->
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/Blue" />
+
+                    <!--Text view to display R, // "Water", "Electrical", "House", "Custom" -->
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:typeface="serif"
+                        android:text="Car Payemnts" />
+
+                    <TextView
+                        android:id="@+id/carPercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="8dp"
+                        android:text="0"
+                        android:typeface="serif" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center_vertical">
+
+                    <!--View to display the yellow color icon-->
+                    <View
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_one" />
+
+                    <!--Text view to display R, // "Water", "Electrical", "House", "Custom" -->
+                    <TextView
+                        android:layout_width="88dp"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:text="Balance"
+                        android:typeface="serif" />
+
+                    <TextView
+                        android:id="@+id/balancePercentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="8dp"
+                        android:typeface="serif"
+                        android:text="0" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- Another Card view for displaying -->
+    <!-- Use of programming languages -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/details"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        android:layout_below="@+id/cardViewGraph"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="0"
+        android:layout_marginRight="20dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp">
+
+        <!--Relative layout to display -->
+        <!-- use of programming languages -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <!--Text view to use of -->
+            <!-- programming languages text-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="20dp"
+                android:text="Total Budget and Expenses"
+                android:textSize="23sp"
+                android:textStyle="bold"
+                android:typeface="serif" />
+            <!--View to display the line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_two" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="22dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp">
+
+                <!--Text view to display R -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Utilities"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <!--Text view to display the -->
+                <!-- percentage of programming language -->
+                <!-- used. For now default set to 0-->
+                <TextView
+                    android:id="@+id/utilitiesView"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+            </RelativeLayout>
+
+            <!--View to display the line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_two" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="House"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <!--Text view to display the percentage -->
+                <!-- of programming language used. -->
+                <!-- For now default set to 0-->
+                <TextView
+                    android:id="@+id/houseView"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+<!--                    android:layout_width="82dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_alignParentStart="true"-->
+<!--                    android:layout_marginStart="252dp"-->
+<!--                    android:layout_marginRight="10dp"-->
+<!--                    android:fontFamily="sans-serif-light"-->
+<!--                    android:text="0"-->
+<!--                    android:textAlignment="textEnd"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:typeface="serif"
+/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_two" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Custom"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <!-Text view to display the percentage -->
+                <!-- of programming language used. -->
+                <!-- For now default set to 0-->
+                <TextView
+                    android:id="@+id/customView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_two" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp">
+
+                <!--Text view to display R -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Personal"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <!--Text view to display the -->
+                <!-- percentage of programming language -->
+                <!-- used. For now default set to 0-->
+                <TextView
+                    android:id="@+id/personalView"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+            </RelativeLayout>
+
+            <!--View to display the line-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_two" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Groceries"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <!--Text view to display the percentage -->
+                <!-- of programming language used. -->
+                <!-- For now default set to 0-->
+                <TextView
+                    android:id="@+id/groceriesView"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Car Payments"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <!--Text view to display the percentage -->
+                <!-- of programming language used. -->
+                <!-- For now default set to 0-->
+                <TextView
+                    android:id="@+id/carView"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Custom"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <!--Text view to display the percentage -->
+                <!-- of programming language used. -->
+                <!-- For now default set to 0-->
+                <TextView
+                    android:id="@+id/CustomView"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+            </RelativeLayout>
+
+
+
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_two" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="10dp">
+
+                <!--Text view to display R -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remaining Budget"
+                    android:textSize="18sp"
+                    android:typeface="serif" />
+
+                <TextView
+                    android:id="@+id/remainingBudgetView"
+                    android:layout_width="80dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:typeface="serif" />
+
+                <!--Text view to display the -->
+                <!-- percentage of programming language -->
+                <!-- used. For now default set to 0-->
+
+            </RelativeLayout>
+
+            <!--View to display the line-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_two" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!--View to display the line-->
+
+            <!--Text view to display the -->
+            <!-- percentage of programming language -->
+            <!-- used. For now default set to 0-->
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
 </RelativeLayout>
+<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:background="#D8BFD8">-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvUniWallet"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="UniWallet"-->
+<!--        android:textSize="24sp"-->
+<!--        android:textColor="#FFFFFF"-->
+<!--        android:layout_centerHorizontal="true"/>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/graphBox"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp"-->
+<!--        android:orientation="vertical"-->
+<!--        android:background="#FFFFFF"-->
+<!--        android:layout_below="@id/tvUniWallet"-->
+<!--        android:layout_marginTop="20dp">-->
+
+<!--    <org.eazegraph.lib.charts.PieChart-->
+<!--        android:id="@+id/pieChart"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/tvUniWallet"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        style="@style/MinorTextStyle"/>-->
+
+<!--    </LinearLayout>-->
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/legendBox"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@id/graphBox"-->
+<!--        android:layout_marginTop="19dp"-->
+<!--        android:background="#FFFFFF"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/customPercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="custom bill Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/customBillView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="custom bill value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/customPercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/foodPercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="food Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/foodBillView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="food value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/foodPercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/groceriesPercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="groceries Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/groceriesBillView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="groceries value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/groceriesPercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/personalPercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Personal Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/personalView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="personal value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/personalPercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/luxuryPercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="luxury Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/luxuryBillView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="luxury value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/luxuryPercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+<!--        <TextView-->
+<!--            android:id="@+id/budgetHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Budget" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/budgetView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="budget value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/budgetValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/balanceHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Balance" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/balanceValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/housePercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Rent Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/houseBillView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="rent value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/housePercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/carPercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Car Payment Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/carPaymentView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="car payment value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/carPercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/waterPercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="water bill Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/waterBillView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="water bill value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/waterPercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/electricalPercentageHeaderView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="electrical bill Percentage" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/electricalBillView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="electrical bill value view" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/electricalPercentageValueView"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="" />-->
+
+
+<!--        &lt;!&ndash; Repeat similar elements for each category in the pie chart &ndash;&gt;-->
+
+<!--    </LinearLayout>-->
+
+<!--    <androidx.appcompat.widget.AppCompatButton-->
+<!--        android:id="@+id/homeButton"-->
+<!--        style="@style/MinorButtonStyle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentEnd="true"-->
+<!--        android:layout_gravity="end"-->
+<!--        android:layout_marginTop="52dp"-->
+<!--        android:layout_marginEnd="-1dp"-->
+<!--        android:text="Home" />-->
+<!--</RelativeLayout>-->

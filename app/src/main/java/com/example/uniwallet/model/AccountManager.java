@@ -448,13 +448,13 @@ public class AccountManager implements Serializable {
 
                         switch (rate) {
                             case "Weekly":
-                                adjustedRate += Double.parseDouble(parts[3]) / 7;
+                                adjustedRate += Double.parseDouble(parts[3]) / 4;
                                 break;
                             case "Monthly":
-                                adjustedRate += Double.parseDouble(parts[3]) / 30;
+                                adjustedRate += Double.parseDouble(parts[3]) / 1;
                                 break;
                             case "Yearly":
-                                adjustedRate += Double.parseDouble(parts[3]) / 365;
+                                adjustedRate += Double.parseDouble(parts[3]) * 12;
                                 break;
                             default:
                                 adjustedRate += Double.parseDouble(parts[3]);
@@ -939,7 +939,7 @@ public class AccountManager implements Serializable {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length > 0) {
+                if (parts.length > 0 && !parts[0].isEmpty()) {
                     int userCount = Integer.parseInt(parts[0]);
 
                     if (userCount > lastUserCount) {

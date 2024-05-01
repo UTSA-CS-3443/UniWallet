@@ -23,4 +23,8 @@
     <color name="colorPrimary">#024265</color>
     <color name="colorPrimaryDark">#024265</color>
     <color name="colorAccent">#05af9b</color>
+    <color name = "Food">#800080</color>
+    <color name = "Blue">#00008B</color>
+    <color name="yellow">#FFFF00</color>
+
 </resources>
