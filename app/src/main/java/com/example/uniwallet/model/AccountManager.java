@@ -443,21 +443,17 @@ public class AccountManager implements Serializable {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 if (parts.length >= 4 && parts[1] != null && parts[1].equals(category)) {
-                    String utilityRate = parts[2];
+                    String utilityRate = parts[3];
                     if (isCustom && "Custom".equals(parts[1])) {
-
                         switch (rate) {
                             case "Weekly":
                                 adjustedRate += Double.parseDouble(parts[3]) / 4;
                                 break;
                             case "Monthly":
-                                adjustedRate += Double.parseDouble(parts[3]) / 1;
+                                adjustedRate += Double.parseDouble(parts[3]) * 4 ;
                                 break;
                             case "Yearly":
                                 adjustedRate += Double.parseDouble(parts[3]) * 12;
-                                break;
-                            default:
-                                adjustedRate += Double.parseDouble(parts[3]);
                                 break;
                         }
                     } else if (!isCustom && !"Custom".equals(parts[1])) {
@@ -471,6 +467,45 @@ public class AccountManager implements Serializable {
         }
         return adjustedRate;
     }
+//    public double getUtilityRateAdjusted(Account account, String category, String rate, boolean isCustom) {
+//        double adjustedRate = 0.0;
+//        try {
+//            File userDirectory = getUserDirectory(account.getUsername());
+//            File accountExpenseFile = new File(userDirectory, "accountExpense.csv");
+//
+//            BufferedReader reader = new BufferedReader(new FileReader(accountExpenseFile));
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                String[] parts = line.split(",");
+//                if (parts.length >= 4 && parts[1] != null && parts[1].equals(category)) {
+//                    String utilityRate = parts[3];
+//                    if (isCustom && "Custom".equals(parts[1])) {
+//
+//                        switch (rate) {
+//                            case "Weekly":
+//                                adjustedRate += Double.parseDouble(parts[3]) * 7;
+//                                break;
+//                            case "Monthly":
+//                                adjustedRate += Double.parseDouble(parts[3]) * 30;
+//                                break;
+//                            case "Yearly":
+//                                adjustedRate += Double.parseDouble(parts[3]) * 365;
+//                                break;
+//                            default:
+//                                adjustedRate += Double.parseDouble(parts[3]);
+//                                break;
+//                        }
+//                    } else if (!isCustom && !"Custom".equals(parts[1])) {
+//                        adjustedRate += Double.parseDouble(parts[3]);
+//                    }
+//                }
+//            }
+//            reader.close();
+//        } catch (IOException e) {
+//            Log.e(TAG, "Error reading expense file for user: " + account.getUsername(), e);
+//        }
+//        return adjustedRate;
+//    }
     public String getUtilityRate(Account account, String category) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());

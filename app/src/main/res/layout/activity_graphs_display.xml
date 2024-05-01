@@ -466,19 +466,7 @@
                 <!-Text view to display the percentage -->
                 <!-- of programming language used. -->
                 <!-- For now default set to 0-->
-                <TextView
-                    android:id="@+id/customView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="sans-serif-light"
-                    android:text="0"
-                    android:textAlignment="textEnd"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:typeface="serif" />
+
 
             </RelativeLayout>
 
@@ -617,7 +605,7 @@
                 <!-- of programming language used. -->
                 <!-- For now default set to 0-->
                 <TextView
-                    android:id="@+id/CustomView"
+                    android:id="@+id/customView"
                     android:layout_width="80dp"
                     android:layout_height="25dp"
                     android:layout_alignParentRight="true"
@@ -658,7 +646,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Remaining Budget"
+                    android:text="Balance"
                     android:textSize="18sp"
                     android:typeface="serif" />
 
