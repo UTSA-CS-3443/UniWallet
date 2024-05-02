@@ -410,7 +410,6 @@
                     android:fontFamily="sans-serif-light"
                     android:text="0"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:typeface="serif" />
@@ -451,53 +450,9 @@
                     android:fontFamily="sans-serif-light"
                     android:text="0"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:typeface="serif" />
-<!--                    android:layout_width="82dp"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_alignParentStart="true"-->
-<!--                    android:layout_marginStart="252dp"-->
-<!--                    android:layout_marginRight="10dp"-->
-<!--                    android:fontFamily="sans-serif-light"-->
-<!--                    android:text="0"-->
-<!--                    android:textAlignment="textEnd"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="18sp"-->
-<!--                    android:textStyle="bold"-->
-<!--                    android:typeface="serif"
-/>
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/color_two" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="25dp"
-                android:layout_marginBottom="10dp">
-
-                <TextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:text="Custom"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    android:typeface="serif" />
-
-                <!-Text view to display the percentage -->
-                <!-- of programming language used. -->
-                <!-- For now default set to 0-->
-
 
             </RelativeLayout>
 
@@ -536,7 +491,6 @@
                     android:fontFamily="sans-serif-light"
                     android:text="0"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:typeface="serif" />
@@ -577,7 +531,6 @@
                     android:fontFamily="sans-serif-light"
                     android:text="0"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:typeface="serif" />
@@ -610,7 +563,6 @@
                     android:fontFamily="sans-serif-light"
                     android:text="0"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:typeface="serif" />
@@ -644,7 +596,6 @@
                     android:fontFamily="sans-serif-light"
                     android:text="0"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:typeface="serif" />
@@ -678,7 +629,6 @@
                     android:fontFamily="sans-serif-light"
                     android:text="0"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:typeface="serif" />
@@ -722,7 +672,6 @@
                     android:fontFamily="sans-serif-light"
                     android:text="0"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:typeface="serif" />
@@ -762,254 +711,3 @@
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>
-<!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    android:background="#D8BFD8">-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/tvUniWallet"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="UniWallet"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textColor="#FFFFFF"-->
-<!--        android:layout_centerHorizontal="true"/>-->
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/graphBox"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="300dp"-->
-<!--        android:orientation="vertical"-->
-<!--        android:background="#FFFFFF"-->
-<!--        android:layout_below="@id/tvUniWallet"-->
-<!--        android:layout_marginTop="20dp">-->
-
-<!--    <org.eazegraph.lib.charts.PieChart-->
-<!--        android:id="@+id/pieChart"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/tvUniWallet"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        style="@style/MinorTextStyle"/>-->
-
-<!--    </LinearLayout>-->
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/legendBox"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@id/graphBox"-->
-<!--        android:layout_marginTop="19dp"-->
-<!--        android:background="#FFFFFF"-->
-<!--        android:orientation="vertical">-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/customPercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="custom bill Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/customBillView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="custom bill value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/customPercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/foodPercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="food Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/foodBillView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="food value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/foodPercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/groceriesPercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="groceries Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/groceriesBillView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="groceries value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/groceriesPercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/personalPercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Personal Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/personalView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="personal value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/personalPercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/luxuryPercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="luxury Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/luxuryBillView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="luxury value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/luxuryPercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-<!--        <TextView-->
-<!--            android:id="@+id/budgetHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Budget" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/budgetView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="budget value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/budgetValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/balanceHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Balance" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/balanceValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/housePercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Rent Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/houseBillView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="rent value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/housePercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/carPercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Car Payment Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/carPaymentView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="car payment value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/carPercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/waterPercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="water bill Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/waterBillView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="water bill value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/waterPercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/electricalPercentageHeaderView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="electrical bill Percentage" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/electricalBillView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="electrical bill value view" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/electricalPercentageValueView"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="" />-->
-
-
-<!--        &lt;!&ndash; Repeat similar elements for each category in the pie chart &ndash;&gt;-->
-
-<!--    </LinearLayout>-->
-
-<!--    <androidx.appcompat.widget.AppCompatButton-->
-<!--        android:id="@+id/homeButton"-->
-<!--        style="@style/MinorButtonStyle"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_gravity="end"-->
-<!--        android:layout_marginTop="52dp"-->
-<!--        android:layout_marginEnd="-1dp"-->
-<!--        android:text="Home" />-->
-<!--</RelativeLayout>-->
