@@ -22,14 +22,15 @@ import java.text.DecimalFormat;
 public class GraphsDisplayActivity extends AppCompatActivity {
 
     public TextView personalBillTextView, utilitiesBillTextView, houseBillTextView, carPaymentTextView, customBillTextView;
-    public TextView balanceTextView, groceriesTextView;
-    public TextView carPercentageTextView, balancePercentageTextView, utilitiesPercentageTextView, housePercentageTextView, customPercentageTextView, personalPercentageTextView, groceriesPercentageTextView;
+    public TextView budgetTextView, groceriesTextView;
+    public TextView carPercentageTextView, budgetPercentageTextView, utilitiesPercentageTextView, housePercentageTextView,
+            customPercentageTextView, personalPercentageTextView, groceriesPercentageTextView, savingsPercentageTextView, savingsTextView, extraFundsTextView;
     Account account;
 
     // Declare variables for bill values
     public double balanceValue;
-    public TextView balancePercentage , utilitiesPercentage, housePercentage,
-            customPercentage, personalPercentage, groceriesPercentage, carPercentage;
+    public TextView budgetPercentage , utilitiesPercentage, housePercentage,
+            customPercentage, personalPercentage, groceriesPercentage, carPercentage, savingsPercentage;
 
     //double budgetValue = 100;
     PieChart pieChart;
@@ -49,8 +50,9 @@ public class GraphsDisplayActivity extends AppCompatActivity {
         carPaymentTextView = findViewById(R.id.carView);
         customBillTextView = findViewById(R.id.customView);
          //budgetTextView = findViewById(R.id.remainingBudgetView);
-        balanceTextView = findViewById(R.id.remainingBudgetView);
+        budgetTextView = findViewById(R.id.remainingBudgetView);
         groceriesTextView = findViewById(R.id.groceriesView);
+        savingsTextView = findViewById(R.id.savingsTextView);
 
         // Initialize the TextView variables
         utilitiesPercentageTextView = findViewById(R.id.utilitiesPercentage);
@@ -59,14 +61,17 @@ public class GraphsDisplayActivity extends AppCompatActivity {
         personalPercentageTextView = findViewById(R.id.personalPercentage);
         groceriesPercentageTextView = findViewById(R.id.groceriesPercentage);
         carPercentageTextView = findViewById(R.id.carPercentage);
+        savingsPercentageTextView = findViewById(R.id.savingsPercentage);
+
 
         utilitiesPercentage = findViewById(R.id.utilitiesPercentage);
         housePercentage = findViewById(R.id.housePercentage);
         customPercentage = findViewById(R.id.customPercentage);
         personalPercentage = findViewById(R.id.personalPercentage);
         groceriesPercentage = findViewById(R.id.groceriesPercentage);
-        balancePercentage = findViewById(R.id.balancePercentage);
+        budgetPercentage = findViewById(R.id.budgetPercentage);
         carPercentage = findViewById(R.id.carPercentage);
+        savingsPercentage = findViewById(R.id.savingsPercentage);
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("account")) {
@@ -76,20 +81,31 @@ public class GraphsDisplayActivity extends AppCompatActivity {
             String dataType = intent.getStringExtra("dataType");
             assert account != null;
             double Savings = accountManager.getSavingsFromFile(account);
-            double budgetValue = account.getBudget();
-            double income = account.getPay();
+            //double budgetValue = account.getBudget();
+            double income = accountManager.getPaycheckFromFile(account);
             switch (dataType) {
                 case "weekly": {
-                    income /= 4;
-                    balanceValue = accountManager.generateBudget(account) / 4 ;
-                    balanceTextView.setText(String.valueOf(balanceValue));
-                    double balancePercent = Double.parseDouble(String.valueOf(getPercentage(balanceValue,income)));
-                    if (balancePercentageTextView != null) {
-                        balancePercentageTextView.setText(String.valueOf(balancePercentage));
+                    //income /= 4;
+
+                    income = account.getPay();
+                    double budgetValue = accountManager.generateBudget(account) ;
+                    budgetTextView.setText(String.valueOf(budgetValue));
+                    double balancePercent = Double.parseDouble(String.valueOf(getPercentage(budgetValue,income)));
+                    if (budgetPercentageTextView != null) {
+                        budgetPercentageTextView.setText(String.valueOf(budgetPercentage));
                     } else {
                         Log.e("GraphsDisplayActivity", "balancePercentageTextView is null");
                     }
                     //balanceTextView.setText(String.valueOf(balanceValue));
+
+                    double savings = accountManager.getSavingsFromFile(account);
+                    double newSavings = savings / 100 * income;
+                    String savingsString = formatDouble(newSavings);
+                    double savingsPercent = Double.parseDouble(getPercentage(newSavings, income));
+                    savingsPercentageTextView.setText(String.valueOf(savingsPercent));
+                    savingsTextView.setText(savingsString);
+                    Log.i("accounts", savingsString);
+
                     double personalBill = accountManager.getRemoveFundsCategory(account, "Personal");
                     String personalBillString = formatDouble(personalBill);
                     double personalPercent = Double.parseDouble(getPercentage(personalBill, income));
@@ -99,7 +115,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
 
 
                     String utilitiesRate = accountManager.getUtilityRate(account, "Utilities");
-                    double utilitiesBill = accountManager.getUtilityRateAdjusted(account, "Utilities", utilitiesRate, false)/ 4;
+                    double utilitiesBill = accountManager.getUtilityRateAdjusted(account, "Utilities", utilitiesRate, false);
                     String utilitiesBillString = formatDouble(utilitiesBill);
                     utilitiesBillTextView.setText(utilitiesBillString);
                     double utilitiesPercent = Double.parseDouble(getPercentage(utilitiesBill, income));
@@ -107,7 +123,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     Log.i("accounts", utilitiesBillString);
 
                     String houseRate = accountManager.getUtilityRate(account, "House");
-                    double houseBill = accountManager.getUtilityRateAdjusted(account, "House", houseRate, false)/ 4 ;
+                    double houseBill = accountManager.getUtilityRateAdjusted(account, "House", houseRate, false);
                     String houseBillString = formatDouble(houseBill);
                     double housePercent = Double.parseDouble(getPercentage(houseBill,income));
                     housePercentageTextView.setText(String.valueOf(housePercent));
@@ -115,7 +131,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     Log.i("accounts", houseBillString);
 
                     String carRate = accountManager.getUtilityRate(account, "Car");
-                    double carBill = accountManager.getUtilityRateAdjusted(account, "Car", carRate, false)/ 4;
+                    double carBill = accountManager.getUtilityRateAdjusted(account, "Car", carRate, false);
                     String carBillString = formatDouble(carBill);
                     double carPercent = Double.parseDouble(getPercentage(carBill,income));
                     carPercentageTextView.setText(String.valueOf(carPercent));
@@ -148,8 +164,9 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     customPercentage.setText(String.valueOf(customPercent));
                     personalPercentage.setText(String.valueOf(personalPercent));
                     groceriesPercentage.setText(String.valueOf(groceriesPercent));
-                    balancePercentage.setText(String.valueOf(balancePercent));
+                    budgetPercentage.setText(String.valueOf(balancePercent));
                     carPercentage.setText(String.valueOf(carPercent));
+                    savingsPercentage.setText(String.valueOf(savingsPercent));
                     pieChart.addPieSlice(
                             new PieModel(
                                     "Utilites",
@@ -179,10 +196,15 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     Color.parseColor("#E3E0E0");
                     pieChart.addPieSlice( //CORRECT FORMAT
                             new PieModel(
-                                    "Balance",
-                                    (int) Double.parseDouble(balancePercentage.getText().toString()),
+                                    "Budget",
+                                    (int) Double.parseDouble(budgetPercentage.getText().toString()),
                                     Color.parseColor("#fb7268")));
                     pieChart.addPieSlice( //CORRECT FORMAT
+                            new PieModel(
+                                    "Savings",
+                                    (int) Double.parseDouble(savingsPercentage.getText().toString()),
+                                    Color.parseColor("#000000")));
+                    pieChart.addPieSlice( //
                             new PieModel(
                                     "Car",
                                     (int) Double.parseDouble(carPercentage.getText().toString()),
@@ -192,18 +214,26 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                 }// Display weekly data
                 break;
                 case "monthly":
-                    income = account.getPay();
-                    double balanceValueMonthly = accountManager.generateBudget(account);
-                    balanceTextView.setText(String.valueOf(balanceValueMonthly));
+                    income = account.getPay() /7 *30;
+                    double balanceValueMonthly = accountManager.generateBudget(account) /7 * 30;
+                    budgetTextView.setText(String.valueOf(balanceValueMonthly));
                     double balancePercentMonthly = Double.parseDouble(getPercentage(balanceValueMonthly, income));
-                    if (balancePercentageTextView != null) {
-                        balancePercentageTextView.setText(String.valueOf(balancePercentMonthly));
+                    if (budgetPercentageTextView != null) {
+                        budgetPercentageTextView.setText(String.valueOf(balancePercentMonthly));
                     } else {
                         Log.e("GraphsDisplayActivity", "balancePercentageTextView is null");
                     }
                     //balanceTextView.setText(String.valueOf(balanceValue));
 
-                    double personalBillMonthly = accountManager.getRemoveFundsCategory(account, "Personal");
+                    double savingsMonthly = accountManager.getSavingsFromFile(account);
+                    double newSavingsMonthly = savingsMonthly / 100 * income;
+                    String savingsStringMonthly = formatDouble(newSavingsMonthly);
+                    double savingsPercentMonthly = Double.parseDouble(getPercentage(newSavingsMonthly, income));
+                    savingsPercentageTextView.setText(String.valueOf(savingsPercentMonthly));
+                    savingsTextView.setText(savingsStringMonthly);
+                    Log.i("accounts", savingsStringMonthly);
+
+                    double personalBillMonthly = accountManager.getRemoveFundsCategory(account, "Personal") /7 * 30;
                     String personalBillStringMonthly = formatDouble(personalBillMonthly);
                     double personalPercentMonthly = Double.parseDouble(getPercentage(personalBillMonthly, income));
                     personalPercentageTextView.setText(String.valueOf(personalPercentMonthly));
@@ -211,8 +241,8 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     Log.i("accounts", personalBillStringMonthly);
 //
 
-                    String utilitiesRateMonthly = accountManager.getUtilityRate(account, "Utilities");
-                    double utilitiesBillMonthly = accountManager.getUtilityRateAdjusted(account, "Utilities", utilitiesRateMonthly, false);
+                    String utilitiesRateMonthly = accountManager.getUtilityRate(account, "Utilities") ;
+                    double utilitiesBillMonthly = accountManager.getUtilityRateAdjusted(account, "Utilities", utilitiesRateMonthly, false) /7 * 30;
                     String utilitiesBillStringMonthly = formatDouble(utilitiesBillMonthly);
                     utilitiesBillTextView.setText(utilitiesBillStringMonthly);
                     double utilitiesPercentMonthly = Double.parseDouble(getPercentage(utilitiesBillMonthly, income));
@@ -221,7 +251,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
 //
 
                     String houseRateMonthly = accountManager.getUtilityRate(account, "House");
-                    double houseBillMonthly = accountManager.getUtilityRateAdjusted(account, "House", houseRateMonthly, false);
+                    double houseBillMonthly = accountManager.getUtilityRateAdjusted(account, "House", houseRateMonthly, false) /7 * 30;
                     String houseBillStringMonthly = formatDouble(houseBillMonthly);
                     double housePercentMonthly = Double.parseDouble(getPercentage(houseBillMonthly, income));
                     housePercentageTextView.setText(String.valueOf(housePercentMonthly));
@@ -229,14 +259,14 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     Log.i("accounts", houseBillStringMonthly);
 
                     String carRateMonthly = accountManager.getUtilityRate(account, "Car");
-                    double carBillMonthly = accountManager.getUtilityRateAdjusted(account, "Car", carRateMonthly, false);
+                    double carBillMonthly = accountManager.getUtilityRateAdjusted(account, "Car", carRateMonthly, false) /7 * 30;
                     String carBillStringMonthly = formatDouble(carBillMonthly);
                     double carPercentMonthly = Double.parseDouble(getPercentage(carBillMonthly, income));
                     carPercentageTextView.setText(String.valueOf(carPercentMonthly));
                     carPaymentTextView.setText(carBillStringMonthly);
                     Log.i("accounts", carBillStringMonthly);
 
-                    double groceriesBillMonthly = accountManager.getRemoveFundsCategory(account, "Groceries");
+                    double groceriesBillMonthly = accountManager.getRemoveFundsCategory(account, "Groceries") /7 * 30;
                     String groceriesBillStringMonthly = formatDouble(groceriesBillMonthly);
                     double groceriesPercentMonthly = Double.parseDouble(getPercentage(groceriesBillMonthly, income));
                     groceriesPercentageTextView.setText(String.valueOf(groceriesPercentMonthly));
@@ -245,7 +275,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
 
 
                     String customRateMonthly = accountManager.getUtilityRate(account, "Custom");
-                    double customBillMonthly = accountManager.getUtilityRateAdjusted(account, "Custom", customRateMonthly, true) * 4;
+                    double customBillMonthly = accountManager.getUtilityRateAdjusted(account, "Custom", customRateMonthly, true) /7 * 30;
                     String customBillStringMonthly = formatDouble(customBillMonthly);
                     if (customBillStringMonthly != null) {
                         // Proceed with using customBillStringMonthly
@@ -264,7 +294,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     customPercentage.setText(String.valueOf(customPercentMonthly));
                     personalPercentage.setText(String.valueOf(personalPercentMonthly));
                     groceriesPercentage.setText(String.valueOf(groceriesPercentMonthly));
-                    balancePercentage.setText(String.valueOf(balancePercentMonthly));
+                    budgetPercentage.setText(String.valueOf(balancePercentMonthly));
                     carPercentage.setText(String.valueOf(carPercentMonthly));
 
                     // Add pie slices for monthly data
@@ -296,8 +326,13 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     pieChart.addPieSlice(
                             new PieModel(
                                     "Balance",
-                                    (int) Double.parseDouble(balancePercentage.getText().toString()),
-                                    Color.parseColor("#fb7268")));
+                                    (int) Double.parseDouble(budgetPercentage.getText().toString()),
+                                    Color.parseColor("#fbbb68")));
+                    pieChart.addPieSlice( //CORRECT FORMAT
+                            new PieModel(
+                                    "Savings",
+                                    (int) Double.parseDouble(savingsPercentage.getText().toString()),
+                                    Color.parseColor("#000000")));
                     pieChart.addPieSlice(
                             new PieModel(
                                     "Car",
@@ -307,17 +342,27 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     pieChart.startAnimation();
                     break;
                 case "yearly":
-                    income *= 12;
-                    double balanceValueYearly = accountManager.generateBudget(account) * 12 ;
-                    balanceTextView.setText(String.valueOf(balanceValueYearly));
-                    double balancePercentYearly = Double.parseDouble(getPercentage(balanceValueYearly, income));
-                    if (balancePercentageTextView != null) {
-                        balancePercentageTextView.setText(String.valueOf(balancePercentYearly));
+                    income = account.getPay() /7 *365;
+                    double budgetValueYearly = accountManager.generateBudget(account) /7 * 365 ;
+                    budgetTextView.setText(String.valueOf(budgetValueYearly));
+                    double budgetPercentageYearly = Double.parseDouble(getPercentage(budgetValueYearly, income));
+                    if (budgetPercentageTextView != null) {
+                        budgetPercentageTextView.setText(String.valueOf(budgetPercentageYearly));
                     } else {
                         Log.e("GraphsDisplayActivity", "balancePercentageTextView is null");
                     }
+
+                    double savingsYearly = accountManager.getSavingsFromFile(account);
+                    double newSavingsYearly = (savingsYearly / 100 * income);
+                    String savingsStringYearly = formatDouble(newSavingsYearly);
+                    double savingsPercentYearly = Double.parseDouble(getPercentage(newSavingsYearly, income));
+                    savingsPercentageTextView.setText(String.valueOf(savingsPercentYearly));
+                    savingsTextView.setText(savingsStringYearly);
+                    Log.i("accounts", savingsStringYearly);
+
+
                     //balanceTextView.setText(String.valueOf(balanceValueYearly));
-                    double personalBillYearly = accountManager.getRemoveFundsCategory(account, "Personal");
+                    double personalBillYearly = accountManager.getRemoveFundsCategory(account, "Personal") /7 * 365 ;
                     String personalBillStringYearly = formatDouble(personalBillYearly);
                     double personalPercentYearly = Double.parseDouble(getPercentage(personalBillYearly, income));
                     personalPercentageTextView.setText(String.valueOf(personalPercentYearly));
@@ -326,7 +371,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
 
 
                     String utilitiesRateYearly = accountManager.getUtilityRate(account, "Utilities");
-                    double utilitiesBillYearly = accountManager.getUtilityRateAdjusted(account, "Utilities", utilitiesRateYearly, false) * 12;
+                    double utilitiesBillYearly = accountManager.getUtilityRateAdjusted(account, "Utilities", utilitiesRateYearly, false) /7 * 365 ;
                     String utilitiesBillStringYearly = formatDouble(utilitiesBillYearly);
                     utilitiesBillTextView.setText(utilitiesBillStringYearly);
                     double utilitiesPercentYearly = Double.parseDouble(getPercentage(utilitiesBillYearly, income));
@@ -335,7 +380,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
 
 
                     String houseRateYearly = accountManager.getUtilityRate(account, "House");
-                    double houseBillYearly = accountManager.getUtilityRateAdjusted(account, "House", houseRateYearly, false) * 12;
+                    double houseBillYearly = accountManager.getUtilityRateAdjusted(account, "House", houseRateYearly, false)/7 * 365  ;
                     String houseBillStringYearly = formatDouble(houseBillYearly);
                     double housePercentYearly = Double.parseDouble(getPercentage(houseBillYearly, income));
                     housePercentageTextView.setText(String.valueOf(housePercentYearly));
@@ -343,14 +388,14 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     Log.i("accounts", houseBillStringYearly);
 
                     String carRateYearly = accountManager.getUtilityRate(account, "Car");
-                    double carBillYearly = accountManager.getUtilityRateAdjusted(account, "Car", carRateYearly, false) * 12;
+                    double carBillYearly = accountManager.getUtilityRateAdjusted(account, "Car", carRateYearly, false) /7 * 365 ;
                     String carBillStringYearly = formatDouble(carBillYearly);
                     double carPercentYearly = Double.parseDouble(getPercentage(carBillYearly, income));
                     carPercentageTextView.setText(String.valueOf(carPercentYearly));
                     carPaymentTextView.setText(carBillStringYearly);
                     Log.i("accounts", carBillStringYearly);
 
-                    double groceriesBillYearly = accountManager.getRemoveFundsCategory(account, "Groceries");
+                    double groceriesBillYearly = accountManager.getRemoveFundsCategory(account, "Groceries")/7 * 365 ;
                     String groceriesBillStringYearly = formatDouble(groceriesBillYearly);
                     double groceriesPercentYearly = Double.parseDouble(getPercentage(groceriesBillYearly, income));
                     groceriesPercentageTextView.setText(String.valueOf(groceriesPercentYearly));
@@ -360,7 +405,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
 
 
                     String customRateYearly = accountManager.getUtilityRate(account, "Custom");
-                    double customBillYearly = accountManager.getUtilityRateAdjusted(account, "Custom", customRateYearly, true) * 12 * 4;
+                    double customBillYearly = accountManager.getUtilityRateAdjusted(account, "Custom", customRateYearly, true) /7 * 365 ;
                     String customBillStringYearly = formatDouble(customBillYearly);
                     if (customBillStringYearly != null) {
                         // Proceed with using customBillStringYearly
@@ -379,7 +424,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     customPercentage.setText(String.valueOf(customPercentYearly));
                     personalPercentage.setText(String.valueOf(personalPercentYearly));
                     groceriesPercentage.setText(String.valueOf(groceriesPercentYearly));
-                    balancePercentage.setText(String.valueOf(balancePercentYearly));
+                    budgetPercentage.setText(String.valueOf(budgetPercentageYearly));
                     carPercentage.setText(String.valueOf(carPercentYearly));
 
                     // Add pie slices for yearly data
@@ -411,8 +456,13 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     pieChart.addPieSlice(
                             new PieModel(
                                     "Balance",
-                                    (int) Double.parseDouble(balancePercentage.getText().toString()),
+                                    (int) Double.parseDouble(budgetPercentage.getText().toString()),
                                     Color.parseColor("#fb7268")));
+                    pieChart.addPieSlice( //CORRECT FORMAT
+                            new PieModel(
+                                    "Savings",
+                                    (int) Double.parseDouble(savingsPercentage.getText().toString()),
+                                    Color.parseColor("#000000")));
                     pieChart.addPieSlice(
                             new PieModel(
                                     "Car",
