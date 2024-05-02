@@ -34,4 +34,7 @@ Java Masters Team
 - Press the logout button if you wish to logout of your account. You will be taken back to the home page.
 - Toggle the switch to change the application theme to light and dark mode.
 ## Known Issues
-- N/A
+- UserID check needs fixing when reading files, had to remove for functional reading.
+- CSV Headers were not added properly, needs fixing in order for more clarity of what's in the files.
+- Little bit of lag when running the app for a while. 
+  
