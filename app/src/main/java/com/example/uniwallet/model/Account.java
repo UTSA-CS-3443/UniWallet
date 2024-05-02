@@ -2,9 +2,13 @@ package com.example.uniwallet.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * Represents a user account with various attributes such as user ID, username, password, expenses, income, and account information.
+ * Implements Serializable interface to support serialization.
+ */
 public class Account implements Serializable {
 
+    // User identification
 
     private int userID = 0;
     private String username;
@@ -23,6 +27,14 @@ public class Account implements Serializable {
     private String item; //quickRemove
     private double amount2; //quickRemove
     private double savings;
+
+    /**
+     * Constructs an Account object with provided user ID, username, and password.
+     *
+     * @param userID   The unique identifier for the user account.
+     * @param username The username associated with the account.
+     * @param password The password associated with the account.
+     */
     public Account(int userID, String username, String password) {
 
 
@@ -45,11 +57,13 @@ public class Account implements Serializable {
         this.setItem(null);
         this.setAmount2(0.0);
     }
-
+    /**
+     * Sets default values for the account attributes.
+     */
     public void setDefaultValues() {
 
     }
-
+    // Getters and setters for various attributes.
     public double getBudget() {
         return budget;
     }

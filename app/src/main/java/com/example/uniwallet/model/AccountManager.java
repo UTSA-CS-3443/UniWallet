@@ -33,21 +33,24 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+/**
+ * Manages user accounts including sign-up, account initialization, and budget calculation.
+ * Implements Serializable interface to support serialization.
+ */
 public class AccountManager implements Serializable {
     ArrayList<Account> usernameList;
-    private static final String ACCOUNTS_DIRECTORY = "files";
-    private static final String accountsCSV = "users.csv";
-    private static final String TAG = "Accounts";
+    private static final String ACCOUNTS_DIRECTORY = "files"; // Directory to store user account files
+    private static final String accountsCSV = "users.csv"; // File name for user account CSV
+    private static final String TAG = "Accounts"; // Log tag for debugging purposes
 
-    private int userID;
-    //private String username;
-    //private String password;
-    private final String filename;
-    //private final String balanceFile = "accountBalance.csv";
-    //private static final String BALANCE_FILE_NAME = "accountBalance.csv";
+    private int userID; // List of user accounts
+    private final String filename; // File name for user account
     private Activity activity;
-
+    /**
+     * Constructs an AccountManager object associated with the provided activity.
+     *
+     * @param activity The activity associated with the account manager.
+     */
     public AccountManager(Activity activity){
         this.activity = activity;
         usernameList = new ArrayList<Account>();
@@ -56,7 +59,13 @@ public class AccountManager implements Serializable {
         //this.password = password;
         //this.userID = 0;
     }
-
+    /**
+     * Checks if the provided username and password meet the sign-up criteria.
+     *
+     * @param username The username to check.
+     * @param password The password to check.
+     * @return True if the parameters meet the criteria, false otherwise.
+     */
     public boolean checkSignUpParameters(String username, String password) {
 
         File file = new File(ACCOUNTS_DIRECTORY);
@@ -71,6 +80,12 @@ public class AccountManager implements Serializable {
         return false;
 
     }
+    /**
+     * Checks if the provided username exists in the username list.
+     *
+     * @param username The username to check.
+     * @return True if the username exists, false otherwise.
+     */
 
     public boolean usernameExists(String username) {
         for (Account account : usernameList) {
@@ -81,7 +96,14 @@ public class AccountManager implements Serializable {
         return false;
     }
 
-
+    /**
+     * Signs up a new user with the provided username and password.
+     *
+     * @param username The username for the new user.
+     * @param password The password for the new user.
+     * @return The newly created account if sign-up is successful, null otherwise.
+     * @throws IOException If an I/O error occurs.
+     */
     public Account signUp(String username, String password) throws IOException {
 
         if (!checkSignUpParameters(username, password)) {
@@ -110,7 +132,12 @@ public class AccountManager implements Serializable {
         }
         return null;
     }
-
+    /**
+     * Generates the budget for the provided account based on income and expenses.
+     *
+     * @param account The account for which to generate the budget.
+     * @return The calculated budget.
+     */
 
     public double generateBudget(Account account) {
        // double balance = account.getBalance();
@@ -190,7 +217,12 @@ public class AccountManager implements Serializable {
 
         return income;
     }
-
+    /**
+     * Retrieves the savings amount for the provided account from the file.
+     *
+     * @param account The account for which to retrieve savings.
+     * @return The savings amount.
+     */
       public double getSavingsFromFile(Account account) {
         double savings = 0.0;
         try {
@@ -218,7 +250,12 @@ public class AccountManager implements Serializable {
         }
         return savings;
     }
-
+    /**
+     * Retrieves the balance amount for the provided account from the file.
+     *
+     * @param account The account for which to retrieve the balance.
+     * @return The balance amount.
+     */
     public double getBalanceFromFile(Account account) {
         double balance = 0.0;
         try {
@@ -246,6 +283,12 @@ public class AccountManager implements Serializable {
         }
         return balance;
     }
+    /**
+     * Updates the savings amount in the balance file for the provided account.
+     *
+     * @param account The account for which to update savings.
+     * @param savings The new savings amount.
+     */
     public void updateSavingsInFile(Account account, double savings){
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -276,6 +319,12 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error updating savings in file for user: " + account.getUsername(), e);
         }
     }
+    /**
+     * Updates the balance amount in the balance file for the provided account.
+     *
+     * @param account The account for which to update the balance.
+     * @param balance The new balance amount.
+     */
     public void updateBalanceInFile(Account account, double balance) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -306,7 +355,12 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error updating balance in file for user: " + account.getUsername(), e);
         }
     }
-
+    /**
+     * Updates the budget amount in the balance file for the provided account.
+     *
+     * @param account The account for which to update the budget.
+     * @param budget The new budget amount.
+     */
     public void updateBudgetInFile(Account account, double budget) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -338,6 +392,13 @@ public class AccountManager implements Serializable {
         }
 
     }
+    /**
+     * Retrieves the total amount removed from funds for the provided category.
+     *
+     * @param account The account for which to retrieve removed funds.
+     * @param category The category for which to retrieve removed funds.
+     * @return The total amount removed from funds.
+     */
     public double getRemoveFundsCategory(Account account, String category) {
         double totalAmount = 0.0;
         try {
@@ -358,6 +419,15 @@ public class AccountManager implements Serializable {
         }
         return totalAmount;
     }
+    /**
+     * Retrieves the adjusted utility rate for the provided category and rate.
+     *
+     * @param account The account for which to retrieve the adjusted utility rate.
+     * @param category The category for which to retrieve the adjusted utility rate.
+     * @param rate The rate for which to retrieve the adjusted utility rate.
+     * @param isCustom Indicates if the category is custom.
+     * @return The adjusted utility rate.
+     */
     public double getUtilityRateAdjusted(Account account, String category, String rate, boolean isCustom) {
         double adjustedRate = 0.0;
         try {
@@ -393,7 +463,13 @@ public class AccountManager implements Serializable {
         }
         return adjustedRate;
     }
-
+    /**
+     * Retrieves the utility rate for the provided category.
+     *
+     * @param account The account for which to retrieve the utility rate.
+     * @param category The category for which to retrieve the utility rate.
+     * @return The utility rate.
+     */
     public String getUtilityRate(Account account, String category) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -413,7 +489,15 @@ public class AccountManager implements Serializable {
         }
         return null;
     }
-
+    /**
+     * Adds a new utility to the expense file for the provided account.
+     *
+     * @param account The account for which to add the utility.
+     * @param category The category of the utility.
+     * @param rate The rate of the utility.
+     * @param cost The cost of the utility.
+     * @param isCustom Indicates if the category is custom.
+     */
     public void addUtility(Account account, String category, String rate, double cost, boolean isCustom) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -459,7 +543,14 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error adding expense in file for user: " + account.getUsername(), e);
         }
     }
-
+    /**
+     * Removes funds from the account for the provided category and item.
+     *
+     * @param account The account from which to remove funds.
+     * @param category The category for which to remove funds.
+     * @param item The item for which to remove funds.
+     * @param amount The amount to remove.
+     */
     public void removeFunds(Account account, String category, String item, double amount){
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -507,7 +598,12 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error updating budget in file for user: " + account.getUsername(), e);
         }
     }
-
+    /**
+     * Retrieves the paycheck amount from the income file for the provided account.
+     *
+     * @param account The account for which to retrieve the paycheck.
+     * @return The paycheck amount.
+     */
     public double getPaycheckFromFile(Account account){
         double paycheck = 0.0;
         try {
@@ -535,6 +631,13 @@ public class AccountManager implements Serializable {
         }
         return paycheck;
     }
+    /**
+     * Adds a new paycheck to the income file for the provided account.
+     *
+     * @param account The account for which to add the paycheck.
+     * @param paycheck The paycheck amount to add.
+     * @param timeRate The time rate of the paycheck.
+     */
     public void addPaycheck(Account account, double paycheck, String timeRate){
         try{
             File userDirectory = getUserDirectory(account.getUsername());
@@ -570,7 +673,12 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error updating budget in file for user: " + account.getUsername(), e);
         }
     }
-
+    /**
+     * Adds money to the account and updates the corresponding file.
+     *
+     * @param account The account to which to add money.
+     * @param amount The amount to add.
+     */
     public void addMoney(Account account, double amount) {
         try {
             File userDirectory = getUserDirectory(account.getUsername());
@@ -596,9 +704,12 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error adding amount to file for user: " + account.getUsername(), e);
         }
     }
-
-
-
+    /**
+     * Updates the password in the account files for the provided account.
+     *
+     * @param account The account for which to update the password.
+     * @param newPassword The new password.
+     */
     public void updatePasswordInFiles(Account account, String newPassword) {
         try {
 
@@ -652,11 +763,20 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Error updating password in account info file for user: " + account.getUsername(), e);
         }
     }
+    /**
+     * Retrieves the directory for the provided username.
+     *
+     * @param username The username for which to retrieve the directory.
+     * @return The directory corresponding to the username.
+     */
     private File getUserDirectory(String username) {
         return new File(activity.getFilesDir(), username);
     }
-
-
+    /**
+     * Deletes the account from files and directories.
+     *
+     * @param account The account to delete.
+     */
     public void deleteAccount(Account account) {
         File userDirectory = getUserDirectory(account.getUsername());
         File usersFile = new File(userDirectory.getParent(), "users.csv");
@@ -690,7 +810,11 @@ public class AccountManager implements Serializable {
             System.out.println("Failed to delete the account from users.csv");
         }
     }
-
+    /**
+     * Recursively deletes a directory and its contents.
+     *
+     * @param directory The directory to delete.
+     */
     private void deleteDirectory(File directory) {
         File[] files = directory.listFiles();
         if (files != null) {
@@ -704,7 +828,13 @@ public class AccountManager implements Serializable {
         }
         directory.delete(); // Delete the directory itself
     }
-
+    /**
+     * Logs in the user with the provided username and password.
+     *
+     * @param username The username to log in.
+     * @param password The password associated with the username.
+     * @return The logged-in account if successful, otherwise null.
+     */
     public Account login(String username, String password) {
         try {
             File accountsFile = new File(activity.getFilesDir(), accountsCSV);
@@ -729,7 +859,11 @@ public class AccountManager implements Serializable {
         Log.i(TAG, "Login failed: Incorrect username or password.");
         return null;
     }
-
+    /**
+     * Creates a directory for the provided username.
+     *
+     * @param username The username for which to create the directory.
+     */
      private void createDirectory(String username) {
 
         File directory = activity.getFileStreamPath(filename).getParentFile();
@@ -747,6 +881,12 @@ public class AccountManager implements Serializable {
             Log.i(TAG, "Directory already exists: " + userDirectory.getAbsolutePath());
         }
     }
+    /**
+     * Initializes files required for the user's account, such as CSV files for account information, balance, income, expenses, and quick add/remove transactions.
+     * Also, ensures the creation of the user's directory if it doesn't exist.
+     *
+     * @param username The username of the account for which files need to be initialized.
+     */
     private void initializeFiles(String username) {
         try {
             Log.i(TAG, "Attempting to read from file ...");
@@ -794,6 +934,11 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "IOException occurred: " + e.getMessage());
         }
     }
+    /**
+     * Adds a user account to the username list and creates necessary directories and CSV files for the account.
+     *
+     * @param account The account to be added.
+     */
     public void addUser(Account account){
         if(usernameList != null){
             Log.i(TAG, "Adding " + account + " to the players");
@@ -802,7 +947,9 @@ public class AccountManager implements Serializable {
             createCSVFiles(account, new File(activity.getFileStreamPath(filename).getParentFile(), account.getUsername()));
         }
     }
-
+    /**
+     * Saves the user account information to a CSV file.
+     */
     public void saveFile() {
         try {
             Log.i(TAG, "Attempting to save to file ... ");
@@ -826,6 +973,11 @@ public class AccountManager implements Serializable {
             Log.i(TAG, "Failed to write to file. " + filename);
         }
     }
+    /**
+     * Retrieves the user count from the CSV file.
+     *
+     * @return The user count retrieved from the CSV file.
+     */
     private int getUserCountFromCSV() {
         int lastUserCount = 0;
         try {
@@ -849,6 +1001,13 @@ public class AccountManager implements Serializable {
         }
         return lastUserCount;
     }
+
+    /**
+     * Creates CSV files for the provided account in the specified directory.
+     *
+     * @param account   The account for which CSV files are to be created.
+     * @param directory The directory where CSV files are to be created.
+     */
      public void createCSVFiles(Account account, File directory) {
 
         directory = activity.getFileStreamPath(filename).getParentFile();
@@ -907,6 +1066,12 @@ public class AccountManager implements Serializable {
             Log.e(TAG, "Failed to create CSV files in directory: " + userDirectory.getAbsolutePath());
         }
     }
+    /**
+     * Ensures that the provided file exists; if not, creates the file.
+     *
+     * @param file The file to be ensured.
+     * @throws IOException If an I/O error occurs while ensuring the file.
+     */
     private void ensureFileCreated(File file) throws IOException {
         if (!file.exists()) {
             if (!file.createNewFile()) {
@@ -914,6 +1079,13 @@ public class AccountManager implements Serializable {
             }
         }
     }
+    /**
+     * Appends data to the specified file.
+     *
+     * @param file The file to which data is to be appended.
+     * @param data The data to be appended to the file.
+     * @throws IOException If an I/O error occurs while appending to the file.
+     */
     private void appendToFile(File file, String data) throws IOException {
         FileWriter fw = new FileWriter(file, true); // Append mode
         fw.write(data);

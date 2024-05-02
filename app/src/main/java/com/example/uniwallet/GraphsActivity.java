@@ -12,7 +12,9 @@ import com.example.uniwallet.model.Account;
 public class GraphsActivity extends AppCompatActivity {
     Account account;
 
-
+    /**
+     * Sets up the GraphsActivity UI and handles button clicks.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
@@ -56,18 +58,32 @@ public class GraphsActivity extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Launches the MainActivity.
+     *
+     * @param account The account data to pass to the MainActivity.
+     */
     private void launchMainActivity(Account account){
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("account", account);
         startActivity(intent);
     }
+    /**
+     * Launches the GraphsDisplayActivity with the specified data type.
+     *
+     * @param dataType The type of data to display in the graphs.
+     */
     private void launchGraphsDisplayActivity(String dataType){
         Intent intent = new Intent(this, GraphsDisplayActivity.class);
         intent.putExtra("account", account);
         intent.putExtra("dataType", dataType);
         startActivity(intent);
     }
+    /**
+     * Launches the SettingsActivity.
+     *
+     * @param account The account data to pass to the SettingsActivity.
+     */
     private void launchSettingsActivity(Account account) {
         Intent intent = new Intent(this, SettingsActivity.class);
         intent.putExtra("account", account);

@@ -18,11 +18,16 @@ import org.eazegraph.lib.models.PieModel;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-
+/**
+ * This activity is responsible for displaying graphs of various financial data.
+ * It retrieves data from the intent passed to it and then displays the appropriate graphs based on the selected time frame.
+ */
 public class GraphsDisplayActivity extends AppCompatActivity {
 
+    // Declare TextView variables for displaying bill values
     public TextView personalBillTextView, utilitiesBillTextView, houseBillTextView, carPaymentTextView, customBillTextView;
     public TextView budgetTextView, groceriesTextView;
+    // Declare TextView variables for displaying percentage values
     public TextView carPercentageTextView, budgetPercentageTextView, utilitiesPercentageTextView, housePercentageTextView,
             customPercentageTextView, personalPercentageTextView, groceriesPercentageTextView, savingsPercentageTextView, savingsTextView, extraFundsTextView;
     Account account;
@@ -32,10 +37,14 @@ public class GraphsDisplayActivity extends AppCompatActivity {
     public TextView budgetPercentage , utilitiesPercentage, housePercentage,
             customPercentage, personalPercentage, groceriesPercentage, carPercentage, savingsPercentage;
 
-    //double budgetValue = 100;
+    // Initialize PieChart and buttons
     PieChart pieChart;
     Button homeButton, backButton;
-
+    /**
+     * Called when the activity is starting. This is where most initialization should go.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -43,18 +52,19 @@ public class GraphsDisplayActivity extends AppCompatActivity {
         Button homeButton, backButton;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graphs_display);
+        // Initialize PieChart
         pieChart = findViewById(R.id.piechart);
+        // Initialize TextViews for bill values
         personalBillTextView = findViewById(R.id.personalView);
         utilitiesBillTextView = findViewById(R.id.utilitiesView);
         houseBillTextView = findViewById(R.id.houseView);
         carPaymentTextView = findViewById(R.id.carView);
         customBillTextView = findViewById(R.id.customView);
-         //budgetTextView = findViewById(R.id.remainingBudgetView);
         budgetTextView = findViewById(R.id.remainingBudgetView);
         groceriesTextView = findViewById(R.id.groceriesView);
         savingsTextView = findViewById(R.id.savingsTextView);
 
-        // Initialize the TextView variables
+        // Initialize TextViews for bill percentages
         utilitiesPercentageTextView = findViewById(R.id.utilitiesPercentage);
         housePercentageTextView = findViewById(R.id.housePercentage);
         customPercentageTextView = findViewById(R.id.customPercentage);
@@ -72,7 +82,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
         budgetPercentage = findViewById(R.id.budgetPercentage);
         carPercentage = findViewById(R.id.carPercentage);
         savingsPercentage = findViewById(R.id.savingsPercentage);
-
+        // Retrieve data from intent
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("account")) {
             AccountManager accountManager;
@@ -81,12 +91,10 @@ public class GraphsDisplayActivity extends AppCompatActivity {
             String dataType = intent.getStringExtra("dataType");
             assert account != null;
             double Savings = accountManager.getSavingsFromFile(account);
-            //double budgetValue = account.getBudget();
             double income = accountManager.getPaycheckFromFile(account);
             switch (dataType) {
+                //Display weekly data
                 case "weekly": {
-                    //income /= 4;
-
                     income = account.getPay();
                     double budgetValue = accountManager.generateBudget(account) ;
                     budgetTextView.setText(String.valueOf(budgetValue));
@@ -96,7 +104,6 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     } else {
                         Log.e("GraphsDisplayActivity", "balancePercentageTextView is null");
                     }
-                    //balanceTextView.setText(String.valueOf(balanceValue));
 
                     double savings = accountManager.getSavingsFromFile(account);
                     double newSavings = savings / 100 * income;
@@ -151,7 +158,6 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     double customPercent = Double.parseDouble(getPercentage(customBill, income));
                     if (customBillString != null) {
                         // Proceed with using customBillString
-//                        double customPercent = Double.parseDouble(getPercentage(customBill, income));
                         customPercentageTextView.setText(String.valueOf(customPercent));
                         customBillTextView.setText(String.valueOf(customBill));
                         Log.i("accounts", customBillString);
@@ -214,6 +220,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                 }// Display weekly data
                 break;
                 case "monthly":
+                    //Displays monthly data.
                     income = account.getPay() /7 *30;
                     double balanceValueMonthly = accountManager.generateBudget(account) /7 * 30;
                     budgetTextView.setText(String.valueOf(balanceValueMonthly));
@@ -223,7 +230,6 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     } else {
                         Log.e("GraphsDisplayActivity", "balancePercentageTextView is null");
                     }
-                    //balanceTextView.setText(String.valueOf(balanceValue));
 
                     double savingsMonthly = accountManager.getSavingsFromFile(account);
                     double newSavingsMonthly = savingsMonthly / 100 * income;
@@ -239,7 +245,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     personalPercentageTextView.setText(String.valueOf(personalPercentMonthly));
                     personalBillTextView.setText(personalBillStringMonthly);
                     Log.i("accounts", personalBillStringMonthly);
-//
+
 
                     String utilitiesRateMonthly = accountManager.getUtilityRate(account, "Utilities") ;
                     double utilitiesBillMonthly = accountManager.getUtilityRateAdjusted(account, "Utilities", utilitiesRateMonthly, false) /7 * 30;
@@ -248,7 +254,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     double utilitiesPercentMonthly = Double.parseDouble(getPercentage(utilitiesBillMonthly, income));
                     utilitiesPercentageTextView.setText(String.valueOf(utilitiesPercentMonthly));
                     Log.i("accounts", utilitiesBillStringMonthly);
-//
+
 
                     String houseRateMonthly = accountManager.getUtilityRate(account, "House");
                     double houseBillMonthly = accountManager.getUtilityRateAdjusted(account, "House", houseRateMonthly, false) /7 * 30;
@@ -342,6 +348,7 @@ public class GraphsDisplayActivity extends AppCompatActivity {
                     pieChart.startAnimation();
                     break;
                 case "yearly":
+                    //Display yearly data
                     income = account.getPay() /7 *365;
                     double budgetValueYearly = accountManager.generateBudget(account) /7 * 365 ;
                     budgetTextView.setText(String.valueOf(budgetValueYearly));
@@ -474,19 +481,22 @@ public class GraphsDisplayActivity extends AppCompatActivity {
 
             }
         }
-
+        // Set up button click listeners
         homeButton = findViewById(R.id.homeButton);
         backButton = findViewById(R.id.backButton);
-
-
         homeButton.setOnClickListener(v -> {
             launchHomeActivity();
         });
 
         backButton.setOnClickListener(v -> onBackPressed());
-
-        pieChart = findViewById(R.id.piechart);
     }
+    /**
+     * Calculates the percentage value of a given value relative to the total income.
+     *
+     * @param value  The value to calculate the percentage for.
+     * @param income The total income.
+     * @return The percentage value as a string.
+     */
     public String getPercentage(double value, double income) {
         // Handle potential division by zero
         if (income == 0) {
@@ -496,13 +506,20 @@ public class GraphsDisplayActivity extends AppCompatActivity {
         double percentage = (value * 100) / income;
         return String.valueOf(Double.parseDouble(String.format("%.2f", percentage))); // Return with 2 decimal places
     }
-
+    /**
+     * Launches the home activity.
+     */
     private void launchHomeActivity( ) {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
-
+    /**
+     * Formats a double value to have two decimal places.
+     *
+     * @param value The value to format.
+     * @return The formatted value as a string.
+     */
     private String formatDouble(double value) {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_UP); // Optional: Adjust rounding mode as needed

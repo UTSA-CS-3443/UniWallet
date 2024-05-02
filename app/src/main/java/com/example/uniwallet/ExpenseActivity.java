@@ -19,33 +19,44 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class ExpenseActivity extends AppCompatActivity {
-    Account account;
-   // EditText budgetText;
-    EditText savingsText;
-    EditText addText;
-    EditText paycheckText;
-    EditText amountText;
-    EditText itemText;
-    EditText costText;
-    TextView balanceTextView,budgetTextView,incomeTextView,savingsValueTextView,savingsPercentTextView;
-    double savings;
-    double budget = 0.0;
-    double balance = 0.0;
-    double income = 0.0;
-    double amount = 0.0;
-    //double paycheck = 0.1;
-    double pay;
-    String timeRate;
-    String item;
-    String savingsString;
-    Spinner timeRateSpinner;
-    Spinner categorySpinner;
-    Spinner utilitySpinner;
-    Spinner timeRateSpinner2;
-    private boolean isAddingAmount = false;
-    private boolean isRemovingFunds = false;
-    private boolean isAddingUtility = false;
+    Account account; // The account associated with the expenses.
 
+    // EditText budgetText;
+    EditText savingsText; // EditText for changing the savings percentage.
+    EditText addText; // EditText for adding funds.
+    EditText paycheckText; // EditText for entering the paycheck amount.
+    EditText amountText; // EditText for entering the amount to be removed.
+    EditText itemText; // EditText for entering the item to be removed.
+    EditText costText; // EditText for entering the cost of a utility.
+
+    /**
+     * TextViews for displaying the current values.
+     */
+    TextView balanceTextView, budgetTextView, incomeTextView, savingsValueTextView, savingsPercentTextView;
+
+    double savings; // Current savings amount.
+    double budget = 0.0; // Initial budget value.
+    double balance = 0.0; // Current balance.
+    double income = 0.0; // Current income.
+    double amount = 0.0; // Amount variable used for various calculations.
+    // double paycheck = 0.1; // Uncomment if using default paycheck value.
+    double pay; // Paycheck amount.
+    String timeRate; // Time rate for paycheck frequency.
+    String item; // Item description for removal.
+    String savingsString; // String representation of savings.
+    Spinner timeRateSpinner; // Spinner for selecting paycheck frequency.
+    Spinner categorySpinner; // Spinner for selecting expense category.
+    Spinner utilitySpinner; // Spinner for selecting utility type.
+    Spinner timeRateSpinner2; // Spinner for selecting utility frequency.
+    private boolean isAddingAmount = false; // Flag to indicate if funds are being added.
+    private boolean isRemovingFunds = false; // Flag to indicate if funds are being removed.
+    private boolean isAddingUtility = false; // Flag to indicate if a utility is being added.
+
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expenses);
@@ -116,8 +127,6 @@ public class ExpenseActivity extends AppCompatActivity {
         timeRateSpinner = findViewById(R.id.paycheckTypeSpinner);
         timeRateSpinner.setAdapter(adapter);
 
-        // String selectedTimeRate = timeRateSpinner.getSelectedItem().toString();
-
         //Remove Buttons/Texts
 
         Button removeButton = findViewById(R.id.remove_funds_button);
@@ -149,16 +158,6 @@ public class ExpenseActivity extends AppCompatActivity {
         timeRateSpinner2 = findViewById(R.id.timeRateTypeSpinner);
         timeRateSpinner2.setAdapter(adapter4);
 
-        //Generate Balance Button
-/*
-         changeSavingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ExpenseActivity.this, account.getUsername() + "savings updated: " + account.getSavings(), Toast.LENGTH_SHORT).show();
-                updateAccountSavings();
-            }
-        });
-  */
         homeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,8 +171,6 @@ public class ExpenseActivity extends AppCompatActivity {
                 AccountManager accountManager = new AccountManager(ExpenseActivity.this);
                 double generatedBudget = accountManager.generateBudget(account);
                 savings = accountManager.getSavingsFromFile(account);
-                //double newBalance = generatedBudget * (1-savingsDecimal);
-                //String generatedBalanceString = String.valueOf(newBalance);
                 String generatedBudgetString = formatDouble(generatedBudget);
 
                 if(generatedBudget <= 0){
@@ -183,8 +180,6 @@ public class ExpenseActivity extends AppCompatActivity {
                 }
                 budgetTextView.setText(generatedBudgetString);
 
-                // updateAccountSavings();
-               // savingsValueTextView.setText(savingsValueString);
             }
         });
         utilityButton.setOnClickListener(new View.OnClickListener() {
@@ -219,12 +214,6 @@ public class ExpenseActivity extends AppCompatActivity {
                 double paycheck = account.getPay();
                 String paycheckString = formatDouble(paycheck);
                 incomeTextView.setText(paycheckString);
-                //updateAccountSavings();
-                //savingsValueTextView.setText(savingsValueString);
-                //updateAccountSavings();
-                //savingsValueTextView.setText(savingsValueString);
-
-
             }
         });
 
@@ -248,7 +237,6 @@ public class ExpenseActivity extends AppCompatActivity {
 
                 double savings = accountManager.getSavingsFromFile(account);
                  String savingsString = savings + "%";
-                //String savingsString = String.valueOf(savings);
                 savingsPercentTextView.setText(savingsString);
                 double savingsDecimal = savings / 100;
                 double savingsValue = income * savingsDecimal;
@@ -258,13 +246,19 @@ public class ExpenseActivity extends AppCompatActivity {
             }
         });
     }
-
+    /**
+     * Launches the MainActivity.
+     *
+     * @param account The account to be passed to the MainActivity.
+     */
     private void launchMainActivity(Account account) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("account", account);
         startActivity(intent);
     }
-
+    /**
+     * Updates the savings percentage for the account.
+     */
     private void updateAccountSavings() {
         String savingsString = savingsText.getText().toString();
         if (!savingsString.isEmpty()) {
@@ -299,6 +293,9 @@ public class ExpenseActivity extends AppCompatActivity {
             }
         }
     }
+    /**
+     * Updates the budget for the account.
+     */
     private void updateAccountBudget() {
         String budgetString = budgetTextView.getText().toString();
         if (!budgetString.isEmpty()) {
@@ -310,7 +307,9 @@ public class ExpenseActivity extends AppCompatActivity {
             }
         }
     }
-
+    /**
+     * Adds funds to the account.
+     */
     private void updateAddAmount() {
         if (!isAddingAmount) { // Check if amount is already being added
             isAddingAmount = true; // Set flag to indicate that amount is being added
@@ -325,7 +324,9 @@ public class ExpenseActivity extends AppCompatActivity {
             isAddingAmount = false; // Reset flag after adding amount
         }
     }
-
+    /**
+     * Updates the paycheck amount for the account.
+     */
     private void updateAccountPaycheck() {
         String addString = paycheckText.getText().toString();
         if (!addString.isEmpty()) {
@@ -346,7 +347,9 @@ public class ExpenseActivity extends AppCompatActivity {
             }
         }
     }
-
+    /**
+     * Removes funds from the account.
+     */
     private void updateRemoveFunds() {
         if (!isRemovingFunds) { // Check if funds are already being removed
             isRemovingFunds = true; // Set flag to indicate that funds are being removed
@@ -365,6 +368,9 @@ public class ExpenseActivity extends AppCompatActivity {
             isRemovingFunds = false;
         }
     }
+    /**
+     * Adds a utility expense to the account.
+     */
     private void updateAddUtility() {
         if (!isAddingUtility) { // Check if utilities are already being added
             isAddingUtility = true; // Set flag to indicate that utilities are being added
@@ -389,6 +395,12 @@ public class ExpenseActivity extends AppCompatActivity {
             isAddingUtility = false; // Reset flag after adding utility
         }
     }
+    /**
+     * Formats a double value to two decimal places.
+     *
+     * @param value The value to be formatted.
+     * @return The formatted value as a string.
+     */
     private String formatDouble(double value) {
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.HALF_UP); // Optional: Adjust rounding mode as needed
