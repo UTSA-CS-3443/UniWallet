@@ -54,27 +54,17 @@
         android:text="Logout"
         style="@style/ButtonStyle"/>
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/btg_theme_switch"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:gravity="center_horizontal"
-        app:singleSelection="true"
-        app:selectionRequired="true"
-        android:layout_marginTop="10dp">
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/mode_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:trackTint="@color/colorTitleHeader"/>
 
-        <Button
-            android:id="@+id/btnLight"
-            style="@style/SwitchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Light"/>
-
-        <Button
-            android:id="@+id/btnDark"
-            style="@style/SwitchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dark"/>
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+    <TextView
+        style="@style/TextViewStyle"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:text="Light         Dark"/>
 </LinearLayout>
