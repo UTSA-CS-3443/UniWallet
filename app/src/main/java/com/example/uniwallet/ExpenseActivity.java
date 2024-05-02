@@ -117,7 +117,7 @@ public class ExpenseActivity extends AppCompatActivity {
         //Paycheck Buttons/Texts
 
         Button paycheckButton = findViewById(R.id.add_paycheck_button);
-        String[] timeRates = {"Weekly", "Biweekly", "Monthly", "Yearly"};
+        String[] timeRates = {"Weekly", "Monthly", "Yearly"};
         paycheckText = findViewById(R.id.paycheckAmountField);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, timeRates);
@@ -145,7 +145,7 @@ public class ExpenseActivity extends AppCompatActivity {
 
         Button utilityButton = findViewById(R.id.add_utility_button);
         String[] utilities = {"Utilities", "Car", "House", "Custom"};
-        String[] timeRates2 = {"Weekly", "Biweekly", "Monthly", "Yearly"};
+        String[] timeRates2 = {"Weekly", "Monthly", "Yearly"};
         costText = findViewById(R.id.cost_field);
 
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, utilities);
