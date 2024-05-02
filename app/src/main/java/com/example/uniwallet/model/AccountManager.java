@@ -184,20 +184,7 @@ public class AccountManager implements Serializable {
             }
             reader.close();
 
-            // Process accountQuickAdd.csv
-            /*
-            File quickAddFile = new File(userDirectory, "accountQuickAdd.csv");
-            reader = new BufferedReader(new FileReader(quickAddFile));
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length >= 3) {
-                     amount = Double.parseDouble(parts[2]);
-                    income += amount;
-                }
-            }
-            reader.close();
-*/
-            // Process accountQuickRemove.csv
+             // Process accountQuickRemove.csv
             File quickRemoveFile = new File(userDirectory, "accountQuickRemove.csv");
             reader = new BufferedReader(new FileReader(quickRemoveFile));
             while ((line = reader.readLine()) != null) {
@@ -443,17 +430,27 @@ public class AccountManager implements Serializable {
                     if (isCustom && "Custom".equals(parts[1])) {
                         switch (rate) {
                             case "Weekly":
-                                adjustedRate += Double.parseDouble(parts[3]);
+                                adjustedRate += Double.parseDouble(parts[3]) /7;
                                 break;
                             case "Monthly":
-                                adjustedRate += Double.parseDouble(parts[3]);
+                                adjustedRate += Double.parseDouble(parts[3]) /30;
                                 break;
                             case "Yearly":
-                                adjustedRate += Double.parseDouble(parts[3]);
+                                adjustedRate += Double.parseDouble(parts[3]) /365;
                                 break;
                         }
                     } else if (!isCustom && !"Custom".equals(parts[1])) {
-                        adjustedRate += Double.parseDouble(parts[3]);
+                        switch (rate) {
+                            case "Weekly":
+                                adjustedRate += Double.parseDouble(parts[3]) /7;
+                                break;
+                            case "Monthly":
+                                adjustedRate += Double.parseDouble(parts[3]) /30;
+                                break;
+                            case "Yearly":
+                                adjustedRate += Double.parseDouble(parts[3]) /365;
+                                break;
+                        }
                     }
                 }
             }
@@ -1043,16 +1040,6 @@ public class AccountManager implements Serializable {
             ensureFileCreated(quickAddFile);
             ensureFileCreated(quickRemoveFile);
 
-
-/*
-            appendToFile(infoFile, String.format("%s,%s,%s\n", "UserID", "Username", "Password"));
-            appendToFile(balanceFile, String.format("%s,%s,%s\n", "UserID", "Budget", "Balance"));
-            appendToFile(incomeFile, String.format("%s,%s,%s\n", "UserID", "Pay", "Time Rate"));
-            appendToFile(expenseFile, String.format("%s,%s,%s,%s\n", "UserID","Category", "Rate", "Cost"));
-            appendToFile(quickAddFile, String.format("%s,%s,%s\n", "UserID", "Transaction Number", "Amount"));
-            appendToFile(quickRemoveFile, String.format("%s,%s,%s,%s,%s\n", "UserID", "Transaction Number 2", "Category 2", "Item", "Amount 2"));
-*/
-
             appendToFile(infoFile, String.format("%d,%s,%s\n", account.getUserID(), account.getUsername(), account.getPassword()));
             appendToFile(balanceFile, String.format("%d,%s,%s,%s\n", account.getUserID(), account.getBudget(), account.getBalance(), account.getSavings()));
             appendToFile(incomeFile, String.format("%d,%s,%s\n", account.getUserID(), account.getPay(), account.getTimeRate()));
@@ -1092,25 +1079,5 @@ public class AccountManager implements Serializable {
         fw.close();
     }
 
-    /*
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    @NonNull
-    public String toString(){
-        return getUsername();
-    }
-*/
-}
+ }
 
